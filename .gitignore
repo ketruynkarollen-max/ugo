@@ -1,0 +1,53 @@
+.vercel
+.claude/
+desktop.ini
+Thumbs.db
+
+# Pastas não referenciadas pela landing
+fotos/
+draco/
+
+# Rascunhos / scripts desligados
+index_clean.html
+index_backup_clean.html
+ugo-draw.html
+notebook-3d.html
+notebook-3d.js
+notebook-3d-2.js
+phones-3d.js
+
+*.pdf
+macbook-b64.txt
+
+# Vídeos na raiz: só estes dois aparecem no index.html
+/*.mp4
+!/demo-mobile.mp4
+!/hugo.mp4
+
+# PNG na raiz: ignorar tudo exceto os usados na página
+/*.png
+!/AAAAAAA.png
+!/dashboard.png
+!/features-banner.png
+!/laptop-empresas.png
+!/tablet-escolas.png
+!/screen1.png
+!/screen2.png
+!/screen3.png
+!/screen4.png
+!/screen5.png
+
+/*.jpg
+/*.jpeg
+
+# Modelos 3D na raiz: só o MacBook do bloco analytics
+/*.glb
+!/macbook-pro.glb
+
+# cards/: só ícones 1–5 usados na gamificação
+/cards/*
+!/cards/1.png
+!/cards/2.png
+!/cards/3.png
+!/cards/4.png
+!/cards/5.png

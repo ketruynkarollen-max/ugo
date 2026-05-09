@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>U.GO Analytics — Clareza que Vira Ação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F4EE;
+  --bg2:#EDE9DF;
+  --bg-card:#FDFBF8;
+  --dark:#141210;
+  --dark2:#1C1914;
+  --ink:#18160F;
+  --ink2:#4A4540;
+  --muted:#9B9590;
+  --line:rgba(24,22,15,.09);
+  --line-dark:rgba(255,255,255,.07);
+  --orange:#E8501A;
+  --orange-pale:#FDF0EB;
+  --orange-dim:rgba(232,80,26,.12);
+  --green:#2A6B4A;
+  --ff-d:'Bricolage Grotesque',sans-serif;
+  --ff-b:'Plus Jakarta Sans',sans-serif;
+  --ff-s:'Instrument Serif',serif;
+  --ff-m:'DM Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--ff-b);overflow-x:hidden;cursor:none}
+
+/* ─── CURSOR ─── */
+#cd,#cr{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+#cd{width:6px;height:6px;background:var(--ink);border-radius:50%;transition:width .12s,height .12s,background .12s}
+#cr{width:32px;height:32px;border:1px solid rgba(24,22,15,.2);border-radius:50%;transition:width .25s,height .25s,border-color .25s}
+body:has(a:hover,button:hover) #cd{width:10px;height:10px;background:var(--orange)}
+body:has(a:hover,button:hover) #cr{width:50px;height:50px;border-color:var(--orange)}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 60px;
+  background:rgba(247,244,238,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);
+}
+.nav-logo{font-family:var(--ff-d);font-weight:800;font-size:17px;letter-spacing:-.03em;color:var(--ink);text-decoration:none}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{font-size:13px;font-weight:400;color:var(--ink2);text-decoration:none;opacity:.55;transition:opacity .2s;letter-spacing:.01em}
+.nav-links a:hover{opacity:1}
+.nav-links a.active{opacity:1;color:var(--orange);font-weight:500}
+.nav-right{display:flex;gap:12px;align-items:center}
+.nav-login{font-size:12.5px;color:var(--ink2);text-decoration:none;opacity:.5;transition:opacity .2s}
+.nav-login:hover{opacity:1}
+.nav-btn{background:var(--orange);color:#fff;font-family:var(--ff-b);font-size:13px;font-weight:500;padding:10px 22px;border:none;text-decoration:none;border-radius:100px;transition:transform .25s cubic-bezier(.16,1,.3,1),background .2s;display:inline-block;}
+.nav-btn:hover{transform:scale(1.04);background:#c93e10}
+
+/* ─── HERO ─── */
+#hero{min-height:100vh;display:flex;align-items:center;padding:130px 60px 80px;position:relative;overflow:hidden;}
+/* video bg */
+.hero-video-bg{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;z-index:0}
+.hero-video-bg video{width:100%;height:100%;object-fit:cover;display:block}
+.hero-video-overlay{
+  position:absolute;inset:0;z-index:1;
+  background:
+    linear-gradient(to right, rgba(247,244,238,.96) 0%, rgba(247,244,238,.88) 40%, rgba(247,244,238,.4) 70%, rgba(247,244,238,.1) 100%),
+    linear-gradient(to bottom, rgba(247,244,238,.5) 0%, transparent 30%, transparent 70%, rgba(247,244,238,.6) 100%);
+}
+.hero-topo{position:absolute;inset:0;pointer-events:none;opacity:.15;z-index:1}
+.hero-topo svg{width:100%;height:100%}
+.hero-wash{position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse 65% 60% at 75% 100%,rgba(232,80,26,.06) 0%,transparent 65%);}
+.hero-left{position:relative;z-index:2;max-width:680px}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--ff-m);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink2);background:var(--bg2);padding:7px 14px;border-radius:100px;border:1px solid var(--line);margin-bottom:32px;}
+.hero-tag .tag-dot{width:5px;height:5px;border-radius:50%;background:var(--orange);flex-shrink:0}
+.hero-h1{font-family:var(--ff-d);font-size:clamp(52px,6.5vw,100px);font-weight:800;line-height:.96;letter-spacing:-.045em;margin-bottom:0;}
+.hero-h1 .t-light{font-weight:300;color:rgba(24,22,15,.35);display:block;font-size:clamp(14px,1.4vw,22px);letter-spacing:.01em;margin-bottom:8px;white-space:nowrap;}
+.hero-h1 .t-bold{font-weight:800;color:var(--ink);display:block;}
+.hero-h1 .t-accent{font-weight:800;color:var(--orange);display:block;}
+.hero-sub{font-size:13px;line-height:1.75;color:var(--muted);font-weight:300;max-width:360px;margin:28px 0 40px;border-left:2px solid var(--orange);padding-left:14px;}
+.hero-sub strong{font-weight:600;color:var(--ink2)}
+.hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--orange);color:#fff;font-family:var(--ff-b);font-size:14px;font-weight:500;padding:15px 32px;border-radius:100px;text-decoration:none;transition:transform .3s cubic-bezier(.16,1,.3,1),background .2s;}
+.btn-primary:hover{transform:scale(1.04);background:#c93e10}
+.btn-primary svg{width:16px;height:16px}
+.btn-ghost{font-size:14px;color:var(--ink2);text-decoration:none;display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid var(--line);padding-bottom:2px;transition:border-color .2s,color .2s;}
+.btn-ghost:hover{color:var(--ink);border-color:var(--ink2)}
+.hero-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:36px;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--ff-m);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--bg2);padding:6px 12px;border-radius:100px;border:1px solid var(--line);}
+.badge svg{width:10px;height:10px;color:var(--orange)}
+.hero-right{position:relative;z-index:2;height:580px;display:flex;align-items:center;justify-content:center}
+.card-stack{position:relative;width:100%;max-width:460px}
+.hc-main{background:var(--dark2);border-radius:24px;border:1px solid rgba(255,255,255,.07);box-shadow:0 48px 80px rgba(20,18,12,.3),inset 0 1px 0 rgba(255,255,255,.05);padding:28px;}
+.hc-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.hc-title{font-family:var(--ff-d);font-size:13px;font-weight:600;color:#fff;letter-spacing:-.02em}
+.hc-period{font-family:var(--ff-m);font-size:9px;color:rgba(255,255,255,.3);background:rgba(255,255,255,.05);padding:4px 10px;border-radius:100px}
+.hc-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+.hc-kpi{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px 12px}
+.hck-l{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.1em;color:rgba(255,255,255,.28);text-transform:uppercase;margin-bottom:8px}
+.hck-v{font-family:var(--ff-d);font-size:26px;font-weight:700;color:#fff;letter-spacing:-.05em;line-height:1}
+.hck-d{font-size:9px;margin-top:4px;font-family:var(--ff-m)}
+.hck-d.g{color:#4ade80}.hck-d.o{color:var(--orange)}
+.hc-chart{margin-bottom:16px}
+.hc-chart-label{font-family:var(--ff-m);font-size:8px;letter-spacing:.12em;color:rgba(255,255,255,.22);margin-bottom:10px}
+.hc-chart svg{width:100%;height:80px;display:block}
+.hc-list{display:flex;flex-direction:column;gap:6px}
+.hcl-row{display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);border-radius:8px}
+.hcl-name{font-size:10.5px;color:rgba(255,255,255,.55);flex:1}
+.hcl-bar{width:80px;height:2px;background:rgba(255,255,255,.06);border-radius:2px;position:relative}
+.hcl-fill{position:absolute;left:0;top:0;height:2px;border-radius:2px;background:var(--orange)}
+.hcl-val{font-family:var(--ff-m);font-size:9px;color:var(--orange);width:28px;text-align:right}
+.hc-float{position:absolute;bottom:-20px;right:-28px;background:#fff;border-radius:16px;border:1px solid rgba(24,22,15,.06);box-shadow:0 20px 48px rgba(20,18,12,.12);padding:16px 20px;min-width:180px;}
+.hcf-label{font-family:var(--ff-m);font-size:8px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:8px}
+.hcf-val{font-family:var(--ff-d);font-size:32px;font-weight:800;color:var(--orange);letter-spacing:-.05em;line-height:1}
+.hcf-sub{font-size:11px;color:var(--muted);margin-top:4px}
+.hcf-arrow{color:#4ade80;font-size:11px}
+
+/* ─── MARQUEE ─── */
+.marquee-wrap{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 0}
+.m-track{display:flex;width:max-content;animation:marquee 30s linear infinite}
+.m-track span{font-family:var(--ff-m);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:0 28px}
+.m-track .dot{color:var(--orange);padding:0 4px}
+
+/* ─── STATEMENT EDITORIAL ─── */
+#statement-editorial{background:#FAFAF8;padding:100px 80px 80px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.se-inner{max-width:1100px;margin:0 auto}
+.se-label{display:flex;align-items:center;gap:10px;font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(24,22,15,.35);margin-bottom:56px;}
+.se-bullet{color:var(--orange);font-size:8px}
+.se-text{font-family:var(--ff-b);font-size:clamp(22px,2.8vw,38px);font-weight:400;line-height:1.55;letter-spacing:-.01em;color:var(--ink);max-width:960px;margin-bottom:72px;}
+.se-em{font-family:var(--ff-s);font-style:italic;font-weight:400;color:rgba(24,22,15,.28);letter-spacing:.01em;transition:color .3s;}
+.se-em:hover{color:var(--orange)}
+.se-word{display:inline-block;will-change:transform,opacity}
+.se-meta{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);padding-top:32px;}
+.se-meta-col{padding-right:32px;border-right:1px solid var(--line)}
+.se-meta-col:last-child{border-right:none}
+.se-meta-label{font-family:var(--ff-m);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.se-meta-value{font-family:var(--ff-b);font-size:13px;font-weight:500;color:var(--ink2);line-height:1.4;}
+@media(max-width:768px){#statement-editorial{padding:60px 24px}.se-meta{grid-template-columns:1fr 1fr;gap:24px}.se-meta-col{border-right:none;padding-right:0}}
+
+/* ─── APLICAÇÕES POR SEGMENTO ─── */
+#aplicacoes{background:#FAFAF8;padding:80px 80px 72px;border-bottom:1px solid var(--line);}
+.ap-inner{max-width:1100px;margin:0 auto}
+.ap-header{margin-bottom:56px}
+.ap-label{display:flex;align-items:center;gap:10px;font-family:var(--ff-m);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(24,22,15,.35);margin-bottom:24px;}
+.ap-title{font-family:var(--ff-d);font-size:clamp(28px,3.2vw,48px);font-weight:800;letter-spacing:-.04em;line-height:1.05;color:var(--ink);margin-bottom:10px;}
+.ap-em{font-family:var(--ff-s);font-style:italic;font-weight:400;color:rgba(24,22,15,.3);}
+.ap-sub{font-family:var(--ff-m);font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;}
+.ap-grid{display:grid;grid-template-columns:1fr 1px 1fr;gap:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:40px;background:var(--bg-card);}
+.ap-divider{background:var(--line)}
+.ap-card{padding:40px 44px}
+.ap-card-header{display:flex;align-items:center;gap:16px;padding-bottom:24px;border-bottom:1px solid var(--line);margin-bottom:24px;}
+.ap-card-icon{width:44px;height:44px;border-radius:10px;background:var(--orange-pale);border:1px solid rgba(232,80,26,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ap-card-icon svg{width:20px;height:20px;color:var(--orange)}
+.ap-card-name{font-family:var(--ff-d);font-size:17px;font-weight:700;color:var(--ink);letter-spacing:-.025em;}
+.ap-items{display:flex;flex-direction:column;gap:0}
+.ap-item{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);transition:padding-left .25s ease;}
+.ap-item:last-child{border-bottom:none}
+.ap-item:hover{padding-left:6px}
+.ap-item-icon{width:32px;height:32px;border-radius:8px;background:var(--bg2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .25s,border-color .25s;}
+.ap-item:hover .ap-item-icon{background:var(--orange-pale);border-color:rgba(232,80,26,.2)}
+.ap-item-icon svg{width:14px;height:14px;color:var(--muted)}
+.ap-item:hover .ap-item-icon svg{color:var(--orange)}
+.ap-item span{font-size:14px;color:var(--ink2);line-height:1.45;font-weight:300;transition:color .25s;}
+.ap-item:hover span{color:var(--ink)}
+.ap-footer{display:flex;align-items:center;gap:14px;padding-top:32px;border-top:1px solid var(--line);}
+.ap-footer-icon{width:36px;height:36px;border-radius:9px;background:var(--orange-pale);border:1px solid rgba(232,80,26,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ap-footer-icon svg{width:16px;height:16px;color:var(--orange)}
+.ap-footer p{font-size:15px;color:var(--ink2);font-weight:300;}
+.ap-footer .ap-em{color:var(--orange);font-style:normal;font-family:var(--ff-b);font-weight:500}
+@media(max-width:900px){#aplicacoes{padding:60px 24px}.ap-grid{grid-template-columns:1fr;grid-template-rows:auto}.ap-divider{display:none}.ap-card{padding:32px 24px}}
+
+/* ─── COMO FUNCIONA 4 STEPS ─── */
+#como-funciona{background:#fff;padding:80px 60px;border-bottom:1px solid var(--line)}
+.cf-inner{max-width:1280px;margin:0 auto}
+.cf-header{margin-bottom:52px}
+.cf-title{font-family:var(--ff-d);font-size:clamp(28px,3.5vw,52px);font-weight:800;letter-spacing:-.04em;color:var(--ink);margin-bottom:6px;line-height:1.05}
+.cf-title-accent{color:var(--orange)}
+.cf-subtitle{font-size:17px;color:var(--ink2);font-weight:400;margin-bottom:12px;font-family:var(--ff-s);font-style:italic}
+.cf-title-line{width:40px;height:3px;background:var(--orange);border-radius:2px}
+.cf-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:stretch;position:relative;margin-bottom:32px;}
+.cf-step{position:relative;display:flex;flex-direction:column;align-items:center;}
+.cf-step-num{width:42px;height:42px;border-radius:50%;background:var(--orange);color:#fff;font-family:var(--ff-d);font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:14px;flex-shrink:0;box-shadow:0 4px 14px rgba(232,80,26,.3);}
+.cf-arrow{position:absolute;top:12px;left:calc(100% - 4px);width:60px;color:rgba(24,22,15,.18);z-index:1;pointer-events:none;}
+.cf-arrow svg{width:100%;display:block}
+.cf-step-last .cf-arrow{display:none}
+.cf-card{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:20px;width:100%;flex:1;box-shadow:0 2px 12px rgba(24,22,15,.04);display:flex;flex-direction:column;}
+.cf-card-title{font-family:var(--ff-d);font-size:13px;font-weight:700;letter-spacing:-.02em;color:var(--ink);line-height:1.35;text-align:center;margin-bottom:16px;flex-shrink:0;min-height:44px;display:flex;align-items:center;justify-content:center;}
+.cf-mock-list{display:flex;flex-direction:column;gap:6px;background:#fff;border-radius:8px;padding:10px;flex:1;justify-content:space-between}
+.cf-mock-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(24,22,15,.05)}
+.cf-mock-row:last-child{border-bottom:none}
+.cf-mock-icon{width:22px;height:22px;border-radius:5px;background:var(--orange-pale);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cf-mock-icon svg{width:11px;height:11px;color:var(--orange)}
+.cf-mock-lines{flex:1;display:flex;flex-direction:column;gap:3px}
+.cf-mock-lines span{height:4px;background:rgba(24,22,15,.08);border-radius:2px;display:block;width:100%}
+.cf-mock-dots{display:flex;gap:3px;flex-shrink:0}
+.cf-mock-dots i{width:4px;height:4px;border-radius:50%;background:rgba(24,22,15,.1);display:block}
+.cf-mock-dots i.active{background:var(--orange)}
+.cf-metrics{display:grid;grid-template-columns:1fr 1fr;gap:6px;flex:1;align-content:stretch}
+.cf-metric{display:flex;flex-direction:column;justify-content:center;background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;text-align:center;}
+.cf-metric-icon{width:24px;height:24px;border-radius:6px;background:var(--orange-pale);display:flex;align-items:center;justify-content:center;margin:0 auto 6px}
+.cf-metric-icon svg{width:13px;height:13px;color:var(--orange)}
+.cf-metric-val{font-family:var(--ff-d);font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.04em;line-height:1}
+.cf-metric-val span{font-size:13px;color:var(--muted)}
+.cf-metric-lbl{font-family:var(--ff-m);font-size:8px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
+.cf-radar-wrap{display:flex;gap:10px;align-items:center;flex:1}
+.cf-radar-left{flex:1}
+.cf-radar-right{flex-shrink:0;text-align:center}
+.cf-radar-title{font-family:var(--ff-m);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.cf-radar-svg{width:100%;max-width:130px;display:block}
+.cf-radar-legend{display:flex;flex-direction:column;gap:4px;margin-top:6px}
+.cf-legend-row{display:flex;align-items:center;gap:5px;font-size:8px;color:var(--muted)}
+.cf-legend-dot{width:14px;height:2px;border-radius:1px;display:inline-block}
+.cf-legend-dot.solid{background:var(--orange)}
+.cf-legend-dot.dashed{background:rgba(24,22,15,.2)}
+.cf-gauge{margin:6px auto;display:flex;justify-content:center}
+.cf-gauge-delta{font-family:var(--ff-m);font-size:8px;color:var(--green);margin-top:4px;letter-spacing:.02em}
+.cf-recom-title{font-family:var(--ff-d);font-size:11px;font-weight:700;color:var(--ink2);margin-bottom:8px;letter-spacing:-.01em}
+.cf-recom-list{display:flex;flex-direction:column;gap:0;flex:1;justify-content:space-around}
+.cf-recom-item{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--line);transition:padding-left .2s;cursor:default;}
+.cf-recom-item:last-child{border-bottom:none}
+.cf-recom-item:hover{padding-left:4px}
+.cf-recom-icon{width:24px;height:24px;border-radius:6px;background:var(--orange-pale);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cf-recom-icon svg{width:11px;height:11px;color:var(--orange)}
+.cf-recom-item span{font-size:11.5px;color:var(--ink2);flex:1;line-height:1.3}
+.cf-recom-arrow{width:14px;height:14px;color:var(--muted);flex-shrink:0;transition:color .2s,transform .2s}
+.cf-recom-item:hover .cf-recom-arrow{color:var(--orange);transform:translateX(2px)}
+.cf-banner{display:flex;align-items:center;gap:16px;background:var(--bg2);border-radius:12px;padding:20px 24px;border:1px solid var(--line);}
+.cf-banner-icon{width:40px;height:40px;border-radius:10px;background:var(--orange-pale);border:1px solid rgba(232,80,26,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cf-banner-icon svg{width:18px;height:18px;color:var(--orange)}
+.cf-banner p{font-size:15px;color:var(--ink2);font-weight:300;line-height:1.5}
+.cf-banner strong{font-weight:700;color:var(--orange)}
+@media(max-width:1000px){#como-funciona{padding:60px 24px}.cf-steps{grid-template-columns:1fr 1fr;gap:24px}.cf-arrow{display:none}.cf-step{align-items:flex-start}}
+@media(max-width:600px){.cf-steps{grid-template-columns:1fr}}
+
+/* ─── SECTION TAGS ─── */
+.section-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--ff-m);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink2);background:var(--bg2);padding:7px 14px;border-radius:100px;border:1px solid var(--line);margin-bottom:28px;}
+.section-tag .tag-dot{width:5px;height:5px;border-radius:50%;background:var(--orange);flex-shrink:0}
+.section-h2{font-family:var(--ff-d);font-size:clamp(36px,4vw,60px);font-weight:800;letter-spacing:-.045em;line-height:.97;margin-bottom:24px}
+.section-h2 .t-light{font-weight:300;color:rgba(24,22,15,.32);display:block;font-size:.78em;letter-spacing:-.02em}
+.section-h2 .t-bold{font-weight:800;color:var(--ink);display:block}
+.section-h2 .t-accent{font-weight:800;color:var(--orange);display:block}
+.section-h2 em{font-family:var(--ff-s);font-style:italic;font-weight:400;color:var(--orange)}
+.section-desc{font-size:14px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:32px;border-left:2px solid var(--line);padding-left:14px;}
+
+/* ─── WHAT IS ─── */
+#what{padding:120px 60px;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center;border-bottom:1px solid var(--line);position:relative;overflow:hidden;}
+.what-bg{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(24,22,15,.04) 1px,transparent 1px);background-size:36px 36px;pointer-events:none}
+.what-left{position:relative;z-index:2}
+.what-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.pill{padding:8px 16px;border-radius:100px;font-size:12.5px;font-weight:500;border:1px solid var(--line);color:var(--ink2);background:var(--bg-card)}
+.pill.hi{background:var(--orange-pale);border-color:rgba(232,80,26,.2);color:var(--orange)}
+.what-right{position:relative;z-index:2}
+.dif-grid{display:flex;flex-direction:column;gap:2px}
+.dif-card{background:var(--bg2);padding:28px 32px;display:flex;align-items:flex-start;gap:20px;transition:background .3s;position:relative;overflow:hidden}
+.dif-card:hover{background:#E5DFD3}
+.dif-card::after{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--orange);transform:scaleY(0);transform-origin:top;transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.dif-card:hover::after{transform:scaleY(1)}
+.dif-icon{width:40px;height:40px;background:var(--orange-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.dif-icon svg{width:18px;height:18px;color:var(--orange)}
+.dif-title{font-family:var(--ff-d);font-size:15px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+.dif-desc{font-size:13px;color:var(--muted);line-height:1.65}
+
+/* ─── METRICS ─── */
+#metrics{background:var(--dark);padding:100px 60px;border-bottom:1px solid rgba(255,255,255,.05);position:relative;overflow:hidden;}
+.metrics-glow{position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:900px;height:500px;background:radial-gradient(ellipse,rgba(232,80,26,.1) 0%,transparent 65%);pointer-events:none}
+.metrics-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:64px 64px;pointer-events:none}
+.metrics-label{text-align:center;font-family:var(--ff-m);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:60px;display:flex;align-items:center;justify-content:center;gap:14px;position:relative;z-index:2}
+.metrics-label::before,.metrics-label::after{content:'';width:40px;height:1px;background:rgba(255,255,255,.12)}
+.metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.05);position:relative;z-index:2}
+.metric-block{background:var(--dark);padding:60px 56px;position:relative;overflow:hidden;text-align:center}
+.metric-block::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:1px;height:48px;background:linear-gradient(to bottom,var(--orange),transparent)}
+.mb-num{font-family:var(--ff-d);font-size:clamp(56px,7vw,96px);font-weight:800;letter-spacing:-.06em;line-height:1;color:#fff;margin-bottom:12px}
+.mb-num .accent{color:var(--orange)}
+.mb-title{font-size:15px;font-weight:500;color:rgba(255,255,255,.7);margin-bottom:8px}
+.mb-desc{font-size:13px;color:rgba(255,255,255,.3);line-height:1.6;max-width:220px;margin:0 auto}
+
+/* ─── FOCUS ─── */
+#focus{padding:120px 60px;border-bottom:1px solid var(--line)}
+.focus-header{text-align:center;max-width:600px;margin:0 auto 80px}
+.focus-h2{font-family:var(--ff-d);font-size:clamp(34px,3.8vw,56px);font-weight:800;letter-spacing:-.04em;line-height:1.04;margin-bottom:20px}
+.focus-h2 em{font-family:var(--ff-s);font-style:italic;font-weight:400;color:var(--orange)}
+.focus-sub{font-size:15px;color:var(--ink2);line-height:1.75;font-weight:300}
+.focus-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.focus-card{background:var(--bg2);padding:52px 44px;position:relative;overflow:hidden;transition:background .3s;}
+.focus-card:hover{background:#E3DDD1}
+.focus-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--orange);transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.focus-card:hover::after{transform:scaleX(1)}
+.fc-num{font-family:var(--ff-m);font-size:10px;letter-spacing:.2em;color:var(--muted);margin-bottom:28px}
+.fc-icon{width:40px;height:40px;background:var(--orange-pale);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:22px}
+.fc-icon svg{width:18px;height:18px;color:var(--orange)}
+.fc-name{font-family:var(--ff-d);font-size:18px;font-weight:700;letter-spacing:-.03em;margin-bottom:12px;line-height:1.2}
+.fc-desc{font-size:13px;color:var(--muted);line-height:1.75}
+
+/* ─── FOR WHOM ─── */
+#forwhom{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line);overflow:hidden;}
+.fw-left{padding:120px 80px;background:var(--dark2);display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
+.fw-bg-text{position:absolute;bottom:-40px;right:-24px;font-family:var(--ff-d);font-size:200px;font-weight:800;color:rgba(255,255,255,.025);line-height:1;pointer-events:none;letter-spacing:-.05em}
+.fw-h2{font-family:var(--ff-d);font-size:clamp(32px,3.5vw,52px);font-weight:800;letter-spacing:-.04em;line-height:1.05;color:#fff;margin-bottom:24px;position:relative;z-index:2}
+.fw-h2 em{font-family:var(--ff-s);font-style:italic;font-weight:400;color:var(--orange)}
+.fw-desc{font-size:15px;color:rgba(255,255,255,.4);line-height:1.8;font-weight:300;max-width:380px;position:relative;z-index:2;margin-bottom:44px}
+.fw-right{padding:80px;background:var(--bg2);display:flex;flex-direction:column;justify-content:center;gap:12px;position:relative;overflow:hidden}
+.fw-card{background:var(--bg-card);border-radius:16px;padding:28px;display:flex;align-items:flex-start;gap:18px;border:1px solid var(--line);transition:box-shadow .3s,transform .3s;}
+.fw-card:hover{box-shadow:0 12px 32px rgba(24,22,15,.08);transform:translateY(-2px)}
+.fw-card-icon{width:44px;height:44px;border-radius:12px;background:var(--orange-pale);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fw-card-icon svg{width:20px;height:20px;color:var(--orange)}
+.fw-card-title{font-family:var(--ff-d);font-size:15px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+.fw-card-desc{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* ─── SECURITY ─── */
+#security{padding:100px 60px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center;position:relative;overflow:hidden;background:var(--bg);}
+.sec-badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:36px}
+.sec-badge{display:flex;align-items:center;gap:10px;background:var(--bg-card);border:1px solid var(--line);border-radius:12px;padding:14px 20px;}
+.sec-badge svg{width:16px;height:16px;color:var(--orange);flex-shrink:0}
+.sec-badge-text{font-size:12.5px;font-weight:500;color:var(--ink2)}
+.sec-right{display:flex;flex-direction:column;gap:20px}
+.sec-item{display:flex;align-items:flex-start;gap:16px;padding:24px;background:var(--bg2);border-radius:16px}
+.sec-item-icon{width:40px;height:40px;border-radius:10px;background:var(--orange-pale);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sec-item-icon svg{width:18px;height:18px;color:var(--orange)}
+.sec-item-title{font-family:var(--ff-d);font-size:14px;font-weight:700;letter-spacing:-.02em;margin-bottom:4px}
+.sec-item-desc{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* ─── TRUSTED ─── */
+#trusted{padding:80px 60px;border-bottom:1px solid var(--line);text-align:center}
+.trusted-label{font-family:var(--ff-m);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:40px}
+.trusted-logos{display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap}
+.tl-item{font-family:var(--ff-d);font-size:18px;font-weight:700;color:rgba(24,22,15,.18);letter-spacing:-.03em;transition:color .3s}
+.tl-item:hover{color:rgba(24,22,15,.45)}
+
+/* ─── CTA ─── */
+#cta{padding:120px 60px;background:var(--dark2);text-align:center;position:relative;overflow:hidden;}
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:450px;background:radial-gradient(ellipse,rgba(232,80,26,.1) 0%,transparent 68%);pointer-events:none}
+.cta-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:80px 80px;pointer-events:none}
+.cta-inner{position:relative;z-index:2}
+.cta-tag{font-family:var(--ff-m);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:28px;display:inline-flex;align-items:center;gap:14px}
+.cta-tag::before,.cta-tag::after{content:'';width:20px;height:1px;background:rgba(255,255,255,.15)}
+.cta-h2{font-size:clamp(52px,8vw,112px);letter-spacing:-.055em;line-height:.94;margin-bottom:32px}
+.cta-sub{font-size:15px;color:rgba(255,255,255,.3);font-weight:300;line-height:1.75;max-width:420px;margin:0 auto 48px}
+.cta-actions{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap}
+.btn-white{display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--ink);font-family:var(--ff-b);font-size:14px;font-weight:600;padding:15px 34px;border-radius:100px;text-decoration:none;transition:transform .3s cubic-bezier(.16,1,.3,1);}
+.btn-white:hover{transform:scale(1.04)}
+.btn-white svg{width:16px;height:16px}
+.btn-outline{font-size:14px;color:rgba(255,255,255,.45);text-decoration:none;display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:2px;transition:color .2s,border-color .2s}
+.btn-outline:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+
+/* ─── FOOTER ─── */
+footer{background:var(--dark2);padding:0 60px 36px;border-top:1px solid rgba(255,255,255,.05)}
+.ft-top{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:60px;padding:56px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.ft-logo{font-family:var(--ff-d);font-weight:800;font-size:20px;letter-spacing:-.03em;color:#fff;margin-bottom:12px}
+.ft-desc{font-size:13px;color:rgba(255,255,255,.28);line-height:1.65;max-width:200px;font-weight:300}
+.ft-col-title{font-family:var(--ff-m);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:16px}
+.ft-col a{display:block;font-size:13px;color:rgba(255,255,255,.4);text-decoration:none;margin-bottom:10px;transition:color .2s;font-weight:300}
+.ft-col a:hover{color:#fff}
+.ft-btm{display:flex;justify-content:space-between;align-items:center;padding-top:28px;font-family:var(--ff-m);font-size:10px;color:rgba(255,255,255,.18);letter-spacing:.04em}
+.ft-socials{display:flex;gap:10px}
+.ft-social{width:32px;height:32px;border:1px solid rgba(255,255,255,.08);border-radius:8px;display:flex;align-items:center;justify-content:center;text-decoration:none;color:rgba(255,255,255,.3);font-size:10px;font-family:var(--ff-d);font-weight:700;transition:all .2s}
+.ft-social:hover{border-color:rgba(255,255,255,.2);color:#fff}
+
+/* ─── REVEALS ─── */
+.reveal,.reveal-l,.reveal-r{}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1100px){
+  nav{padding:16px 24px}
+  .nav-links span,.nav-links a:not(.nav-btn,.nav-login){display:none}
+  #hero,#what,#security,#forwhom{grid-template-columns:1fr;padding-left:24px;padding-right:24px}
+  #hero{gap:48px;padding-top:100px}
+  .hero-right{height:auto}
+  .hc-float{position:relative;right:auto;bottom:auto;margin-top:12px}
+  #focus,#metrics,#trusted,#cta,footer{padding-left:24px;padding-right:24px}
+  .focus-grid,#forwhom{grid-template-columns:1fr}
+  .fw-left,#forwhom .fw-right{padding:60px 24px}
+  .metrics-grid{grid-template-columns:1fr}
+  .ft-top{grid-template-columns:1fr 1fr;gap:32px}
+  #what{gap:48px}
+  .trusted-logos{gap:24px}
+}
+</style>
+</head>
+<body>
+
+<div id="cd"></div>
+<div id="cr"></div>
+
+<nav>
+  <a href="https://www.ugoapp.com.br" class="nav-logo">U.GO</a>
+  <div class="nav-links">
+    <a href="https://www.ugoapp.com.br">Início</a>
+    <a href="#">Dicas</a>
+    <a href="#" class="active">Analytics</a>
+  </div>
+  <div class="nav-right">
+    <a href="#" class="nav-login">Login Web</a>
+    <a href="https://wa.me/5500000000000" target="_blank" class="nav-btn">Teste Grátis</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <!-- vídeo de fundo -->
+  <div class="hero-video-bg">
+    <video autoplay muted loop playsinline>
+      <source src="hero-analytics.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-video-overlay"></div>
+
+  <div class="hero-topo">
+    <svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <defs><filter id="tf"><feGaussianBlur stdDeviation="1.5"/></filter></defs>
+      <g fill="none" stroke="rgba(24,22,15,0.07)" stroke-width="1" filter="url(#tf)">
+        <ellipse cx="950" cy="700" rx="500" ry="200"/><ellipse cx="950" cy="700" rx="400" ry="155"/>
+        <ellipse cx="950" cy="700" rx="300" ry="110"/><ellipse cx="950" cy="700" rx="200" ry="68"/>
+        <ellipse cx="200" cy="120" rx="280" ry="120"/><ellipse cx="200" cy="120" rx="200" ry="85"/>
+        <ellipse cx="200" cy="120" rx="120" ry="50"/>
+      </g>
+    </svg>
+  </div>
+  <div class="hero-wash"></div>
+  <div class="hero-left">
+    <div class="hero-tag"><span class="tag-dot"></span>U.GO Analytics · 2026</div>
+    <h1 class="hero-h1">
+      <span class="t-light">A primeira plataforma de</span>
+      <span class="t-bold">INTELIGÊNCIA</span>
+      <span class="t-bold">COMPORTAMENTAL</span>
+      <span class="t-accent">QUE VIRA AÇÃO.</span>
+    </h1>
+    <p class="hero-sub">Métricas reais para escolas, empresas e programas de formação. Meça <strong>evolução humana</strong>, não apenas desempenho.</p>
+    <div class="hero-actions">
+      <a href="https://wa.me/5500000000000" target="_blank" class="btn-primary">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.6 0 0 3.6 0 8c0 1.4.4 2.8 1.1 4L0 16l4.2-1.1C5.3 15.6 6.6 16 8 16c4.4 0 8-3.6 8-8s-3.6-8-8-8zm3.9 11.2c-.2.5-1 1-1.4 1-.4.1-.8.1-1.2 0-.7-.2-1.6-.5-2.9-1.8C5.1 9.2 4.5 8 4.4 7.6c-.1-.4 0-.9.3-1.2l.3-.3c.1-.1.3-.2.4-.2h.3c.1 0 .3 0 .4.3.2.4.6 1.3.7 1.4.1.1.1.3 0 .4l-.3.4c-.1.1-.2.3-.1.5.4.6.8 1 1.3 1.4.6.4 1.1.6 1.3.5.2-.1.3-.2.5-.4l.3-.4c.1-.2.3-.2.5-.1l1.3.6c.2.1.3.2.4.4 0 .2 0 .4-.2.8z"/></svg>
+        Quero aplicar
+      </a>
+      <a href="#what" class="btn-ghost">Saiba como funciona</a>
+    </div>
+    <div class="hero-badges">
+      <div class="badge"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 5l2.5 2.5 5.5-5.5"/></svg>LGPD compliant</div>
+      <div class="badge"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 5l2.5 2.5 5.5-5.5"/></svg>Microsoft Azure</div>
+      <div class="badge"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 5l2.5 2.5 5.5-5.5"/></svg>Sem exposição individual</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="m-track">
+    <span>Inteligência comportamental</span><span class="dot">·</span><span>Ética de dados</span><span class="dot">·</span><span>Sem exposição individual</span><span class="dot">·</span><span>LGPD</span><span class="dot">·</span><span>Engajamento real</span><span class="dot">·</span><span>Líderes mais eficazes</span><span class="dot">·</span><span>Evolução humana</span><span class="dot">·</span><span>Escolas · Empresas · Formação</span><span class="dot">·</span>
+    <span>Inteligência comportamental</span><span class="dot">·</span><span>Ética de dados</span><span class="dot">·</span><span>Sem exposição individual</span><span class="dot">·</span><span>LGPD</span><span class="dot">·</span><span>Engajamento real</span><span class="dot">·</span><span>Líderes mais eficazes</span><span class="dot">·</span><span>Evolução humana</span><span class="dot">·</span><span>Escolas · Empresas · Formação</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- STATEMENT EDITORIAL -->
+<section id="statement-editorial">
+  <div class="se-inner">
+    <div class="se-label"><span class="se-bullet">■</span> Proposta de valor</div>
+    <p class="se-text">O U.GO Analytics resolveu o desafio de <em class="se-em">dados dispersos</em> traduzindo comportamento humano complexo em <em class="se-em">clareza real</em> — entregando decisões precisas que transformam <em class="se-em">líderes comuns</em> em agentes de mudança que constroem confiança imediata.</p>
+    <div class="se-meta">
+      <div class="se-meta-col"><div class="se-meta-label">Setor</div><div class="se-meta-value">Educação &amp; Empresas</div></div>
+      <div class="se-meta-col"><div class="se-meta-label">Função</div><div class="se-meta-value">Inteligência Comportamental</div></div>
+      <div class="se-meta-col"><div class="se-meta-label">Plataforma</div><div class="se-meta-value">Web · Mobile · API</div></div>
+      <div class="se-meta-col"><div class="se-meta-label">Estilo</div><div class="se-meta-value">Dados · Ética · Clareza</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- APLICAÇÕES POR SEGMENTO -->
+<section id="aplicacoes">
+  <div class="ap-inner">
+    <div class="ap-header">
+      <div class="ap-label"><span class="se-bullet">■</span> Aplicações por segmento</div>
+      <h2 class="ap-title">Valor claro para <em class="ap-em">empresas</em> e <em class="ap-em">escolas.</em></h2>
+      <p class="ap-sub">Uma plataforma, múltiplos contextos de aplicação.</p>
+    </div>
+    <div class="ap-grid">
+      <div class="ap-card">
+        <div class="ap-card-header"><div class="ap-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><div class="ap-card-name">Empresas</div></div>
+        <div class="ap-items">
+          <div class="ap-item"><div class="ap-item-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 2l1.5 3 3.5.5-2.5 2.5.5 3.5L10 10l-3 1.5.5-3.5L5 5.5l3.5-.5z"/></svg></div><span>Melhora da eficácia de gestores</span></div>
+          <div class="ap-item"><div class="ap-item-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M3 14l4-5 3 3.5 3-5 4 4"/></svg></div><span>Aumento de produtividade e engajamento</span></div>
+          <div class="ap-item"><div class="ap-item-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="10" cy="8" r="3"/><path d="M4 18a6 6 0 0112 0"/></svg></div><span>Desenvolvimento de soft skills nos times</span></div>
+          <div class="ap-item"><div class="ap-item-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 2l5 2.5v5C15 13 12.5 16 10 17 7.5 16 5 13 5 9.5v-5L10 2z"/></svg></div><span>Redução de rotatividade e burnout</span></div>
+        </div>
+      </div>
+      <div class="ap-divider"></div>
+      <div class="ap-card">
+        <div class="ap-card-header"><div class="ap-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M22 10l-10-6L2 10l10 6 10-6z"/><path d="M6 12v5c0 2 2.5 3 6 3s6-1 6-3v-5"/></svg></div><div class="ap-card-name">Escolas e programas de formação</div></div>
+        <div class="ap-items">
+          <div class="ap-item"><div class="ap-item-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M3 14l4-5 3 3.5 3-5 4 4"/></svg></div><span>Acompanhamento de evolução comportamental</span></div>
+          <div class="ap-item"><div class="ap-item-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="10" cy="10" r="4"/><circle cx="10" cy="10" r="1.5" fill="currentColor"/></svg></div><span>Visão mais clara sobre engajamento e autonomia</span></div>
+          <div class="ap-item"><div class="ap-item-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M7 10a3 3 0 106 0 3 3 0 00-6 0z"/><path d="M4 17a6 6 0 0112 0"/></svg></div><span>Fortalecimento de soft skills</span></div>
+          <div class="ap-item"><div class="ap-item-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2"/></svg></div><span>Apoio à coordenação em intervenções mais assertivas</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona">
+  <div class="cf-inner">
+    <div class="cf-header">
+      <h2 class="cf-title">O que é o <span class="cf-title-accent">U.GO Analytics</span></h2>
+      <p class="cf-subtitle">O braço de inteligência da U.GO</p>
+      <div class="cf-title-line"></div>
+    </div>
+    <div class="cf-steps">
+      <div class="cf-step">
+        <div class="cf-step-num">1</div>
+        <div class="cf-arrow"><svg viewBox="0 0 80 16" fill="none"><path d="M0 8h70M62 2l10 6-10 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 3"/></svg></div>
+        <div class="cf-card">
+          <p class="cf-card-title">Capta sinais de rotina, hábitos e execução</p>
+          <div class="cf-mock-list">
+            <div class="cf-mock-row"><div class="cf-mock-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M2 6h12M5 2v2M11 2v2"/></svg></div><div class="cf-mock-lines"><span></span><span style="width:60%"></span></div><div class="cf-mock-dots"><i></i><i></i><i></i></div></div>
+            <div class="cf-mock-row"><div class="cf-mock-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M14 3H2a1 1 0 00-1 1v7a1 1 0 001 1h3l3 2 3-2h3a1 1 0 001-1V4a1 1 0 00-1-1z"/></svg></div><div class="cf-mock-lines"><span style="width:75%"></span><span style="width:40%"></span></div><div class="cf-mock-dots"><i class="active"></i></div></div>
+            <div class="cf-mock-row"><div class="cf-mock-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 8l2 2 4-4"/></svg></div><div class="cf-mock-lines"><span style="width:85%"></span><span style="width:55%"></span></div><div class="cf-mock-dots"><i></i><i class="active"></i></div></div>
+            <div class="cf-mock-row"><div class="cf-mock-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="8" cy="8" r="5"/><path d="M8 5v3l2 1.5"/></svg></div><div class="cf-mock-lines"><span style="width:65%"></span><span style="width:45%"></span></div><div class="cf-mock-dots"><i></i><i></i><i class="active"></i></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="cf-step">
+        <div class="cf-step-num">2</div>
+        <div class="cf-arrow"><svg viewBox="0 0 80 16" fill="none"><path d="M0 8h70M62 2l10 6-10 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 3"/></svg></div>
+        <div class="cf-card">
+          <p class="cf-card-title">Traduz comportamento em indicadores de soft skills e performance</p>
+          <div class="cf-metrics">
+            <div class="cf-metric"><div class="cf-metric-icon"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 14a5 5 0 0110 0"/><circle cx="9" cy="7" r="3"/></svg></div><div class="cf-metric-val">78<span>%</span></div><div class="cf-metric-lbl">Engajamento</div></div>
+            <div class="cf-metric"><div class="cf-metric-icon"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="9" cy="9" r="5"/><path d="M7 8c.5-1.5 4-1.5 4.5.5s-2 3-2.5 4.5"/></svg></div><div class="cf-metric-val">72</div><div class="cf-metric-lbl">Soft Skills</div></div>
+            <div class="cf-metric"><div class="cf-metric-icon"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M3 12l3-4 3 3.5 3-5.5 3 4"/></svg></div><div class="cf-metric-val">85</div><div class="cf-metric-lbl">Performance</div></div>
+            <div class="cf-metric"><div class="cf-metric-icon"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="9" cy="9" r="6"/><path d="M9 5v4l2.5 2"/></svg></div><div class="cf-metric-val">81<span>%</span></div><div class="cf-metric-lbl">Execução</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="cf-step">
+        <div class="cf-step-num">3</div>
+        <div class="cf-arrow"><svg viewBox="0 0 80 16" fill="none"><path d="M0 8h70M62 2l10 6-10 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 3"/></svg></div>
+        <div class="cf-card">
+          <p class="cf-card-title">Entrega insights agregados, éticos e sem exposição individual</p>
+          <div class="cf-radar-wrap">
+            <div class="cf-radar-left">
+              <div class="cf-radar-title">Panorama da Equipe</div>
+              <svg class="cf-radar-svg" viewBox="0 0 120 110">
+                <polygon points="60,10 98,32 98,78 60,100 22,78 22,32" fill="none" stroke="rgba(24,22,15,.08)" stroke-width="1"/>
+                <polygon points="60,22 86,38 86,72 60,88 34,72 34,38" fill="none" stroke="rgba(24,22,15,.08)" stroke-width="1"/>
+                <polygon points="60,34 74,44 74,66 60,76 46,66 46,44" fill="none" stroke="rgba(24,22,15,.08)" stroke-width="1"/>
+                <polygon points="60,18 92,36 92,74 60,92 28,74 28,36" fill="none" stroke="rgba(24,22,15,.15)" stroke-width="1" stroke-dasharray="3 2"/>
+                <polygon id="radar-data" points="60,20 88,40 85,70 60,86 35,68 32,38" fill="rgba(232,80,26,.12)" stroke="#E8501A" stroke-width="1.5"/>
+                <text x="60" y="7" text-anchor="middle" font-size="6" fill="rgba(24,22,15,.45)" font-family="Plus Jakarta Sans">Autoconfiança</text>
+                <text x="103" y="34" font-size="6" fill="rgba(24,22,15,.45)" font-family="Plus Jakarta Sans">Colab.</text>
+                <text x="103" y="80" font-size="6" fill="rgba(24,22,15,.45)" font-family="Plus Jakarta Sans">Comu.</text>
+                <text x="60" y="107" text-anchor="middle" font-size="6" fill="rgba(24,22,15,.45)" font-family="Plus Jakarta Sans">Resiliência</text>
+                <text x="17" y="80" text-anchor="end" font-size="6" fill="rgba(24,22,15,.45)" font-family="Plus Jakarta Sans">Resp.</text>
+              </svg>
+              <div class="cf-radar-legend">
+                <div class="cf-legend-row"><span class="cf-legend-dot solid"></span>Sua equipe</div>
+                <div class="cf-legend-row"><span class="cf-legend-dot dashed"></span>Benchmark</div>
+              </div>
+            </div>
+            <div class="cf-radar-right">
+              <div class="cf-radar-title">Índice Geral</div>
+              <div class="cf-gauge">
+                <svg viewBox="0 0 80 80" width="80" height="80">
+                  <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(24,22,15,.07)" stroke-width="7"/>
+                  <circle id="gauge-circle" cx="40" cy="40" r="32" fill="none" stroke="#E8501A" stroke-width="7" stroke-dasharray="0 201" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+                  <text id="gauge-text" x="40" y="44" text-anchor="middle" font-size="18" font-weight="800" fill="#18160F" font-family="Bricolage Grotesque">0</text>
+                </svg>
+              </div>
+              <div class="cf-gauge-delta">↑ 11pp vs. anterior</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cf-step cf-step-last">
+        <div class="cf-step-num">4</div>
+        <div class="cf-card">
+          <p class="cf-card-title">Apoia intervenções simples, rápidas e acionáveis</p>
+          <div class="cf-recom-title">Recomendações</div>
+          <div class="cf-recom-list">
+            <div class="cf-recom-item"><div class="cf-recom-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="8" cy="8" r="5"/><path d="M5.5 8.5a2.5 2.5 0 005 0"/></svg></div><span>Foco em colaboração</span><svg class="cf-recom-arrow" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 5h5M6 3l2 2-2 2"/></svg></div>
+            <div class="cf-recom-item"><div class="cf-recom-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M14 4H2a1 1 0 00-1 1v5a1 1 0 001 1h3l3 2 3-2h3a1 1 0 001-1V5a1 1 0 00-1-1z"/></svg></div><span>Fortalecer comunicação</span><svg class="cf-recom-arrow" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 5h5M6 3l2 2-2 2"/></svg></div>
+            <div class="cf-recom-item"><div class="cf-recom-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M8 2l1.5 3 3.5.5-2.5 2.5.5 3.5L8 10l-3 1.5.5-3.5L3 5.5l3.5-.5z"/></svg></div><span>Reconhecer consistências</span><svg class="cf-recom-arrow" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 5h5M6 3l2 2-2 2"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cf-banner">
+      <div class="cf-banner-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M10 2l5 2.5v5C15 13 12.5 16 10 17 7.5 16 5 13 5 9.5v-5L10 2z"/><path d="M7 10l2 2 4-4"/></svg></div>
+      <p>Mais do que medir desempenho, o U.GO mede <strong>evolução humana.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IS -->
+<section id="what">
+  <div class="what-bg"></div>
+  <div class="what-left">
+    <div class="section-tag reveal"><span class="tag-dot"></span>O que é</div>
+    <h2 class="section-h2 reveal d1"><span class="t-light">Métricas que medem</span><span class="t-bold">EVOLUÇÃO HUMANA,</span><span class="t-accent">NÃO SÓ PERFORMANCE.</span></h2>
+    <p class="section-desc reveal d2">O U.GO Analytics é a plataforma de inteligência comportamental para escolas, empresas e programas de formação que precisam de dados reais — sem expor o indivíduo.</p>
+    <p class="section-desc reveal d2" style="margin-bottom:0;border-left-color:var(--orange)">Medimos o comportamento que gera produção: objetivos, hábitos, foco, humor e consistência.</p>
+    <div class="what-pills reveal d3">
+      <div class="pill hi">Escolas</div><div class="pill hi">Empresas</div><div class="pill hi">Programas de formação</div>
+      <div class="pill">RH</div><div class="pill">Líderes</div><div class="pill">Coordenadores</div>
+    </div>
+  </div>
+  <div class="what-right reveal-r">
+    <div class="dif-grid">
+      <div class="dif-card"><div class="dif-icon"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="9" cy="9" r="6"/><path d="M9 5v4l2.5 2"/></svg></div><div><div class="dif-title">Dados éticos, nunca invasivos</div><div class="dif-desc">Visão coletiva e agregada. Sem ranking individual, sem exposição. Conformidade total com a LGPD.</div></div></div>
+      <div class="dif-card"><div class="dif-icon"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 13l3.5-4.5 3 3.5 3.5-6L17 12"/></svg></div><div><div class="dif-title">Insights que viram decisões</div><div class="dif-desc">O sistema aponta padrões e recomenda ações. Não é só dado — é o próximo passo claro para o gestor.</div></div></div>
+      <div class="dif-card"><div class="dif-icon"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 2l1.8 3.6L15 6.5l-3 2.9.7 4.1L9 11.5l-3.7 2 .7-4.1L3 6.5l4.2-.9L9 2z"/></svg></div><div><div class="dif-title">Evolução, não vigilância</div><div class="dif-desc">A plataforma é uma aliada do colaborador — ele vê seu próprio progresso e se torna agente da mudança.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section id="metrics">
+  <div class="metrics-glow"></div><div class="metrics-grid-bg"></div>
+  <div class="metrics-label reveal"><span style="width:5px;height:5px;border-radius:50%;background:var(--orange);display:inline-block"></span>Resultados comprovados</div>
+  <div class="metrics-grid">
+    <div class="metric-block reveal"><div class="mb-num"><span class="accent">+53</span>%</div><div class="mb-title">Produtividade e engajamento</div><div class="mb-desc">Aumento médio em organizações que implementaram o U.GO Analytics em 90 dias.</div></div>
+    <div class="metric-block reveal d1"><div class="mb-num"><span class="accent">+90</span>%</div><div class="mb-title">Eficácia do gestor</div><div class="mb-desc">Líderes relatam mais segurança em decisões de pessoas após 60 dias com o painel de dados.</div></div>
+    <div class="metric-block reveal d2"><div class="mb-num"><span class="accent">−50</span>%</div><div class="mb-title">Turnover e burnout</div><div class="mb-desc">Redução de rotatividade ao identificar sinais de risco antes que virem problema.</div></div>
+  </div>
+</section>
+
+<!-- FOCUS -->
+<section id="focus">
+  <div class="focus-header reveal">
+    <div class="section-tag" style="margin-bottom:20px"><span class="tag-dot"></span>O que você mede</div>
+    <h2 class="focus-h2" style="font-family:var(--ff-d);font-size:clamp(36px,4.5vw,64px);font-weight:800;letter-spacing:-.045em;line-height:.96;margin-bottom:16px"><span style="font-weight:300;color:rgba(24,22,15,.3);display:block;font-size:.76em;letter-spacing:-.02em">Foque no que</span><span style="display:block;font-weight:800;color:var(--ink)">REALMENTE</span><span style="display:block;font-weight:800;color:var(--orange)">IMPORTA.</span></h2>
+    <p class="focus-sub" style="font-size:13px;color:var(--muted);font-weight:300;line-height:1.7">Cinco dimensões comportamentais que formam uma visão completa do time — atualizada em tempo real.</p>
+  </div>
+  <div class="focus-grid">
+    <div class="focus-card reveal"><div class="fc-num">01</div><div class="fc-icon"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 2l1.8 3.6L15 6.5l-3 2.9.7 4.1L9 11.5l-3.7 2 .7-4.1L3 6.5l4.2-.9L9 2z"/></svg></div><div class="fc-name">Objetivos</div><div class="fc-desc">Clareza sobre metas pessoais e profissionais. Saiba o quanto o time está alinhado ao que realmente quer alcançar.</div></div>
+    <div class="focus-card reveal d1"><div class="fc-num">02</div><div class="fc-icon"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="4" width="12" height="10" rx="2"/><path d="M3 7h12M7 4V2M11 4V2"/></svg></div><div class="fc-name">Hábitos</div><div class="fc-desc">Frequência e consistência dos comportamentos diários que constroem ou destroem a performance do time.</div></div>
+    <div class="focus-card reveal d2"><div class="fc-num">03</div><div class="fc-icon"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="9" cy="9" r="6"/><path d="M9 5v4l2.5 2"/></svg></div><div class="fc-name">Foco</div><div class="fc-desc">Sessões de concentração profunda e padrões de distração identificados por pessoa e por equipe.</div></div>
+    <div class="focus-card reveal"><div class="fc-num">04</div><div class="fc-icon"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="9" cy="7" r="3"/><path d="M3 16a6 6 0 0112 0"/></svg></div><div class="fc-name">Humor</div><div class="fc-desc">Termômetro emocional do time. Detecção antecipada de burnout, desmotivação ou picos de energia.</div></div>
+    <div class="focus-card reveal d1"><div class="fc-num">05</div><div class="fc-icon"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 14l3.5-5 3 3.5 3.5-6.5 3.5 4"/></svg></div><div class="fc-name">Consistência</div><div class="fc-desc">Sequências de engajamento e taxa de retorno — o indicador mais preditivo de resultado real.</div></div>
+    <div class="focus-card reveal d2" style="background:var(--dark2);justify-content:flex-end;display:flex;flex-direction:column"><div style="color:rgba(255,255,255,.5);font-size:13px;line-height:1.7;margin-bottom:24px;font-weight:300">Tudo isso em um único painel de controle, atualizado em tempo real.</div><a href="https://wa.me/5500000000000" target="_blank" class="btn-primary" style="align-self:flex-start"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.6 0 0 3.6 0 8c0 1.4.4 2.8 1.1 4L0 16l4.2-1.1C5.3 15.6 6.6 16 8 16c4.4 0 8-3.6 8-8s-3.6-8-8-8zm3.9 11.2c-.2.5-1 1-1.4 1-.4.1-.8.1-1.2 0-.7-.2-1.6-.5-2.9-1.8C5.1 9.2 4.5 8 4.4 7.6c-.1-.4 0-.9.3-1.2l.3-.3c.1-.1.3-.2.4-.2h.3c.1 0 .3 0 .4.3.2.4.6 1.3.7 1.4.1.1.1.3 0 .4l-.3.4c-.1.1-.2.3-.1.5.4.6.8 1 1.3 1.4.6.4 1.1.6 1.3.5.2-.1.3-.2.5-.4l.3-.4c.1-.2.3-.2.5-.1l1.3.6c.2.1.3.2.4.4 0 .2 0 .4-.2.8z"/></svg>Fale conosco</a></div>
+  </div>
+</section>
+
+<!-- FOR WHOM -->
+<section id="forwhom">
+  <div class="fw-left">
+    <div class="fw-bg-text">UGO</div>
+    <div style="font-family:var(--ff-m);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:24px;display:flex;align-items:center;gap:8px" class="reveal"><span style="width:5px;height:5px;border-radius:50%;background:var(--orange);display:inline-block"></span>Para quem é</div>
+    <h2 class="fw-h2 reveal d1"><span style="font-weight:300;color:rgba(255,255,255,.3);display:block;font-size:.78em;letter-spacing:-.02em">Feito para quem</span><span style="display:block;font-weight:800;letter-spacing:-.045em;line-height:.97">LIDERA</span><span style="display:block;font-weight:800;color:var(--orange);letter-spacing:-.045em;line-height:.97">PESSOAS.</span></h2>
+    <p class="fw-desc reveal d2">Se você é responsável por um time, uma turma ou um programa — o U.GO Analytics foi feito para você ter clareza sobre o que está acontecendo com as pessoas antes que os números apareçam no relatório.</p>
+    <a href="https://wa.me/5500000000000" target="_blank" class="btn-primary reveal d3" style="align-self:flex-start"><svg viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M8 0C3.6 0 0 3.6 0 8c0 1.4.4 2.8 1.1 4L0 16l4.2-1.1C5.3 15.6 6.6 16 8 16c4.4 0 8-3.6 8-8s-3.6-8-8-8zm3.9 11.2c-.2.5-1 1-1.4 1-.4.1-.8.1-1.2 0-.7-.2-1.6-.5-2.9-1.8C5.1 9.2 4.5 8 4.4 7.6c-.1-.4 0-.9.3-1.2l.3-.3c.1-.1.3-.2.4-.2h.3c.1 0 .3 0 .4.3.2.4.6 1.3.7 1.4.1.1.1.3 0 .4l-.3.4c-.1.1-.2.3-.1.5.4.6.8 1 1.3 1.4.6.4 1.1.6 1.3.5.2-.1.3-.2.5-.4l.3-.4c.1-.2.3-.2.5-.1l1.3.6c.2.1.3.2.4.4 0 .2 0 .4-.2.8z"/></svg>Quero aplicar</a>
+  </div>
+  <div class="fw-right">
+    <div class="fw-card reveal"><div class="fw-card-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 16a4 4 0 018 0"/><circle cx="8" cy="8" r="3"/><path d="M14 12a3 3 0 016 0"/><circle cx="17" cy="7" r="2.5"/></svg></div><div><div class="fw-card-title">Empresas</div><div class="fw-card-desc">RH e líderes que precisam entender o pulso real da equipe antes que o turnover apareça na planilha.</div></div></div>
+    <div class="fw-card reveal d1"><div class="fw-card-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="3" width="16" height="13" rx="2"/><path d="M2 7h16M7 3V1M13 3V1"/></svg></div><div><div class="fw-card-title">Escolas</div><div class="fw-card-desc">Coordenadores e diretores que querem ver além da nota — engajamento e bem-estar dos alunos em tempo real.</div></div></div>
+    <div class="fw-card reveal d2"><div class="fw-card-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 2l2 4h4l-3 2.5 1 4.5L10 10.5 6 13l1-4.5L4 6h4z"/></svg></div><div><div class="fw-card-title">Programas de formação</div><div class="fw-card-desc">Instrutores e mentores que precisam saber quem está evoluindo e qual intervenção funciona.</div></div></div>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section id="security">
+  <div class="sec-left">
+    <div class="section-tag reveal"><span class="tag-dot"></span>Segurança</div>
+    <h2 class="section-h2 reveal d1"><span class="t-light">Ambiente</span><span class="t-bold">SEGURO E</span><span class="t-accent">CONTROLADO.</span></h2>
+    <p class="section-desc reveal d2" style="margin-bottom:0">Infraestrutura de nível enterprise. Total conformidade com a LGPD. Seus dados protegidos com os mais altos padrões do mercado.</p>
+    <div class="sec-badges reveal d3">
+      <div class="sec-badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M8 2l5 2.5v4C13 11.5 10.5 14 8 15 5.5 14 3 11.5 3 8.5v-4L8 2z"/></svg><div class="sec-badge-text">Microsoft Azure</div></div>
+      <div class="sec-badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="3" y="6" width="10" height="8" rx="1.5"/><path d="M5 6V4a3 3 0 016 0v2"/></svg><div class="sec-badge-text">LGPD Compliant</div></div>
+      <div class="sec-badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="8" cy="8" r="5"/><path d="M5 8l2 2 4-4"/></svg><div class="sec-badge-text">Dados agregados</div></div>
+    </div>
+  </div>
+  <div class="sec-right">
+    <div class="sec-item reveal-r"><div class="sec-item-icon"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 2l5 2.5v4C14 12 11.5 14.5 9 16 6.5 14.5 4 12 4 8.5v-4L9 2z"/></svg></div><div><div class="sec-item-title">Dados nunca expostos individualmente</div><div class="sec-item-desc">O gestor vê tendências e médias coletivas. Nenhum colaborador tem seu dado individual exibido sem consentimento.</div></div></div>
+    <div class="sec-item reveal-r d1"><div class="sec-item-icon"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="7" width="12" height="9" rx="1.5"/><path d="M6 7V5a3 3 0 016 0v2"/></svg></div><div><div class="sec-item-title">Criptografia e conformidade total</div><div class="sec-item-desc">Toda transmissão de dados é criptografada. Conformidade com LGPD e melhores práticas internacionais de privacidade.</div></div></div>
+    <div class="sec-item reveal-r d2"><div class="sec-item-icon"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="9" cy="9" r="6"/><path d="M6 9l2 2 4-4"/></svg></div><div><div class="sec-item-title">Consentimento do colaborador</div><div class="sec-item-desc">Cada pessoa controla seus dados e entende o que é compartilhado. Transparência como princípio, não exceção.</div></div></div>
+  </div>
+</section>
+
+<!-- TRUSTED -->
+<section id="trusted">
+  <div class="trusted-label reveal">Confiado por líderes de todo o Brasil</div>
+  <div class="trusted-logos reveal d1">
+    <div class="tl-item">Empresa A</div><div class="tl-item">Escola B</div><div class="tl-item">Instituto C</div><div class="tl-item">Grupo D</div><div class="tl-item">Startup E</div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-glow"></div><div class="cta-grid"></div>
+  <div class="cta-inner reveal">
+    <div class="cta-tag">Comece agora</div>
+    <h2 class="cta-h2">
+      <span style="display:block;font-weight:300;color:rgba(255,255,255,.28);font-size:.68em;letter-spacing:-.02em;font-family:var(--ff-d)">Clareza</span>
+      <span style="display:block;font-weight:800;color:#fff;font-family:var(--ff-d)">QUE VIRA</span>
+      <em style="display:block;font-family:var(--ff-s);font-style:italic;font-weight:400;color:var(--orange);font-size:.9em">Ação.</em>
+    </h2>
+    <p class="cta-sub">Implemente o U.GO Analytics no seu time em menos de 48 horas. Sem configuração complexa. Com suporte do início ao fim.</p>
+    <div class="cta-actions">
+      <a href="https://wa.me/5500000000000" target="_blank" class="btn-white"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.6 0 0 3.6 0 8c0 1.4.4 2.8 1.1 4L0 16l4.2-1.1C5.3 15.6 6.6 16 8 16c4.4 0 8-3.6 8-8s-3.6-8-8-8zm3.9 11.2c-.2.5-1 1-1.4 1-.4.1-.8.1-1.2 0-.7-.2-1.6-.5-2.9-1.8C5.1 9.2 4.5 8 4.4 7.6c-.1-.4 0-.9.3-1.2l.3-.3c.1-.1.3-.2.4-.2h.3c.1 0 .3 0 .4.3.2.4.6 1.3.7 1.4.1.1.1.3 0 .4l-.3.4c-.1.1-.2.3-.1.5.4.6.8 1 1.3 1.4.6.4 1.1.6 1.3.5.2-.1.3-.2.5-.4l.3-.4c.1-.2.3-.2.5-.1l1.3.6c.2.1.3.2.4.4 0 .2 0 .4-.2.8z"/></svg>Quero aplicar</a>
+      <a href="mailto:contato@ugoapp.com.br" class="btn-outline">Falar com especialista</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-top">
+    <div><div class="ft-logo">U.GO</div><p class="ft-desc">A plataforma de inteligência comportamental para líderes que colocam pessoas em primeiro lugar.</p></div>
+    <div class="ft-col"><div class="ft-col-title">Produto</div><a href="#">Plataforma</a><a href="#">HUGO IA</a><a href="#">Analytics</a><a href="#">Dicas</a></div>
+    <div class="ft-col"><div class="ft-col-title">Legal</div><a href="#">FAQ</a><a href="#">Termos de uso</a><a href="#">Política de privacidade</a><a href="#">LGPD</a></div>
+    <div class="ft-col"><div class="ft-col-title">Parceiros</div><a href="#">Microsoft Azure</a><a href="#">Seja um parceiro</a><a href="#">Contato</a></div>
+  </div>
+  <div class="ft-btm"><span>© 2026 U.GO · Todos os direitos reservados</span><div class="ft-socials"><a href="#" class="ft-social">in</a><a href="#" class="ft-social">ig</a><a href="#" class="ft-social">tt</a></div></div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+const cd=document.getElementById('cd'),cr=document.getElementById('cr');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px'});
+(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(loop)})();
+
+if(typeof gsap!=='undefined'){
+  gsap.registerPlugin(ScrollTrigger);
+  document.addEventListener('DOMContentLoaded',()=>{
+    gsap.from('nav',{y:-50,opacity:0,duration:.7,ease:'power3.out',delay:.1});
+    const tl=gsap.timeline({delay:.25});
+    tl.from('.hero-tag',{y:18,opacity:0,duration:.55,ease:'power3.out'})
+      .from('.hero-h1 .t-light',{y:20,opacity:0,duration:.5,ease:'power3.out'},'-=.2')
+      .from('.hero-h1 .t-bold',{y:44,opacity:0,duration:.7,stagger:.1,ease:'power4.out'},'-=.25')
+      .from('.hero-h1 .t-accent',{y:44,opacity:0,duration:.7,ease:'power4.out'},'-=.35')
+      .from('.hero-sub',{x:-20,opacity:0,duration:.6,ease:'power3.out'},'-=.3')
+      .from('.hero-actions',{y:20,opacity:0,duration:.55,ease:'power3.out'},'-=.35')
+      .from('.hero-badges .badge',{y:14,opacity:0,duration:.45,stagger:.07,ease:'power3.out'},'-=.35')
+      .from('.hc-main',{y:50,opacity:0,scale:.96,duration:.9,ease:'power3.out'},'-=.65')
+      .from('.hc-float',{x:24,opacity:0,scale:.92,duration:.65,ease:'back.out(1.4)'},'-=.45');
+    gsap.to('.card-stack',{y:-10,duration:3,ease:'sine.inOut',yoyo:true,repeat:-1});
+
+    /* reveals */
+    const style=document.createElement('style');
+    style.textContent='.io-h{opacity:0;transform:translateY(32px);transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1)}.io-hl{opacity:0;transform:translateX(-32px);transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1)}.io-hr{opacity:0;transform:translateX(32px);transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1)}.io-v{opacity:1!important;transform:none!important}';
+    document.head.appendChild(style);
+    document.querySelectorAll('.reveal').forEach(el=>el.classList.add('io-h'));
+    document.querySelectorAll('.reveal-l').forEach(el=>el.classList.add('io-hl'));
+    document.querySelectorAll('.reveal-r').forEach(el=>el.classList.add('io-hr'));
+    ['.what-pills','.dif-grid','.metrics-grid','.focus-grid','.fw-right','.trusted-logos'].forEach(sel=>{
+      const c=document.querySelector(sel);if(!c)return;
+      [...c.children].forEach((ch,i)=>{ch.classList.add('io-h');ch.style.transitionDelay=(i*.08)+'s'});
+    });
+    const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('io-v');obs.unobserve(e.target)}})},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.io-h,.io-hl,.io-hr').forEach(el=>obs.observe(el));
+
+    /* counters */
+    document.querySelectorAll('.mb-num').forEach(el=>{
+      const a=el.querySelector('.accent');if(!a)return;
+      const t=a.textContent.trim(),neg=t.startsWith('−')||t.startsWith('-'),num=parseFloat(t.replace(/[^0-9.]/g,'')),pre=neg?'−':'+';
+      let started=false;
+      new IntersectionObserver(entries=>{if(entries[0].isIntersecting&&!started){started=true;const o={val:0};gsap.to(o,{val:num,duration:1.8,ease:'power2.out',onUpdate:()=>{a.textContent=pre+Math.round(o.val)}})}},{threshold:.3}).observe(el);
+    });
+
+    /* gauge */
+    const gc=document.getElementById('gauge-circle'),gt=document.getElementById('gauge-text');
+    if(gc){
+      new IntersectionObserver(entries=>{
+        if(!entries[0].isIntersecting)return;
+        gsap.to({v:0},{v:162,duration:1.6,delay:.5,ease:'power2.out',onUpdate:function(){gc.setAttribute('stroke-dasharray',this.targets()[0].v+' 201')}});
+        if(gt){const o={v:0};gsap.to(o,{v:82,duration:1.6,delay:.5,ease:'power2.out',onUpdate:()=>{gt.textContent=Math.round(o.v)}})}
+      },{threshold:.2}).observe(gc);
+    }
+
+    /* radar */
+    const rp=document.getElementById('radar-data');
+    if(rp){rp.style.cssText='transform-origin:60px 55px;transform:scale(0);transition:transform 0s';new IntersectionObserver(entries=>{if(!entries[0].isIntersecting)return;setTimeout(()=>{rp.style.transition='transform 1s cubic-bezier(.16,1,.3,1)';rp.style.transform='scale(1)'},500)},{threshold:.2}).observe(rp)}
+
+    /* hover cards */
+    document.querySelectorAll('.fw-card,.focus-card').forEach(el=>{
+      el.addEventListener('mouseenter',()=>gsap.to(el,{y:-4,duration:.28,ease:'power2.out'}));
+      el.addEventListener('mouseleave',()=>gsap.to(el,{y:0,duration:.38,ease:'power2.inOut'}));
+    });
+    document.querySelectorAll('.dif-card').forEach(el=>{
+      el.addEventListener('mouseenter',()=>gsap.to(el,{x:6,duration:.22,ease:'power2.out'}));
+      el.addEventListener('mouseleave',()=>gsap.to(el,{x:0,duration:.32,ease:'power2.inOut'}));
+    });
+    window.addEventListener('scroll',()=>{gsap.to('nav',{padding:window.scrollY>60?'12px 60px':'18px 60px',duration:.3,ease:'power2.out'})},{passive:true});
+
+    /* ══ STATEMENT EDITORIAL — word-by-word reveal ══ */
+    const seText = document.querySelector('.se-text');
+    if (seText) {
+      /* wrap each word in a span, preserving <em> tags */
+      const wrapNode = (node) => {
+        if (node.nodeType === 3) {
+          const words = node.textContent.split(/(\s+)/);
+          const frag = document.createDocumentFragment();
+          words.forEach(w => {
+            if (/^\s+$/.test(w)) {
+              frag.appendChild(document.createTextNode(w));
+            } else if (w) {
+              const s = document.createElement('span');
+              s.className = 'se-word';
+              s.textContent = w;
+              frag.appendChild(s);
+            }
+          });
+          node.parentNode.replaceChild(frag, node);
+        } else if (node.nodeType === 1) {
+          [...node.childNodes].forEach(wrapNode);
+        }
+      };
+      wrapNode(seText);
+
+      /* initial state */
+      const words = seText.querySelectorAll('.se-word');
+      gsap.set(words, { opacity: 0, y: 22, filter: 'blur(4px)' });
+
+      /* fire when in view */
+      new IntersectionObserver(entries => {
+        if (!entries[0].isIntersecting) return;
+        gsap.to(words, {
+          opacity: 1, y: 0, filter: 'blur(0px)',
+          duration: .6,
+          stagger: .028,
+          ease: 'power3.out',
+          delay: .1
+        });
+      }, { threshold: .2 }).observe(seText);
+    }
+
+    /* se-em hover glow */
+    document.querySelectorAll('.se-em').forEach(em => {
+      em.addEventListener('mouseenter', () => {
+        gsap.to(em, { color: 'rgba(232,80,26,.7)', duration: .3, ease: 'power2.out' });
+      });
+      em.addEventListener('mouseleave', () => {
+        gsap.to(em, { color: 'rgba(24,22,15,.28)', duration: .4, ease: 'power2.inOut' });
+      });
+    });
+
+  });
+}
+</script>
+</body>
+</html>
