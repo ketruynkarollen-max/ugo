@@ -1,0 +1,19 @@
+.risco-stack { display: flex; flex-direction: column; gap: 16px; }
+
+.risco-band {
+  display: grid;
+  grid-template-columns: 14px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 0;
+}
+.risco-band + .risco-band { border-top: 1px solid var(--line-2); }
+.risco-dot { width: 10px; height: 10px; border-radius: 50%; }
+.risco-label { font-size: 12.5px; color: var(--ink-2); font-weight: 500; }
+.risco-count { font-size: 22px; font-weight: 700; color: var(--ink); letter-spacing: -.02em; }
+
+.heatmap-wrap { display: flex; flex-direction: column; }
+.heat-col { font-size: 10.5px; color: var(--ink-3); font-weight: 500; text-align: center; }
+.heat-label { font-size: 10.5px; color: var(--ink-3); display: flex; align-items: center; font-weight: 500; }
+.heat-cell { aspect-ratio: 1; border-radius: 6px; min-height: 22px; transition: transform .15s; }
+.heat-cell:hover { transform: scale(1.08); }

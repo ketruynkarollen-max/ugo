@@ -1,0 +1,123 @@
+/* Hero visual: simplified — dashboard + astronaut, more breathing room */
+.hv-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 600px;
+}
+.hv-dot {
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--brand);
+  opacity: .7;
+}
+
+/* DESKTOP DASHBOARD — pushed slightly up + right, tilted */
+.hv-desktop {
+  position: absolute;
+  top: 0; right: 0;
+  width: 560px;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  padding: 0;
+  overflow: hidden;
+  transform: rotate(-1.5deg);
+  z-index: 2;
+}
+.hv-side {
+  background: var(--bg-soft);
+  padding: 14px 12px;
+  border-right: 1px solid var(--line);
+}
+.hv-logo { font-size: 14px; font-weight: 700; color: var(--ink); padding: 4px 6px 14px; letter-spacing: -.02em; }
+.hv-side-list { display: flex; flex-direction: column; gap: 2px; }
+.hv-side-item {
+  font-size: 10.5px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  color: var(--ink-3);
+  font-weight: 500;
+}
+a.hv-side-item.hv-side-item--link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+a.hv-side-item.hv-side-item--link:hover {
+  color: var(--ink);
+  background: rgba(255,255,255,.65);
+}
+a.hv-side-item.hv-side-item--link:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 1px;
+}
+.hv-side-item.active {
+  background: white;
+  color: var(--ink);
+  font-weight: 600;
+  display: flex; align-items: center; gap: 6px;
+}
+.hv-side-item.active .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--brand); }
+
+.hv-main { padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+.hv-main-head { display: flex; justify-content: space-between; align-items: center; }
+.hv-chip { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; font-size: 10px; color: var(--ink-2); font-weight: 500; }
+.hv-avatar { width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg,#FF8A4C,#E45A12); }
+
+.hv-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.hv-kpi { background: white; border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
+.hv-kpi-label { font-size: 9px; color: var(--ink-3); font-weight: 500; }
+.hv-kpi-value {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -.02em;
+  margin-top: 4px;
+  line-height: 1;
+}
+.hv-kpi-value--brand { color: var(--brand); }
+.hv-kpi-delta { font-size: 9px; color: var(--ink-3); font-weight: 500; margin-top: 6px; }
+
+.hv-charts { display: grid; grid-template-columns: 1.6fr 1fr; gap: 8px; }
+.hv-chart { background: white; border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
+.hv-chart-head { display: flex; justify-content: space-between; align-items: center; }
+.hv-pill-mini { font-size: 9px; padding: 2px 7px; border-radius: 99px; background: var(--bg-soft); color: var(--ink-2); font-weight: 600; border: 1px solid var(--line); }
+.hv-x-labels { display: flex; justify-content: space-between; font-size: 8.5px; color: var(--ink-3); margin-top: 4px; padding: 0 2px; }
+.hv-legend { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+
+.hv-risco { background: white; border: 1px solid var(--line); border-radius: 10px; padding: 10px; display: flex; flex-direction: column; gap: 6px; }
+.hv-risco-row { display: grid; grid-template-columns: 26px 1fr auto; gap: 8px; align-items: center; padding: 4px 0; }
+.hv-risco-row + .hv-risco-row { border-top: 1px solid var(--line-2); padding-top: 6px; }
+.hv-av { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 9px; font-weight: 700; }
+.hv-tag-danger { background: var(--ink); color: white; font-size: 9px; font-weight: 700; padding: 3px 6px; border-radius: 5px; }
+.hv-tag-warn { background: var(--bg-soft); color: var(--ink-2); border: 1px solid var(--line); font-size: 9px; font-weight: 600; padding: 3px 6px; border-radius: 5px; }
+
+/* ASTRONAUT — front and center, but offset left for elegant composition */
+.hv-astronaut {
+  position: absolute;
+  bottom: -20px;
+  left: -10px;
+  width: 280px;
+  height: 360px;
+  z-index: 4;
+  pointer-events: none;
+}
+.hv-astronaut image-slot { pointer-events: auto; }
+
+/* responsive */
+@media (max-width: 1100px) {
+  .hv-stage { min-height: 540px; }
+  .hv-desktop { width: 540px; right: 0; }
+  .hv-astronaut { width: 220px; height: 300px; bottom: -10px; left: 0; }
+}
+@media (max-width: 640px) {
+  .hv-stage { min-height: 480px; }
+  .hv-desktop { width: 100%; right: 0; transform: rotate(-1deg) scale(.96); transform-origin: top right; }
+  .hv-astronaut { left: 50%; transform: translateX(-50%); bottom: -16px; width: 180px; height: 240px; }
+}
