@@ -21,6 +21,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preload" href="AAAAAAA.png" as="image"/>
+  <link rel="preload" href="screen1.png" as="image"/>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
 
   <style>
@@ -157,6 +159,88 @@
       transition: background 0.3s !important, transform 0.3s !important;
     }
     .nav-cta:hover { background: var(--accent) !important; transform: scale(1.04); }
+    .nav-login {
+      border: 1.5px solid var(--border) !important;
+      border-radius: 100px;
+      padding: 0.55rem 1.4rem !important;
+      font-weight: 600 !important;
+      font-size: 0.78rem !important;
+      letter-spacing: 0 !important;
+      color: var(--ink) !important;
+      text-decoration: none;
+      transition: border-color 0.3s, background 0.3s, transform 0.3s !important;
+    }
+    .nav-login:hover { border-color: var(--accent) !important; color: var(--accent) !important; transform: scale(1.04); }
+
+    .nav-dropdown {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .nav-dropdown-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font: inherit;
+      font-size: 0.78rem;
+      font-weight: 500;
+      font-family: 'Manrope', sans-serif;
+      color: var(--ink2);
+      letter-spacing: 0.01em;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .nav-dropdown:hover .nav-dropdown-trigger,
+    .nav-dropdown:focus-within .nav-dropdown-trigger { color: var(--ink); }
+    .nav-dropdown-chevron {
+      width: 0.4rem;
+      height: 0.4rem;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(45deg) translateY(-0.15rem);
+      opacity: 0.65;
+    }
+    .nav-dropdown-panel {
+      position: absolute;
+      top: calc(100% + 0.65rem);
+      left: 50%;
+      transform: translateX(-50%) translateY(-4px);
+      min-width: 12.5rem;
+      padding: 0.4rem 0;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+      z-index: 1001;
+    }
+    .nav-dropdown:hover .nav-dropdown-panel,
+    .nav-dropdown:focus-within .nav-dropdown-panel {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    .nav-dropdown-panel a {
+      display: block;
+      padding: 0.55rem 1rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--ink2);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-dropdown-panel a:hover {
+      color: var(--ink);
+      background: rgba(0,0,0,0.04);
+    }
 
     /* ── CANVAS HERO SECTION (seq1 + seq2 unificadas) ── */
     #scrolly { height: 220vh; position: relative; }
@@ -226,7 +310,7 @@
       display: block;
       width: clamp(220px, 30vw, 560px);
       height: auto;
-      filter: drop-shadow(0 6px 20px rgba(0,0,0,0.25));
+      filter: brightness(0) invert(1) drop-shadow(0 6px 20px rgba(0,0,0,0.25));
     }
     .panel-title .accent-dot { color: var(--accent); }
     .panel-sub {
@@ -373,13 +457,13 @@
     }
 
     .bento-card {
-      background: var(--bg2);
+      background: #ffffff;
       border-radius: var(--radius);
       overflow: hidden;
       position: relative;
       transition: transform 0.4s cubic-bezier(0.25,1,0.5,1), box-shadow 0.4s ease, border-color 0.4s ease;
       opacity: 0; transform: translateY(40px);
-      border: 1px solid transparent;
+      border: 1px solid var(--border);
     }
     .bento-card:hover {
       transform: translateY(-6px) scale(1.015);
@@ -570,7 +654,7 @@
 
     /* ── HUGO SECTION ── */
     #hugo {
-      background: var(--bg2);
+      background: var(--bg);
       padding: clamp(4rem, 8vw, 8rem) 2rem;
       position: relative; z-index: 2;
       overflow: hidden;
@@ -760,7 +844,7 @@
     /* ── TESTIMONIALS ── */
     #social {
       padding: clamp(4rem, 8vw, 8rem) 2rem;
-      background: var(--bg2);
+      background: var(--bg);
       position: relative; z-index: 2;
     }
     .social-inner {
@@ -1220,6 +1304,11 @@
       font-weight:800; letter-spacing:-0.03em;
       color:var(--ink); margin-bottom:3rem;
     }
+    #features-evoluir .fe-carousel-viewport > .section-center-title.fe-title {
+      margin-top: 0;
+      margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
+      flex-shrink: 0;
+    }
     .what-cards {
       display:grid; grid-template-columns:repeat(4,1fr); gap:1rem;
     }
@@ -1309,7 +1398,7 @@
     /* ── BEHAVIORAL INTELLIGENCE ── */
     #behavioral {
       padding:clamp(5rem,8vw,10rem) 2rem;
-      background:var(--bg2);
+      background:var(--bg);
     }
     .behavioral-inner {
       max-width: 1280px;
@@ -1476,27 +1565,30 @@
     #features-evoluir {
       padding: clamp(3rem, 5vw, 5rem) 2rem;
       overflow: hidden;
-      background: linear-gradient(180deg, #f6f6f7 0%, #f2f2f4 100%);
+      background: #ffffff;
+      position: relative;
+      z-index: 1;
     }
     .fe-inner { max-width: 1280px; margin: 0 auto; }
     .fe-carousel-viewport {
-      margin-top: 2.5rem;
+      margin-top: 0;
       display: flex;
       flex-direction: column;
       align-items: stretch;
-      overflow: hidden;
-      border-radius: 28px;
-      border: 1px solid rgba(0, 0, 0, 0.06);
-      background: rgba(255, 255, 255, 0.7);
-      box-shadow: 0 16px 60px rgba(10, 10, 10, 0.08);
-      padding: clamp(1.25rem, 2.5vw, 2rem) clamp(0.5rem, 1vw, 1rem) clamp(1rem, 2vw, 1.5rem);
+      gap: clamp(1.25rem, 2.5vw, 2rem);
+      overflow: visible;
+      border-radius: 0;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      padding: clamp(0.5rem, 1.5vw, 1rem) clamp(0.5rem, 1vw, 1rem) clamp(1rem, 2vw, 1.5rem);
       touch-action: pan-y;
     }
     /* Coverflow: fileira de celulares, centro maior (estilo referência) */
     .fe-coverflow {
       position: relative;
       width: 100%;
-      min-height: clamp(320px, 48vh, 460px);
+      min-height: clamp(240px, 38vh, 370px);
       overflow: visible;
     }
     .fe-coverflow-track {
@@ -1515,13 +1607,14 @@
     }
     .fe-cover-item {
       flex: 0 0 auto;
-      width: clamp(118px, 14vw, 168px);
+      width: clamp(160px, 20vw, 260px);
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
       z-index: 1;
       transition: opacity 0.75s ease, z-index 0s linear 0.45s;
+      background: #ffffff;
     }
     .fe-cover-item.is-active {
       z-index: 6;
@@ -1540,7 +1633,7 @@
     .fe-phone {
       margin-top: 0;
       border-radius: 0;
-      background: transparent;
+      background: #ffffff;
       padding: 0;
       box-shadow: none;
       width: 100%;
@@ -1552,21 +1645,17 @@
       display: none;
     }
     .fe-phone-screen {
-      border-radius: clamp(18px, 2.2vw, 26px);
       overflow: hidden;
-      background: #e9e9ee;
+      background: #ffffff;
       border: none;
-      box-shadow:
-        0 4px 6px rgba(0, 0, 0, 0.04),
-        0 14px 28px rgba(0, 0, 0, 0.1),
-        0 24px 48px rgba(0, 0, 0, 0.08);
-      aspect-ratio: 9 / 19.5;
+      box-shadow: none;
     }
     .fe-phone-screen img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
       display: block;
+      mix-blend-mode: multiply;
+      background: #fff;
     }
     .fe-cover-item[data-d="0"] { opacity: 1; }
     .fe-cover-item[data-d="0"] .fe-phone {
@@ -1789,7 +1878,7 @@
     }
 
     /* ── GAMIFICATION ── */
-    #gamification { padding:clamp(5rem,8vw,10rem) 2rem; background:var(--bg2); }
+    #gamification { padding:clamp(5rem,8vw,10rem) 2rem; background:var(--bg); }
     .gamif-inner {
       max-width:1280px; margin:0 auto;
       display:grid; grid-template-columns:1fr 1.6fr; gap:5rem; align-items:center;
@@ -2205,7 +2294,7 @@
     /* ══ B2B CARDS ══ */
     #b2b-cards {
       padding: clamp(4rem, 7vw, 7rem) 2rem;
-      background: #F5F5F7;
+      background: #ffffff;
     }
     .b2b-cards-inner {
       max-width: 1280px; margin: 0 auto;
@@ -2723,8 +2812,9 @@
     /* ══ HUGO MENTOR SECTION ══ */
     #hugo-mentor {
       background: #FFFFFF;
-      padding: clamp(2rem,3vw,3rem) 2rem clamp(3rem,5vw,6rem);
+      padding: clamp(2rem,3vw,3rem) 2rem clamp(4rem,6vw,7rem);
       position: relative;
+      z-index: 2;
       overflow: hidden;
     }
     .hm-inner {
@@ -3249,10 +3339,19 @@
   <nav id="nav">
     <a href="#" class="nav-logo nav-link-target"><img src="AAAAAAA.png" alt="U.GO" style="height:48px;width:auto;display:block;filter:brightness(0);"></a>
     <div class="nav-links">
-      <a href="#what-ugo" class="nav-link-target">Plataforma</a>
-      <a href="#behavioral" class="nav-link-target">HUGO IA</a>
-      <a href="#features-evoluir" class="nav-link-target">Analytics</a>
+      <div class="nav-dropdown">
+        <button type="button" class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true" id="nav-analytics-trigger">
+          Analytics
+          <span class="nav-dropdown-chevron" aria-hidden="true"></span>
+        </button>
+        <div class="nav-dropdown-panel" role="menu" aria-labelledby="nav-analytics-trigger">
+          <a href="analytics-empresa.html" class="nav-link-target" role="menuitem">Analytics Empresa</a>
+          <a href="analytics.html" class="nav-link-target" role="menuitem">Analytics Escola</a>
+        </div>
+      </div>
+      <a href="#statement-b2b" class="nav-link-target">Dicas</a>
       <a href="#gamification" class="nav-link-target">Comunidade</a>
+      <a href="https://app.ugoapp.com.br" target="_blank" class="nav-login nav-link-target">Login web</a>
       <a href="https://www.ugoapp.com.br" target="_blank" class="nav-cta nav-link-target">Agendar demonstração</a>
     </div>
   </nav>
@@ -3324,7 +3423,7 @@
       </div>
 
       <div class="behavioral-video-wrap reveal-b2b-r">
-        <video src="demo-mobile.mp4" autoplay muted loop playsinline
+        <video src="demo-mobile.mp4" autoplay muted loop playsinline preload="none"
                class="behavioral-video"></video>
       </div>
 
@@ -3344,11 +3443,11 @@
       </div>
 
       <div class="gamif-stats reveal-b2b-r">
-        <div class="gamif-stat"><img src="cards/5.png" alt="XP"></div>
-        <div class="gamif-stat"><img src="cards/4.png" alt="Ranking"></div>
-        <div class="gamif-stat"><img src="cards/3.png" alt="Atividade concluída"></div>
-        <div class="gamif-stat"><img src="cards/2.png" alt="Dias ativos"></div>
-        <div class="gamif-stat"><img src="cards/1.png" alt="Prova social"></div>
+        <div class="gamif-stat"><img src="cards/5.png" alt="XP" loading="lazy" decoding="async"></div>
+        <div class="gamif-stat"><img src="cards/4.png" alt="Ranking" loading="lazy" decoding="async"></div>
+        <div class="gamif-stat"><img src="cards/3.png" alt="Atividade concluída" loading="lazy" decoding="async"></div>
+        <div class="gamif-stat"><img src="cards/2.png" alt="Dias ativos" loading="lazy" decoding="async"></div>
+        <div class="gamif-stat"><img src="cards/1.png" alt="Prova social" loading="lazy" decoding="async"></div>
       </div>
     </div>
   </section>
@@ -3360,7 +3459,7 @@
       <h2 class="section-center-title">Do sonho à ação. Tudo em um só app.</h2>
     </div>
     <div style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;overflow:hidden;">
-      <img src="features-banner.png" alt="Features U.GO" style="width:100%;height:auto;display:block;"/>
+      <img src="features-banner.png" alt="Features U.GO" loading="lazy" decoding="async" style="width:100%;height:auto;display:block;"/>
     </div>
   </section>
 
@@ -3414,7 +3513,7 @@
       scene.add(fill);
 
       const dracoLoader = new DRACOLoader();
-      dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/libs/draco/gltf/');
+      dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/gltf/');
       const loader = new GLTFLoader();
       loader.setDRACOLoader(dracoLoader);
 
@@ -3446,14 +3545,20 @@
           }
           if (node.name === 'Frame') frameNode = node;
           if (node.name === 'Screen') {
-            texLoader.load('dashboard.png', tex => {
-              tex.colorSpace = THREE.SRGBColorSpace;
-              tex.flipY = false;
-              node.material.color = new THREE.Color(0xffffff);
-              node.material.map = tex;
-              node.material.transparent = true;
-              node.material.needsUpdate = true;
-            });
+            const vid = document.createElement('video');
+            vid.src = 'videodesk.mp4';
+            vid.loop = true;
+            vid.muted = true;
+            vid.playsInline = true;
+            vid.autoplay = true;
+            vid.play();
+            const vidTex = new THREE.VideoTexture(vid);
+            vidTex.colorSpace = THREE.SRGBColorSpace;
+            vidTex.flipY = false;
+            node.material.color = new THREE.Color(0xffffff);
+            node.material.map = vidTex;
+            node.material.transparent = true;
+            node.material.needsUpdate = true;
           }
         });
 
@@ -3496,7 +3601,7 @@
 
       <!-- Col 1: vídeo -->
       <div class="hm-video-col reveal-b2b">
-        <video src="hugo.mp4" autoplay muted loop playsinline></video>
+        <video src="hugo.mp4" autoplay muted loop playsinline preload="none"></video>
       </div>
 
       <!-- Col 2: texto + ícones -->
@@ -3677,9 +3782,8 @@
   <!-- ══════════════ TUDO QUE SUA EQUIPE PRECISA ══════════════ -->
   <section id="features-evoluir">
     <div class="fe-inner" data-fe-carousel>
-      <h2 class="section-center-title fe-title">Tudo o que você precisa para evoluir, em um só lugar.</h2>
-
       <div class="fe-carousel-viewport">
+        <h2 class="section-center-title fe-title">Tudo o que você precisa para evoluir, em um só lugar.</h2>
         <div class="fe-coverflow" id="feCoverflow">
           <div class="fe-coverflow-track" id="feCoverflowTrack">
             <article class="fe-cover-item is-active" data-i="0" data-title="Humor e sentimento do dia" data-desc="Monitore seu estado emocional para ajustar foco e ritmo da sua rotina.">
@@ -3693,35 +3797,35 @@
               <span class="fe-cover-cap">Tarefas</span>
               <div class="fe-phone">
                 <div class="fe-phone-notch"></div>
-                <div class="fe-phone-screen"><img src="screen2.png" alt="Atividades principais"></div>
+                <div class="fe-phone-screen"><img src="screen2.png" alt="Atividades principais" loading="lazy" decoding="async"></div>
               </div>
             </article>
             <article class="fe-cover-item" data-i="2" data-title="Gráfico da vida" data-desc="Visualize evolução em várias áreas e entenda seus padrões.">
               <span class="fe-cover-cap">Gráfico</span>
               <div class="fe-phone">
                 <div class="fe-phone-notch"></div>
-                <div class="fe-phone-screen"><img src="screen3.png" alt="Gráfico da vida"></div>
+                <div class="fe-phone-screen"><img src="screen3.png" alt="Gráfico da vida" loading="lazy" decoding="async"></div>
               </div>
             </article>
             <article class="fe-cover-item" data-i="3" data-title="Tarefas e calendário" data-desc="Organize entregas e compromissos em um fluxo visual simples.">
               <span class="fe-cover-cap">Agenda</span>
               <div class="fe-phone">
                 <div class="fe-phone-notch"></div>
-                <div class="fe-phone-screen"><img src="screen4.png" alt="Tarefas e calendário"></div>
+                <div class="fe-phone-screen"><img src="screen4.png" alt="Tarefas e calendário" loading="lazy" decoding="async"></div>
               </div>
             </article>
             <article class="fe-cover-item" data-i="4" data-title="Gamificação e recompensas" data-desc="Ganhe XP e mantenha constância com metas progressivas.">
               <span class="fe-cover-cap">Gamificação</span>
               <div class="fe-phone">
                 <div class="fe-phone-notch"></div>
-                <div class="fe-phone-screen"><img src="screen5.png" alt="Gamificação"></div>
+                <div class="fe-phone-screen"><img src="screen5.png" alt="Gamificação" loading="lazy" decoding="async"></div>
               </div>
             </article>
             <article class="fe-cover-item" data-i="5" data-title="Mentoria IA no WhatsApp" data-desc="Receba orientação prática e lembretes com linguagem humana.">
               <span class="fe-cover-cap">HUGO IA</span>
               <div class="fe-phone">
                 <div class="fe-phone-notch"></div>
-                <div class="fe-phone-screen"><img src="dashboard.png" alt="Mentoria IA"></div>
+                <div class="fe-phone-screen"><img src="dashboard.png" alt="Mentoria IA" loading="lazy" decoding="async"></div>
               </div>
             </article>
           </div>
@@ -3892,9 +3996,8 @@
     </div>
   </section>
 
-  <!-- ══════════════ CINEMATIC FOOTER ══════════════ -->
+  <!-- ══════════════ FOOTER ══════════════ -->
   <style>
-    /* ── CINEMATIC FOOTER ── */
     .cf-curtain {
       position: relative;
       height: 100vh;
@@ -3905,236 +4008,129 @@
       position: fixed;
       bottom: 0; left: 0;
       width: 100%; height: 100vh;
-      background: #0A0A0A;
+      background: #111110;
       color: #fff;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      overflow: hidden;
       font-family: 'Manrope', sans-serif;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
     }
-    /* Aurora glow */
-    .cf-aurora {
-      position: absolute;
-      left: 50%; top: 50%;
-      transform: translate(-50%, -50%);
-      width: 80vw; height: 60vh;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,92,42,0.18) 0%, rgba(255,138,92,0.10) 40%, transparent 70%);
-      filter: blur(60px);
-      pointer-events: none; z-index: 0;
-      animation: cf-breathe 8s ease-in-out infinite alternate;
-    }
-    @keyframes cf-breathe {
-      0%   { transform: translate(-50%,-50%) scale(1);   opacity: .6; }
-      100% { transform: translate(-50%,-50%) scale(1.12); opacity: 1; }
-    }
-    /* Grid background */
-    .cf-grid {
-      position: absolute; inset: 0; z-index: 0; pointer-events: none;
-      background-size: 60px 60px;
-      background-image:
-        linear-gradient(to right,  rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
-      mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
-      -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
-    }
-    /* Giant bg text */
-    .cf-giant-text {
-      position: absolute;
-      bottom: -4vh; left: 50%;
-      transform: translateX(-50%);
-      font-size: 28vw; line-height: 0.75;
-      font-weight: 900; letter-spacing: -0.05em;
-      white-space: nowrap;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(255,255,255,0.05);
-      background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 60%);
-      -webkit-background-clip: text; background-clip: text;
-      pointer-events: none; select: none; z-index: 0;
-      opacity: 0;
-    }
-    /* Marquee */
-    .cf-marquee-wrap {
-      position: absolute;
-      top: 3rem; left: 0; width: 100%;
-      overflow: hidden;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.03);
-      backdrop-filter: blur(10px);
-      padding: 0.85rem 0;
-      transform: rotate(-1.5deg) scaleX(1.1);
-      z-index: 10;
-    }
-    .cf-marquee-track {
-      display: flex;
-      width: max-content;
-      animation: cf-marquee 40s linear infinite;
-      font-size: 0.7rem; font-weight: 700;
-      letter-spacing: 0.25em; text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
-    }
-    .cf-marquee-item { display: flex; align-items: center; gap: 2.5rem; padding: 0 2rem; white-space: nowrap; }
-    .cf-marquee-item span { color: rgba(255,92,42,0.5); }
-    @keyframes cf-marquee {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-    /* Main content */
     .cf-content {
       position: relative; z-index: 10;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       flex: 1;
-      padding: 0 2rem;
-      margin-top: 5rem;
       opacity: 0;
+      gap: 2rem;
     }
-    .cf-heading {
-      font-size: clamp(3rem, 8vw, 7rem);
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      text-align: center;
-      margin-bottom: 2.5rem;
-      background: linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.45) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-      filter: drop-shadow(0 0 30px rgba(255,255,255,0.1));
-      line-height: 1.05;
+    .cf-logo {
+      font-size: 1.5rem; font-weight: 800; letter-spacing: -0.04em; color: #fff;
     }
-    .cf-heading em {
-      font-family: 'Instrument Serif', serif;
-      font-style: italic;
-      background: linear-gradient(135deg, #FF5C2A, #FF8A5C);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .cf-logo-dot { color: #FF5C2A; }
+    .cf-tagline {
+      font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+      color: rgba(255,255,255,0.4);
+      text-align: center; max-width: 36ch;
     }
-    /* Glass pills */
-    .cf-pills-primary { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 1rem; }
-    .cf-pills-secondary { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; }
-    .cf-pill {
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      padding: 0.9rem 2rem;
-      border-radius: 100px;
-      font-size: 0.88rem; font-weight: 700;
-      text-decoration: none; color: rgba(255,255,255,0.85);
-      background: linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
-      border: 1px solid rgba(255,255,255,0.1);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.08);
-      transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
-      cursor: pointer;
+    .cf-links-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem 4rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 2rem;
+      width: 100%; max-width: 700px;
     }
-    .cf-pill:hover {
-      background: linear-gradient(145deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 100%);
-      border-color: rgba(255,255,255,0.25);
-      color: #fff;
-      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.15);
-    }
-    .cf-pill.primary {
-      background: linear-gradient(135deg, rgba(255,92,42,0.2) 0%, rgba(255,92,42,0.08) 100%);
-      border-color: rgba(255,92,42,0.3);
-      color: #fff;
-    }
-    .cf-pill.primary:hover {
-      background: linear-gradient(135deg, rgba(255,92,42,0.35) 0%, rgba(255,92,42,0.15) 100%);
-      border-color: rgba(255,92,42,0.6);
-    }
-    .cf-pill-sm { padding: 0.55rem 1.2rem; font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.5); }
-    /* Bottom bar */
-    .cf-bottom {
-      position: relative; z-index: 20;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.5rem 3rem 2rem;
-      gap: 1rem;
-    }
-    .cf-copy {
-      font-size: 0.65rem; font-weight: 700;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: rgba(255,255,255,0.25);
-    }
-    .cf-love {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      padding: 0.5rem 1.2rem; border-radius: 100px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
+    .cf-col-title {
       font-size: 0.65rem; font-weight: 700;
       letter-spacing: 0.12em; text-transform: uppercase;
       color: rgba(255,255,255,0.3);
+      margin-bottom: 0.75rem;
     }
-    .cf-heart {
-      font-size: 0.85rem;
-      animation: cf-heartbeat 2s cubic-bezier(0.25,1,0.5,1) infinite;
+    .cf-col a {
+      display: block; text-decoration: none;
+      font-size: 0.88rem; color: rgba(255,255,255,0.55);
+      margin-bottom: 0.5rem;
+      transition: color 0.2s;
     }
-    @keyframes cf-heartbeat {
-      0%,100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255,59,48,0.5)); }
-      15%,45% { transform: scale(1.3); filter: drop-shadow(0 0 10px rgba(255,59,48,0.9)); }
-      30%      { transform: scale(1); }
+    .cf-col a:hover { color: #fff; }
+    .cf-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .cf-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.75rem; border-radius: 100px;
+      font-size: 0.88rem; font-weight: 700;
+      text-decoration: none; color: #fff;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: background 0.2s, border-color 0.2s;
     }
+    .cf-btn:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.25); }
+    .cf-btn.accent { background: #FF5C2A; border-color: #FF5C2A; }
+    .cf-btn.accent:hover { background: #e04d22; }
+    .cf-bottom {
+      position: relative; z-index: 20;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 0 2rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      gap: 1rem;
+    }
+    .cf-copy { font-size: 0.72rem; color: rgba(255,255,255,0.25); }
     .cf-totop {
-      width: 44px; height: 44px; border-radius: 50%;
+      width: 40px; height: 40px; border-radius: 50%;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; color: rgba(255,255,255,0.4);
       transition: all 0.3s ease;
-      backdrop-filter: blur(8px);
     }
-    .cf-totop:hover { color: #fff; border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); }
-    .cf-totop svg { transition: transform 0.3s ease; }
-    .cf-totop:hover svg { transform: translateY(-3px); }
+    .cf-totop:hover { color: #fff; background: rgba(255,255,255,0.1); }
   </style>
 
   <!-- Curtain wrapper -->
   <div class="cf-curtain">
     <footer class="cf-footer">
-      <!-- Aurora -->
-      <div class="cf-aurora"></div>
-      <!-- Grid -->
-      <div class="cf-grid"></div>
-      <!-- Giant bg text -->
-      <div class="cf-giant-text" id="cfGiantText">U.GO</div>
-
-      <!-- Marquee -->
-      <div class="cf-marquee-wrap">
-        <div class="cf-marquee-track">
-          <div class="cf-marquee-item">Transforme seu comportamento <span>✦</span> Desenvolva constância <span>✦</span> Metas reais <span>✦</span> HUGO IA <span>✦</span> Gamificação <span>✦</span> Analytics B2B <span>✦</span></div>
-          <div class="cf-marquee-item">Transforme seu comportamento <span>✦</span> Desenvolva constância <span>✦</span> Metas reais <span>✦</span> HUGO IA <span>✦</span> Gamificação <span>✦</span> Analytics B2B <span>✦</span></div>
-        </div>
-      </div>
-
-      <!-- Main content -->
       <div class="cf-content" id="cfContent">
-        <h2 class="cf-heading">Pronto para<br/><em>começar?</em></h2>
-        <div class="cf-pills-primary">
-          <a href="https://apps.apple.com" target="_blank" class="cf-pill primary">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.04 2.26-.79 3.59-.76 1.56.04 2.87.67 3.55 1.76-3.13 1.77-2.62 5.92.35 7.14-.65 1.58-1.57 3.1-2.57 4.03zm-3.21-14.7c-.55 1.4-1.89 2.37-3.25 2.28.09-1.5 1.05-2.82 2.38-3.4 1.25-.57 2.66-.41 3.25.04-.15.35-.26.72-.38 1.08z"/></svg>
+        <img src="AAAAAAA.png" alt="U.GO" style="height:48px;width:auto;filter:brightness(0) invert(1);">
+        <p class="cf-tagline">A plataforma de inteligência comportamental que transforma seus sonhos em ações diárias.</p>
+
+        <div class="cf-btns">
+          <a href="https://apps.apple.com" target="_blank" class="cf-btn accent">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.04 2.26-.79 3.59-.76 1.56.04 2.87.67 3.55 1.76-3.13 1.77-2.62 5.92.35 7.14-.65 1.58-1.57 3.1-2.57 4.03zm-3.21-14.7c-.55 1.4-1.89 2.37-3.25 2.28.09-1.5 1.05-2.82 2.38-3.4 1.25-.57 2.66-.41 3.25.04-.15.35-.26.72-.38 1.08z"/></svg>
             Baixar para iOS
           </a>
-          <a href="https://play.google.com" target="_blank" class="cf-pill primary">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 15.34c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1m-11.05 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1m11.4-6.02l2-3.46a.42.42 0 00-.72-.43l-2.02 3.5C15.59 8.24 13.85 7.85 12 7.85s-3.59.39-5.14 1.1L4.84 5.45a.42.42 0 00-.72.43l2 3.46C2.69 11.19.34 14.66 0 18.76h24c-.34-4.1-2.69-7.57-6.12-9.44"/></svg>
+          <a href="https://play.google.com" target="_blank" class="cf-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 15.34c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1m-11.05 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1m11.4-6.02l2-3.46a.42.42 0 00-.72-.43l-2.02 3.5C15.59 8.24 13.85 7.85 12 7.85s-3.59.39-5.14 1.1L4.84 5.45a.42.42 0 00-.72.43l2 3.46C2.69 11.19.34 14.66 0 18.76h24c-.34-4.1-2.69-7.57-6.12-9.44"/></svg>
             Baixar para Android
           </a>
         </div>
-        <div class="cf-pills-secondary">
-          <a href="#" class="cf-pill cf-pill-sm">Política de Privacidade</a>
-          <a href="#" class="cf-pill cf-pill-sm">Termos de Uso</a>
-          <a href="https://www.ugoapp.com.br" target="_blank" class="cf-pill cf-pill-sm">Site Oficial</a>
-          <a href="https://www.instagram.com/u.goapp/" target="_blank" class="cf-pill cf-pill-sm">Instagram</a>
+
+        <div class="cf-links-grid">
+          <div class="cf-col">
+            <div class="cf-col-title">Produto</div>
+            <a href="analytics-empresa.html">Analytics Empresa</a>
+            <a href="analytics.html">Analytics Escola</a>
+            <a href="#statement">Dicas</a>
+            <a href="termos-de-uso.html">Termo de uso</a>
+            <a href="#gamification">Comunidade</a>
+          </div>
+          <div class="cf-col">
+            <div class="cf-col-title">Legal</div>
+            <a href="politica-de-privacidade.html">Política de Privacidade</a>
+            <a href="termos-de-uso.html">Termos de Uso</a>
+            <a href="#">LGPD</a>
+          </div>
+          <div class="cf-col">
+            <div class="cf-col-title">Redes</div>
+            <a href="https://www.instagram.com/u.goapp/" target="_blank">Instagram</a>
+            <a href="https://www.ugoapp.com.br" target="_blank">Site Oficial</a>
+          </div>
         </div>
       </div>
 
-      <!-- Bottom bar -->
       <div class="cf-bottom">
-        <div class="cf-copy">© 2026 U.GO — Todos os direitos reservados.</div>
-        <div class="cf-love">
-          Feito com <span class="cf-heart">❤</span> pela equipe U.GO
-        </div>
-        <button class="cf-totop" id="cfToTop" aria-label="Voltar ao topo">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 10l7-7m0 0l7 7m-7-7v18"/>
-          </svg>
+        <span class="cf-copy">© 2026 U.GO — Todos os direitos reservados.</span>
+        <button class="cf-totop" id="cfToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
         </button>
       </div>
     </footer>
@@ -4216,15 +4212,14 @@
       const slideCount = feViewport.querySelectorAll('.fe-cover-item').length;
       if (slideCount < 2) return;
       const steps = slideCount - 1;
-      const stepDistance = () => Math.min(1100, Math.max(620, window.innerHeight * 0.88));
+      const stepDistance = () => Math.min(600, Math.max(400, window.innerHeight * 0.55));
       ScrollTrigger.create({
         trigger: feViewport,
-        start: 'top top',
+        start: 'top 12%',
         end: () => `+=${steps * stepDistance()}`,
         pin: true,
         pinSpacing: true,
-        pinReparent: true,
-        scrub: 0.65,
+        scrub: 0.4,
         anticipatePin: 1,
         invalidateOnRefresh: true,
         onUpdate(self) {

@@ -6,6 +6,7 @@
 <title>U.GO Analytics — Clareza que Vira Ação</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -30,33 +31,98 @@
   --ff-m:'DM Mono',monospace;
 }
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:var(--ff-b);overflow-x:hidden;cursor:none}
+body{background:var(--bg);color:var(--ink);font-family:var(--ff-b);overflow-x:hidden}
 
-/* ─── CURSOR ─── */
-#cd,#cr{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
-#cd{width:6px;height:6px;background:var(--ink);border-radius:50%;transition:width .12s,height .12s,background .12s}
-#cr{width:32px;height:32px;border:1px solid rgba(24,22,15,.2);border-radius:50%;transition:width .25s,height .25s,border-color .25s}
-body:has(a:hover,button:hover) #cd{width:10px;height:10px;background:var(--orange)}
-body:has(a:hover,button:hover) #cr{width:50px;height:50px;border-color:var(--orange)}
-
-/* ─── NAV ─── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:200;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:18px 60px;
-  background:rgba(247,244,238,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--line);
+/* ─── NAV (mesmo index.html) ─── */
+#nav {
+  position: fixed; top: 0; left: 0; width: 100%;
+  z-index: 200;
+  padding: 1.5rem 2.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(247,244,238,.92);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  box-shadow: 0 1px 0 rgba(0,0,0,.08);
+  transition: padding .4s ease, background .4s ease, box-shadow .4s ease;
 }
-.nav-logo{font-family:var(--ff-d);font-weight:800;font-size:17px;letter-spacing:-.03em;color:var(--ink);text-decoration:none}
-.nav-links{display:flex;gap:32px;align-items:center}
-.nav-links a{font-size:13px;font-weight:400;color:var(--ink2);text-decoration:none;opacity:.55;transition:opacity .2s;letter-spacing:.01em}
-.nav-links a:hover{opacity:1}
-.nav-links a.active{opacity:1;color:var(--orange);font-weight:500}
-.nav-right{display:flex;gap:12px;align-items:center}
-.nav-login{font-size:12.5px;color:var(--ink2);text-decoration:none;opacity:.5;transition:opacity .2s}
-.nav-login:hover{opacity:1}
-.nav-btn{background:var(--orange);color:#fff;font-family:var(--ff-b);font-size:13px;font-weight:500;padding:10px 22px;border:none;text-decoration:none;border-radius:100px;transition:transform .25s cubic-bezier(.16,1,.3,1),background .2s;display:inline-block;}
-.nav-btn:hover{transform:scale(1.04);background:#c93e10}
+#nav .nav-logo { text-decoration: none; display: flex; align-items: center; }
+#nav .nav-links {
+  display: flex; gap: 2.5rem; align-items: center;
+}
+#nav .nav-links > a:not(.nav-login):not(.nav-cta) {
+  font-family: 'Manrope', sans-serif;
+  font-size: .78rem;
+  font-weight: 500;
+  color: #6e6e73;
+  text-decoration: none;
+  letter-spacing: .01em;
+  transition: color .3s;
+}
+#nav .nav-links > a:not(.nav-login):not(.nav-cta):hover { color: #1d1d1f; }
+.nav-cta {
+  background: #1d1d1f !important;
+  color: #fff !important;
+  border-radius: 100px;
+  padding: .55rem 1.4rem !important;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600 !important;
+  font-size: .78rem !important;
+  letter-spacing: 0 !important;
+  text-decoration: none;
+  transition: background .3s !important, transform .3s !important;
+}
+.nav-cta:hover { background: #ff5c2a !important; transform: scale(1.04); }
+.nav-login {
+  border: 1.5px solid rgba(0,0,0,.08) !important;
+  border-radius: 100px;
+  padding: .55rem 1.4rem !important;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600 !important;
+  font-size: .78rem !important;
+  letter-spacing: 0 !important;
+  color: #1d1d1f !important;
+  text-decoration: none;
+  transition: border-color .3s, color .3s, transform .3s !important;
+}
+.nav-login:hover { border-color: #ff5c2a !important; color: #ff5c2a !important; transform: scale(1.04); }
+
+.nav-dropdown { position: relative; display: flex; align-items: center; }
+.nav-dropdown-trigger {
+  display: inline-flex; align-items: center; gap: .35rem;
+  font-family: 'Manrope', sans-serif;
+  font-size: .78rem; font-weight: 500; color: #6e6e73;
+  letter-spacing: .01em; background: none; border: none; padding: 0;
+  cursor: pointer; transition: color .3s;
+}
+.nav-dropdown:hover .nav-dropdown-trigger,
+.nav-dropdown:focus-within .nav-dropdown-trigger { color: #1d1d1f; }
+.nav-dropdown-chevron {
+  width: .4rem; height: .4rem;
+  border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-.15rem); opacity: .65;
+}
+.nav-dropdown-panel {
+  position: absolute; top: calc(100% + .65rem); left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  min-width: 12.5rem; padding: .4rem 0;
+  background: #fff; border: 1px solid rgba(0,0,0,.08); border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.1);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .2s, visibility .2s, transform .2s;
+  z-index: 300;
+}
+.nav-dropdown:hover .nav-dropdown-panel,
+.nav-dropdown:focus-within .nav-dropdown-panel {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.nav-dropdown-panel a {
+  display: block; padding: .55rem 1rem;
+  font-family: 'Manrope', sans-serif; font-size: .78rem; font-weight: 500;
+  color: #6e6e73; text-decoration: none; white-space: nowrap;
+  transition: color .2s, background .2s;
+}
+.nav-dropdown-panel a:hover { color: #1d1d1f; background: rgba(0,0,0,.04); }
 
 /* ─── HERO ─── */
 #hero{min-height:100vh;display:flex;align-items:center;padding:130px 60px 80px;position:relative;overflow:hidden;}
@@ -73,8 +139,6 @@ nav{
 .hero-topo svg{width:100%;height:100%}
 .hero-wash{position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse 65% 60% at 75% 100%,rgba(232,80,26,.06) 0%,transparent 65%);}
 .hero-left{position:relative;z-index:2;max-width:680px}
-.hero-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--ff-m);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink2);background:var(--bg2);padding:7px 14px;border-radius:100px;border:1px solid var(--line);margin-bottom:32px;}
-.hero-tag .tag-dot{width:5px;height:5px;border-radius:50%;background:var(--orange);flex-shrink:0}
 .hero-h1{font-family:var(--ff-d);font-size:clamp(52px,6.5vw,100px);font-weight:800;line-height:.96;letter-spacing:-.045em;margin-bottom:0;}
 .hero-h1 .t-light{font-weight:300;color:rgba(24,22,15,.35);display:block;font-size:clamp(14px,1.4vw,22px);letter-spacing:.01em;margin-bottom:8px;white-space:nowrap;}
 .hero-h1 .t-bold{font-weight:800;color:var(--ink);display:block;}
@@ -87,9 +151,6 @@ nav{
 .btn-primary svg{width:16px;height:16px}
 .btn-ghost{font-size:14px;color:var(--ink2);text-decoration:none;display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid var(--line);padding-bottom:2px;transition:border-color .2s,color .2s;}
 .btn-ghost:hover{color:var(--ink);border-color:var(--ink2)}
-.hero-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:36px;}
-.badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--ff-m);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--bg2);padding:6px 12px;border-radius:100px;border:1px solid var(--line);}
-.badge svg{width:10px;height:10px;color:var(--orange)}
 .hero-right{position:relative;z-index:2;height:580px;display:flex;align-items:center;justify-content:center}
 .card-stack{position:relative;width:100%;max-width:460px}
 .hc-main{background:var(--dark2);border-radius:24px;border:1px solid rgba(255,255,255,.07);box-shadow:0 48px 80px rgba(20,18,12,.3),inset 0 1px 0 rgba(255,255,255,.05);padding:28px;}
@@ -116,12 +177,6 @@ nav{
 .hcf-val{font-family:var(--ff-d);font-size:32px;font-weight:800;color:var(--orange);letter-spacing:-.05em;line-height:1}
 .hcf-sub{font-size:11px;color:var(--muted);margin-top:4px}
 .hcf-arrow{color:#4ade80;font-size:11px}
-
-/* ─── MARQUEE ─── */
-.marquee-wrap{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 0}
-.m-track{display:flex;width:max-content;animation:marquee 30s linear infinite}
-.m-track span{font-family:var(--ff-m);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:0 28px}
-.m-track .dot{color:var(--orange);padding:0 4px}
 
 /* ─── STATEMENT EDITORIAL ─── */
 #statement-editorial{background:#FAFAF8;padding:100px 80px 80px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
@@ -359,12 +414,10 @@ footer{background:var(--dark2);padding:0 60px 36px;border-top:1px solid rgba(255
 
 /* ─── REVEALS ─── */
 .reveal,.reveal-l,.reveal-r{}
-@keyframes marquee{to{transform:translateX(-50%)}}
 
 /* ─── RESPONSIVE ─── */
 @media(max-width:1100px){
-  nav{padding:16px 24px}
-  .nav-links span,.nav-links a:not(.nav-btn,.nav-login){display:none}
+  #nav{padding:1rem 1.5rem}
   #hero,#what,#security,#forwhom{grid-template-columns:1fr;padding-left:24px;padding-right:24px}
   #hero{gap:48px;padding-top:100px}
   .hero-right{height:auto}
@@ -377,23 +430,27 @@ footer{background:var(--dark2);padding:0 60px 36px;border-top:1px solid rgba(255
   #what{gap:48px}
   .trusted-logos{gap:24px}
 }
+@media (max-width: 768px) {
+  #nav .nav-links { display: none; }
+}
 </style>
 </head>
 <body>
 
-<div id="cd"></div>
-<div id="cr"></div>
-
-<nav>
-  <a href="https://www.ugoapp.com.br" class="nav-logo">U.GO</a>
+<nav id="nav">
+  <a href="index.html" class="nav-logo nav-link-target"><img src="AAAAAAA.png" alt="U.GO" style="height:48px;width:auto;display:block;filter:brightness(0);"></a>
   <div class="nav-links">
-    <a href="https://www.ugoapp.com.br">Início</a>
-    <a href="#">Dicas</a>
-    <a href="#" class="active">Analytics</a>
-  </div>
-  <div class="nav-right">
-    <a href="#" class="nav-login">Login Web</a>
-    <a href="https://wa.me/5500000000000" target="_blank" class="nav-btn">Teste Grátis</a>
+    <div class="nav-dropdown">
+      <button type="button" class="nav-dropdown-trigger" aria-haspopup="true" id="nav-analytics-trigger">Analytics<span class="nav-dropdown-chevron" aria-hidden="true"></span></button>
+      <div class="nav-dropdown-panel" role="menu" aria-labelledby="nav-analytics-trigger">
+        <a href="analytics-empresa.html" class="nav-link-target" role="menuitem">Analytics Empresa</a>
+        <a href="analytics.html" class="nav-link-target" role="menuitem">Analytics Escola</a>
+      </div>
+    </div>
+    <a href="index.html#statement-b2b" class="nav-link-target">Dicas</a>
+    <a href="index.html#gamification" class="nav-link-target">Comunidade</a>
+    <a href="https://app.ugoapp.com.br" target="_blank" rel="noopener noreferrer" class="nav-login nav-link-target">Login web</a>
+    <a href="https://www.ugoapp.com.br" target="_blank" rel="noopener noreferrer" class="nav-cta nav-link-target">Agendar demonstração</a>
   </div>
 </nav>
 
@@ -420,7 +477,6 @@ footer{background:var(--dark2);padding:0 60px 36px;border-top:1px solid rgba(255
   </div>
   <div class="hero-wash"></div>
   <div class="hero-left">
-    <div class="hero-tag"><span class="tag-dot"></span>U.GO Analytics · 2026</div>
     <h1 class="hero-h1">
       <span class="t-light">A primeira plataforma de</span>
       <span class="t-bold">INTELIGÊNCIA</span>
@@ -435,21 +491,8 @@ footer{background:var(--dark2);padding:0 60px 36px;border-top:1px solid rgba(255
       </a>
       <a href="#what" class="btn-ghost">Saiba como funciona</a>
     </div>
-    <div class="hero-badges">
-      <div class="badge"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 5l2.5 2.5 5.5-5.5"/></svg>LGPD compliant</div>
-      <div class="badge"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 5l2.5 2.5 5.5-5.5"/></svg>Microsoft Azure</div>
-      <div class="badge"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 5l2.5 2.5 5.5-5.5"/></svg>Sem exposição individual</div>
-    </div>
   </div>
 </section>
-
-<!-- MARQUEE -->
-<div class="marquee-wrap">
-  <div class="m-track">
-    <span>Inteligência comportamental</span><span class="dot">·</span><span>Ética de dados</span><span class="dot">·</span><span>Sem exposição individual</span><span class="dot">·</span><span>LGPD</span><span class="dot">·</span><span>Engajamento real</span><span class="dot">·</span><span>Líderes mais eficazes</span><span class="dot">·</span><span>Evolução humana</span><span class="dot">·</span><span>Escolas · Empresas · Formação</span><span class="dot">·</span>
-    <span>Inteligência comportamental</span><span class="dot">·</span><span>Ética de dados</span><span class="dot">·</span><span>Sem exposição individual</span><span class="dot">·</span><span>LGPD</span><span class="dot">·</span><span>Engajamento real</span><span class="dot">·</span><span>Líderes mais eficazes</span><span class="dot">·</span><span>Evolução humana</span><span class="dot">·</span><span>Escolas · Empresas · Formação</span><span class="dot">·</span>
-  </div>
-</div>
 
 <!-- STATEMENT EDITORIAL -->
 <section id="statement-editorial">
@@ -706,7 +749,7 @@ footer{background:var(--dark2);padding:0 60px 36px;border-top:1px solid rgba(255
 <footer>
   <div class="ft-top">
     <div><div class="ft-logo">U.GO</div><p class="ft-desc">A plataforma de inteligência comportamental para líderes que colocam pessoas em primeiro lugar.</p></div>
-    <div class="ft-col"><div class="ft-col-title">Produto</div><a href="#">Plataforma</a><a href="#">HUGO IA</a><a href="#">Analytics</a><a href="#">Dicas</a></div>
+    <div class="ft-col"><div class="ft-col-title">Produto</div><a href="index.html">Plataforma</a><a href="index.html#hugo-mentor">HUGO IA</a><a href="analytics-empresa.html">Analytics Empresa</a><a href="analytics.html">Analytics Escola</a><a href="index.html#statement-b2b">Dicas</a></div>
     <div class="ft-col"><div class="ft-col-title">Legal</div><a href="#">FAQ</a><a href="#">Termos de uso</a><a href="#">Política de privacidade</a><a href="#">LGPD</a></div>
     <div class="ft-col"><div class="ft-col-title">Parceiros</div><a href="#">Microsoft Azure</a><a href="#">Seja um parceiro</a><a href="#">Contato</a></div>
   </div>
@@ -716,23 +759,16 @@ footer{background:var(--dark2);padding:0 60px 36px;border-top:1px solid rgba(255
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-const cd=document.getElementById('cd'),cr=document.getElementById('cr');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px'});
-(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(loop)})();
-
 if(typeof gsap!=='undefined'){
   gsap.registerPlugin(ScrollTrigger);
   document.addEventListener('DOMContentLoaded',()=>{
     gsap.from('nav',{y:-50,opacity:0,duration:.7,ease:'power3.out',delay:.1});
     const tl=gsap.timeline({delay:.25});
-    tl.from('.hero-tag',{y:18,opacity:0,duration:.55,ease:'power3.out'})
-      .from('.hero-h1 .t-light',{y:20,opacity:0,duration:.5,ease:'power3.out'},'-=.2')
+    tl.from('.hero-h1 .t-light',{y:20,opacity:0,duration:.5,ease:'power3.out'})
       .from('.hero-h1 .t-bold',{y:44,opacity:0,duration:.7,stagger:.1,ease:'power4.out'},'-=.25')
       .from('.hero-h1 .t-accent',{y:44,opacity:0,duration:.7,ease:'power4.out'},'-=.35')
       .from('.hero-sub',{x:-20,opacity:0,duration:.6,ease:'power3.out'},'-=.3')
       .from('.hero-actions',{y:20,opacity:0,duration:.55,ease:'power3.out'},'-=.35')
-      .from('.hero-badges .badge',{y:14,opacity:0,duration:.45,stagger:.07,ease:'power3.out'},'-=.35')
       .from('.hc-main',{y:50,opacity:0,scale:.96,duration:.9,ease:'power3.out'},'-=.65')
       .from('.hc-float',{x:24,opacity:0,scale:.92,duration:.65,ease:'back.out(1.4)'},'-=.45');
     gsap.to('.card-stack',{y:-10,duration:3,ease:'sine.inOut',yoyo:true,repeat:-1});

@@ -61,7 +61,13 @@
 <nav id="nav" class="nav">
   <a href="/index.html" class="nav-logo"><img src="/AAAAAAA.png" alt="U.GO" style="height:48px;width:auto;display:block;filter:brightness(0);"></a>
   <div class="nav-links">
-    <a href="/analytics.html">Analytics</a>
+    <div class="nav-dropdown">
+      <button type="button" class="nav-dropdown-trigger" aria-haspopup="true" id="nav-analytics-trigger">Analytics<span class="nav-dropdown-chevron" aria-hidden="true"></span></button>
+      <div class="nav-dropdown-panel" role="menu" aria-labelledby="nav-analytics-trigger">
+        <a href="/analytics-empresa" role="menuitem">Analytics Empresa</a>
+        <a href="/analytics.html" role="menuitem">Analytics Escola</a>
+      </div>
+    </div>
     <a href="/index.html#statement-b2b">Dicas</a>
     <a href="#comunidade">Comunidade</a>
     <a href="https://app.ugoapp.com.br" target="_blank" rel="noopener noreferrer" class="nav-login">Login web</a>
@@ -527,7 +533,8 @@ tamanho da sua operação</em>.</h2>
       <div class="cf-links-grid">
         <div class="cf-col">
           <div class="cf-col-title">Produto</div>
-          <a href="/analytics.html">Analytics</a>
+          <a href="/analytics-empresa">Analytics Empresa</a>
+          <a href="/analytics.html">Analytics Escola</a>
           <a href="#comunidade">Comunidade</a>
           <a href="#softskills">Soft Skills</a>
           <a href="#agentes">Agentes de IA</a>
