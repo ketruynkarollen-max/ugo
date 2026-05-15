@@ -1,8 +1,5 @@
 {
   "version": 2,
-  "buildCommand": null,
-  "outputDirectory": ".",
-  "framework": null,
   "rewrites": [
     { "source": "/analytics-empresa", "destination": "/analytics-empresa.html" },
     { "source": "/analytics-empresa/", "destination": "/analytics-empresa.html" },
