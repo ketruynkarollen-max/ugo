@@ -1,0 +1,41 @@
+[
+  {
+    "id": "s1",
+    "title": "Por que 95% das pessoas abandonam seus hábitos em menos de duas semanas",
+    "cat": "habitos",
+    "author": "Equipe U.GO",
+    "read": "8 min",
+    "date": "12 Mai 2026",
+    "emoji": "🔥",
+    "color": "linear-gradient(135deg,#1a1a2e,#533483)",
+    "image": "",
+    "excerpt": "A motivação te faz começar. O sistema te faz continuar. Entenda por que a maioria falha e como evitar.",
+    "content": "## Por que isso acontece\n\nA maioria das pessoas já tentou criar um hábito pelo menos uma vez na vida — e falhou. Mas por quê isso acontece com tanta frequência, mesmo quando a motivação inicial é alta?\n\n## O que a neurociência diz\n\nPesquisadores da University College London descobriram que, em média, um comportamento leva **66 dias** para se tornar automático. Mas o problema não está no número de dias — está no que acontece durante eles.\n\n> A motivação te faz começar. O sistema te faz continuar.\n\nNos primeiros dias, a dopamina da novidade sustenta o comportamento. Após a primeira semana, o cérebro começa a questionar: "vale o esforço?".\n\n## O loop de recompensa quebrado\n\nHábitos funcionam em um ciclo: gatilho → rotina → recompensa. Quando a recompensa demora a aparecer, o cérebro não reforça o comportamento com rapidez suficiente.\n\n## O que fazer diferente\n\n- Comece com hábitos menores do que você acha necessário\n- Conecte o novo hábito a um já existente (habit stacking)\n- Celebre cada repetição, não apenas os resultados grandes\n- Use dados para visualizar seu progresso"
+  },
+  {
+    "id": "s2",
+    "title": "Técnica Pomodoro: como usar sem perder o fio da meada entre as tarefas",
+    "cat": "produtividade",
+    "author": "Pedro Alves",
+    "read": "5 min",
+    "date": "10 Mai 2026",
+    "emoji": "⏱️",
+    "color": "linear-gradient(135deg,#fff5f2,#ffe4d6)",
+    "image": "",
+    "excerpt": "A técnica funciona — mas só quando você sabe o que fazer nos 5 minutos de pausa.",
+    "content": "## O que é a Técnica Pomodoro\n\nCriada por Francesco Cirillo nos anos 80, divide o trabalho em blocos de 25 minutos separados por pausas curtas.\n\n## Por que funciona\n\nO método respeita os limites naturais de concentração do cérebro humano. Em vez de lutar contra a fadiga, você trabalha com ela.\n\n> Foco profundo não é questão de força de vontade. É questão de design.\n\n## O erro mais comum\n\nA maioria das pessoas usa o Pomodoro mas ignora a pausa. Usam os 5 minutos para checar redes sociais — e voltam mais dispersos do que saíram.\n\nA pausa ideal envolve: levantar, respirar, mover o corpo. Nada de tela."
+  },
+  {
+    "id": "s3",
+    "title": "Inteligência emocional não é talento. É treino diário.",
+    "cat": "soft-skills",
+    "author": "Ana Lima",
+    "read": "7 min",
+    "date": "08 Mai 2026",
+    "emoji": "🧠",
+    "color": "linear-gradient(135deg,#f0f9ff,#dbeafe)",
+    "image": "",
+    "excerpt": "Pesquisadores já comprovaram: regular emoções é uma habilidade que pode ser desenvolvida.",
+    "content": "## O mito do talento emocional\n\nDurante décadas acreditamos que inteligência emocional era algo que algumas pessoas simplesmente tinham. Os estudos mais recentes mostram que isso é um mito.\n\n## O que é inteligência emocional, de verdade\n\nDaniel Goleman define IE como a capacidade de reconhecer, entender e gerenciar nossas emoções — e as dos outros. São quatro habilidades centrais:\n\n- Autoconsciência\n- Autogestão\n- Consciência social\n- Gestão de relacionamentos\n\nTodas elas podem ser desenvolvidas com prática deliberada."
+  }
+]

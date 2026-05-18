@@ -318,9 +318,15 @@
 <div id="toast"></div>
 
 <script>
+  // ── CONFIG GITHUB ──
+  const GH_OWNER = 'ketruynkarollen-max';
+  const GH_REPO  = 'ugo';
+  const GH_FILE  = 'posts.json';
+  const GH_BRANCH = 'main';
+
   // ── AUTH ──
   const ADMIN_USER = 'admin';
-  const ADMIN_PASS = 'ugo2026'; // troque para uma senha mais segura
+  const ADMIN_PASS = 'ugo2026';
 
   function doLogin() {
     const u = document.getElementById('login-user').value;
@@ -329,7 +335,7 @@
       sessionStorage.setItem('ugo_admin', '1');
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('admin-screen').style.display = 'block';
-      renderAll();
+      loadPostsFromGitHub();
     } else {
       document.getElementById('login-error').style.display = 'block';
     }
@@ -340,14 +346,71 @@
     location.reload();
   }
 
-  // Auto-check session
   window.addEventListener('DOMContentLoaded', () => {
     if (sessionStorage.getItem('ugo_admin') === '1') {
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('admin-screen').style.display = 'block';
-      renderAll();
+      loadPostsFromGitHub();
     }
   });
+
+  // ── GITHUB API ──
+  function getToken() {
+    return localStorage.getItem('ugo_gh_token') || '';
+  }
+
+  async function loadPostsFromGitHub() {
+    try {
+      const res = await fetch(`/posts.json?_=${Date.now()}`);
+      const posts = await res.json();
+      localStorage.setItem('ugo_posts', JSON.stringify(posts));
+      renderAll();
+    } catch(e) {
+      showToast('Erro ao carregar posts.', 'error');
+      renderAll();
+    }
+  }
+
+  async function pushPostsToGitHub(posts) {
+    const token = getToken();
+    if (!token) {
+      const t = prompt('Cole seu GitHub Token (com permissão contents:write):\n\nCrie em: github.com/settings/tokens → Fine-grained token → Contents: Read and write');
+      if (!t) { showToast('Token necessário para publicar.', 'error'); return false; }
+      localStorage.setItem('ugo_gh_token', t.trim());
+    }
+
+    const tk = getToken();
+    const apiUrl = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`;
+
+    // Busca SHA atual do arquivo
+    let sha = '';
+    try {
+      const r = await fetch(apiUrl, { headers: { Authorization: `token ${tk}`, Accept: 'application/vnd.github+json' } });
+      if (r.ok) { const d = await r.json(); sha = d.sha; }
+    } catch {}
+
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(posts, null, 2))));
+    const body = { message: `Update posts — ${new Date().toISOString()}`, content, branch: GH_BRANCH };
+    if (sha) body.sha = sha;
+
+    const res = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: { Authorization: `token ${tk}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      if (res.status === 401) {
+        localStorage.removeItem('ugo_gh_token');
+        showToast('Token inválido. Tente novamente.', 'error');
+      } else {
+        showToast(`Erro GitHub: ${err.message}`, 'error');
+      }
+      return false;
+    }
+    return true;
+  }
 
   // ── POSTS CRUD ──
   function getPosts() {
@@ -437,7 +500,7 @@
   }
 
   // ── POSTS CRUD ──
-  function savePost() {
+  async function savePost() {
     const title   = document.getElementById('f-title').value.trim();
     const excerpt = document.getElementById('f-excerpt').value.trim();
     const author  = document.getElementById('f-author').value.trim();
@@ -460,15 +523,29 @@
       if (idx !== -1) {
         posts[idx] = { ...posts[idx], title, excerpt, author, cat, read, content, emoji, color, image };
       }
-      showToast('Post atualizado! ✓', 'success');
     } else {
       posts.unshift({ id: Date.now().toString(), title, excerpt, author, cat, read, content, emoji, color, image, date: dateStr });
-      showToast('Post publicado! ✓', 'success');
     }
+
+    showToast('Publicando no GitHub…', '');
+    const ok = await pushPostsToGitHub(posts);
+    if (!ok) return;
 
     savePosts(posts);
     clearForm();
     renderAll();
+    showToast(editId ? 'Post atualizado! ✓' : 'Post publicado! ✓', 'success');
+  }
+
+  async function deletePost(id) {
+    if (!confirm('Tem certeza que deseja excluir este post?')) return;
+    const posts = getPosts().filter(p => p.id !== id);
+    showToast('Removendo…', '');
+    const ok = await pushPostsToGitHub(posts);
+    if (!ok) return;
+    savePosts(posts);
+    renderAll();
+    showToast('Post excluído.', 'error');
   }
 
   function editPost(id) {
@@ -494,13 +571,6 @@
     document.querySelector('.admin-body > div:last-child').scrollIntoView({ behavior: 'smooth' });
   }
 
-  function deletePost(id) {
-    if (!confirm('Tem certeza que deseja excluir este post?')) return;
-    const posts = getPosts().filter(p => p.id !== id);
-    savePosts(posts);
-    renderAll();
-    showToast('Post excluído.', 'error');
-  }
 
   function clearForm() {
     ['f-title','f-excerpt','f-author','f-content','f-emoji','edit-id'].forEach(id => document.getElementById(id).value = '');

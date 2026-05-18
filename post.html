@@ -325,10 +325,11 @@
     { id:'s3', title:'Inteligência emocional não é talento. É treino diário.', cat:'soft-skills', author:'Ana Lima', read:'7 min', date:'08 Mai 2026', emoji:'🧠', color:'linear-gradient(135deg,#f0f9ff,#dbeafe)', content:`<p>Durante décadas acreditamos que inteligência emocional era algo que algumas pessoas simplesmente "tinham". Os estudos mais recentes mostram que isso é um mito.</p><h2>O que é inteligência emocional, de verdade</h2><p>Daniel Goleman define IE como a capacidade de reconhecer, entender e gerenciar nossas emoções — e as dos outros. São quatro habilidades centrais: autoconsciência, autogestão, consciência social e gestão de relacionamentos.</p><p>Todas elas podem ser desenvolvidas com prática deliberada.</p>` },
   ];
 
-  function getPosts() {
+  async function getPosts() {
     try {
-      const dynamic = JSON.parse(localStorage.getItem('ugo_posts') || '[]');
-      return [...dynamic, ...STATIC_POSTS];
+      const res = await fetch(`/posts.json?_=${Date.now()}`);
+      const posts = await res.json();
+      return posts.length ? posts : STATIC_POSTS;
     } catch { return STATIC_POSTS; }
   }
 
@@ -391,11 +392,13 @@
   }
 
   // Init
-  const params = new URLSearchParams(location.search);
-  const postId = params.get('id');
-  const posts = getPosts();
-  const post = posts.find(p => p.id === postId) || posts[0];
-  if (post) renderPost(post);
+  (async () => {
+    const params = new URLSearchParams(location.search);
+    const postId = params.get('id');
+    const posts = await getPosts();
+    const post = posts.find(p => p.id === postId) || posts[0];
+    if (post) renderPost(post);
+  })();
 </script>
 </body>
 </html>
