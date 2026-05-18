@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Política de Privacidade — U.GO</title>
+  <meta name="description" content="Política de Privacidade (Termo de Privacidade) da U.GO: coleta, uso, compartilhamento e direitos sobre seus dados."/>
+  <link rel="canonical" href="https://www.ugoapp.com.br/politica-de-privacidade.html"/>
+  <link rel="icon" type="image/png" href="ugo-logo.png" sizes="any"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #fff; --ink: #1d1d1f; --ink2: #6e6e73; --ink3: #aeaeb2; --accent: #ff5c2a; --border: rgba(0,0,0,.08); }
+    body { font-family: 'Manrope', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    .skip-link { position: absolute; left: -9999px; top: 0; z-index: 10001; padding: .75rem 1.25rem; background: var(--ink); color: #fff; font-weight: 600; font-size: .85rem; text-decoration: none; border-radius: 8px; }
+    .skip-link:focus { left: 1rem; top: 1rem; outline: 2px solid var(--accent); outline-offset: 2px; }
+    #nav { position: sticky; top: 0; z-index: 1000; padding: 1.5rem 2.5rem; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,.92); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); box-shadow: 0 1px 0 var(--border); transition: padding .4s ease, background .4s ease, box-shadow .4s ease; }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .nav-logo img { height: 48px; width: auto; display: block; filter: brightness(0); }
+    .nav-links { display: flex; gap: 2.5rem; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .nav-links > a:not(.nav-login):not(.nav-cta) { font-size: .78rem; font-weight: 500; color: var(--ink2); text-decoration: none; letter-spacing: .01em; transition: color .3s; }
+    .nav-links > a:not(.nav-login):not(.nav-cta):hover { color: var(--ink); }
+    .nav-cta { background: var(--ink) !important; color: #fff !important; border-radius: 100px; padding: .55rem 1.4rem !important; font-weight: 600 !important; letter-spacing: 0 !important; text-decoration: none; transition: background .3s !important, transform .3s !important; }
+    .nav-cta:hover { background: var(--accent) !important; transform: scale(1.04); }
+    .nav-login { border: 1.5px solid var(--border) !important; border-radius: 100px; padding: .55rem 1.4rem !important; font-weight: 600 !important; font-size: .78rem !important; letter-spacing: 0 !important; color: var(--ink) !important; text-decoration: none; transition: border-color .3s, color .3s, transform .3s !important; }
+    .nav-login:hover { border-color: var(--accent) !important; color: var(--accent) !important; transform: scale(1.04); }
+    main { max-width: 720px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+    main h1 { font-size: clamp(1.75rem, 4vw, 2.25rem); font-weight: 800; letter-spacing: -.03em; margin-bottom: .5rem; line-height: 1.15; }
+    main .lede { font-size: .95rem; color: var(--ink2); margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+    main h2 { font-size: 1.05rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; margin: 2rem 0 .75rem; }
+    main h3 { font-size: .98rem; font-weight: 700; margin: 1.35rem 0 .5rem; color: var(--ink); }
+    main p, main li { font-size: .95rem; color: var(--ink2); margin-bottom: .85rem; }
+    main ul { margin: .5rem 0 1rem 1.25rem; }
+    main li { margin-bottom: .35rem; }
+    main strong { color: var(--ink); font-weight: 600; }
+    main a { color: var(--accent); }
+    .pp-block { margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+    .pp-block:last-of-type { border-bottom: none; }
+    .tu-footer { margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid var(--border); }
+    .tu-footer-links { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; margin-bottom: 1.5rem; }
+    .tu-footer-links a { font-size: .82rem; font-weight: 600; color: var(--ink2); text-decoration: none; }
+    .tu-footer-links a:hover { color: var(--accent); }
+    .tu-footer-logo img { height: 40px; width: auto; filter: brightness(0); margin-bottom: 1rem; }
+    .tu-copy { font-size: .8rem; color: var(--ink3); margin-bottom: 1.5rem; }
+    .tu-sub { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--ink3); margin: 1.25rem 0 .5rem; }
+    .tu-social { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; }
+    .tu-social a { font-size: .82rem; color: var(--ink2); text-decoration: none; font-weight: 500; }
+    .tu-social a:hover { color: var(--accent); }
+    @media (max-width: 900px) { #nav { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1rem 1.5rem; } .nav-links { width: 100%; gap: 1rem 1.25rem; } }
+    @media (max-width: 768px) { #nav .nav-links { display: none; } }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo principal</a>
+  <nav id="nav" aria-label="Principal">
+    <a href="index.html" class="nav-logo nav-link-target"><img src="ugo-logo.png" alt="U.GO" style="height:48px;width:auto;display:block;filter:brightness(0);"></a>
+    <div class="nav-links">
+      <a href="analytics.html" class="nav-link-target">Analytics</a>
+      <a href="index.html#statement-b2b" class="nav-link-target">Dicas</a>
+      <a href="index.html#gamification" class="nav-link-target">Comunidade</a>
+      <a href="https://app.ugoapp.com.br" target="_blank" rel="noopener noreferrer" class="nav-login nav-link-target">Login web</a>
+      <a href="https://www.ugoapp.com.br" target="_blank" rel="noopener noreferrer" class="nav-cta nav-link-target">Agendar demonstração</a>
+    </div>
+  </nav>
+
+  <main id="conteudo-principal">
+    <h1>Política de Privacidade — U.GO</h1>
+    <p class="lede"><strong>Termo de Privacidade.</strong> A U.GO tem como propósito auxiliar o maior número possível de pessoas a alcançar seus objetivos por meio do planejamento, produtividade e mudanças de hábitos. Com esse objetivo, elaboramos esta política para esclarecer as informações coletadas através de nossos sites, aplicativos, dispositivos e outros produtos e serviços (doravante denominados coletivamente como &quot;Serviços&quot;), bem como a forma como essas informações são utilizadas e as opções disponíveis para você em relação a esses dados.</p>
+
+    <p>É importante observar que esta política não abrange os dados que tratamos em nome de terceiros. As práticas relacionadas a esses dados estão sujeitas a acordos específicos firmados com essas entidades. Recomendamos que você consulte as políticas de privacidade dessas entidades para obter informações detalhadas sobre como elas tratam seus dados.</p>
+
+    <h2>Como coletamos informações</h2>
+    <p>As informações que coletamos são determinadas pela forma como você interage conosco, pelos serviços que utiliza e pelas escolhas que faz. Em nossos serviços, coletamos informações de diversas fontes e de várias maneiras, incluindo dados fornecidos diretamente por você, informações coletadas automaticamente, dados de fontes de terceiros e informações inferidas ou geradas a partir de outros dados.</p>
+    <p>As informações fornecidas por você ao se inscrever ou utilizar a U.GO incluem:</p>
+    <ul>
+      <li><strong>Informações pessoais e identificadores comuns:</strong> coletamos seu nome, nome de usuário ou pseudônimo, bem como detalhes de contato, como endereço de e-mail, endereço postal e número de telefone.</li>
+      <li><strong>Dados demográficos:</strong> em algumas situações, podemos solicitar ou você pode fornecer informações sobre sua idade, sexo, estado civil e dados demográficos similares.</li>
+      <li><strong>Informações de pagamento:</strong> se você realizar uma compra ou outra transação financeira, coletamos os números de cartão de crédito, informações financeiras da conta e outros detalhes de pagamento necessários.</li>
+      <li><strong>Conteúdos e arquivos:</strong> coletamos fotos, documentos ou outros arquivos que você envia para a U.GO. Além disso, caso nos envie mensagens de e-mail ou comunicações, também coletamos e manteremos essas comunicações.</li>
+    </ul>
+    <p>Essas informações são coletadas com o objetivo de fornecer e melhorar nossos serviços, bem como para atender às suas necessidades e preferências como usuário da U.GO. Manteremos esses dados de forma segura e em conformidade com as leis aplicáveis de proteção de dados.</p>
+
+    <h2>Informações pessoais sensíveis</h2>
+    <p>Para melhor atendê-lo, coletamos certas informações pessoais sensíveis de forma segura e em conformidade com as leis de proteção de dados aplicáveis. Essas informações incluem:</p>
+    <ul>
+      <li><strong>Informações de acesso à conta:</strong> coletamos dados como nome de usuário ou número de conta, combinados com senhas, códigos de segurança, credenciais de acesso ou outras informações que permitem o acesso à sua conta.</li>
+      <li><strong>Conteúdo das comunicações:</strong> coletamos o conteúdo das mensagens enviadas por você em chats e quadros de mensagens dentro de nossos aplicativos.</li>
+      <li><strong>Dados relacionados às suas escolhas dentro do aplicativo:</strong> coletamos fotos, documentos ou outros arquivos que você envia para a U.GO. Além disso, caso nos envie mensagens de e-mail ou comunicações, também coletamos e manteremos essas comunicações.</li>
+      <li><strong>Dados demográficos confidenciais:</strong> coletamos informações sobre origem racial ou étnica, religião ou crenças filosóficas que você pode fornecer ou que podemos inferir ao longo do programa, com o objetivo de fornecer um melhor suporte personalizado.</li>
+    </ul>
+    <p>Nossa prioridade é garantir a proteção e a privacidade dessas informações sensíveis. Asseguramos que elas sejam utilizadas somente para os propósitos legítimos de fornecer nossos serviços e melhorar sua experiência conosco. Se você tiver alguma dúvida ou preocupação sobre a coleta e uso dessas informações, entre em contato conosco para obter mais esclarecimentos.</p>
+
+    <h2>Informações técnicas coletadas automaticamente quando você usa a U.GO</h2>
+    <p>Coletamos automaticamente informações técnicas quando você utiliza a U.GO, seja através do nosso site ou aplicativo móvel. Essas informações abrangem diversos aspectos e incluem:</p>
+    <ul>
+      <li><strong>Dados de log:</strong> nossos servidores registram informações (&quot;dados de log&quot;) que o seu navegador envia automaticamente sempre que você visita nosso site ou quando o aplicativo móvel é utilizado. Esses dados de log compreendem o seu endereço IP, tipo e configurações do navegador, bem como a data e hora do uso da U.GO.</li>
+      <li><strong>Dados de geolocalização:</strong> dependendo das configurações do seu dispositivo e aplicativo, coletamos dados de geolocalização para inferir sua localização geográfica geral, como cidade, estado e país, com base no seu endereço IP.</li>
+      <li><strong>Dados de cookies:</strong> utilizamos cookies, web beacons, análises móveis e IDs de dispositivos de publicidade, além de tecnologias similares em nossos sites, aplicativos e serviços online. Essas tecnologias permitem a coleta de dados pessoais, como páginas visitadas, cliques em links e informações de uso, identificadores e dados do dispositivo, rastreando suas atividades online ao longo do tempo e em diferentes sites, aplicativos ou serviços online.</li>
+      <li><strong>Informações do dispositivo:</strong> além dos dados de log, coletamos informações sobre o dispositivo que você está utilizando para acessar a U.GO, como o tipo de dispositivo, sistema operacional, configurações e identificadores exclusivos do dispositivo, bem como dados de falha.</li>
+      <li><strong>Dados de uso e personalização:</strong> utilizamos sua atividade na U.GO, incluindo metas e tarefas que você registra, para personalizar a sua experiência. Adicionalmente, registramos automaticamente outras atividades realizadas em nossos sites, aplicativos e produtos conectados, como a URL do site de onde você veio para nossos sites, as páginas visualizadas, o tempo gasto em cada página, tempos de acesso e outros detalhes sobre o seu uso e ações em nosso site.</li>
+    </ul>
+
+    <h2>Informações que criamos ou geramos</h2>
+    <p>Nós inferimos novas informações de outros dados que coletamos, inclusive usando meios automatizados para gerar informações sobre suas prováveis preferências ou outras características (&quot;inferências&quot;).</p>
+
+    <h2>Informações coletadas de serviços de terceiros</h2>
+    <p>Também coletamos os tipos de informações mencionados acima de fontes terceiras. Essas fontes incluem:</p>
+    <ul>
+      <li><strong>Parceiros de terceiros:</strong> aplicativos e serviços de terceiros, incluindo redes sociais, que você escolhe interagir para se conectar aos nossos serviços. O acesso que temos a essas informações depende das políticas de privacidade ou configurações dessas contas.</li>
+      <li><strong>Informações compartilhadas por anunciantes:</strong> obtemos informações sobre você e suas atividades de nossos parceiros de publicidade e outros terceiros com os quais trabalhamos. Por exemplo, anunciantes online ou terceiros compartilham informações conosco para medir, relatar ou melhorar o desempenho dos anúncios da U.GO.</li>
+      <li><strong>Parceiros de co-branding/marketing:</strong> colaboramos com parceiros para oferecer serviços de co-branding ou participar de atividades de marketing conjuntas.</li>
+      <li><strong>Prestadores de serviços:</strong> terceiros que coletam ou fornecem dados em nome da U.GO, como empresas que determinam a localização do seu dispositivo com base no endereço IP.</li>
+    </ul>
+    <p>Quando solicitamos suas informações, você tem a opção de recusar ou usar os controles do navegador ou do dispositivo para evitar certos tipos de coleta de dados. No entanto, é importante ressaltar que, em alguns casos, se você optar por não fornecer as informações necessárias, alguns serviços ou recursos podem não estar disponíveis ou funcionar de forma completa.</p>
+
+    <h2>O que fazemos com as informações que coletamos</h2>
+    <p>Nosso principal foco é oferecer um serviço relevante, interessante e personalizado, e para isso, utilizamos suas informações de maneira cuidadosa para aprimorar e personalizar sua experiência. A seguir, exemplos de como atingimos esse objetivo:</p>
+
+    <div class="pp-block">
+      <h3>Entrega de produtos e serviços</h3>
+      <p>Com o intuito de disponibilizar e viabilizar nossos serviços, o que envolve a solução de problemas, aprimoramento e personalização desses mesmos serviços.</p>
+      <p>Coletamos diversos tipos de informações, que incluem informações de contato, dados demográficos, informações de pagamento, conteúdo e arquivos, identificadores e informações do dispositivo, dados de geolocalização, dados de log, dados de uso, dados de sensores e inferências. Além disso, também coletamos informações confidenciais, tais como informações de acesso à conta, dados demográficos confidenciais, conteúdo de comunicações e dados de performance. Essas informações são tratadas com a máxima confidencialidade e segurança, em estrita conformidade com as leis e regulamentos de proteção de dados aplicáveis.</p>
+    </div>
+    <div class="pp-block">
+      <h3>Operações de negócio</h3>
+      <p>Com o propósito de conduzir nossos negócios, tais como atividades de cobrança, contabilidade, aprimoramento de nossas operações internas, salvaguarda de nossos sistemas, detecção de atividades fraudulentas ou ilegais e cumprimento de nossas obrigações legais.</p>
+      <p>Informações de contato, dados demográficos, informações de pagamento, conteúdo e arquivos, identificadores e informações do dispositivo, dados de geolocalização, dados de log, dados de uso, dados de sensores, inferências. <strong>Informações confidenciais:</strong> informações de acesso à conta, dados demográficos sensíveis, conteúdo de comunicações e dados de saúde.</p>
+    </div>
+    <div class="pp-block">
+      <h3>Melhoria, desenvolvimento e pesquisa de produtos</h3>
+      <p>Essas pesquisas incluem entrevistas e estudos, possibilitando um aperfeiçoamento contínuo de nossa oferta e garantindo uma experiência cada vez mais satisfatória para nossos clientes.</p>
+      <p>Informações de contato, dados demográficos, informações de pagamento, conteúdo e arquivos, identificadores e informações do dispositivo, dados de geolocalização, dados de log, dados de uso, dados de sensores, inferências. <strong>Informações confidenciais:</strong> informações de acesso à conta, dados demográficos confidenciais, conteúdo de comunicações, dados de saúde.</p>
+    </div>
+    <div class="pp-block">
+      <h3>Personalização</h3>
+      <p>Com o propósito de aprimorar sua experiência e satisfação ao utilizar nossos serviços, buscamos compreender suas preferências e necessidades. Essa abordagem nos permite personalizar nossos serviços de acordo com suas preferências individuais, visando proporcionar uma experiência mais satisfatória e adequada às suas expectativas.</p>
+      <p>Informações de contato, dados demográficos, informações de pagamento, conteúdo e arquivos, identificadores e informações do dispositivo, dados de geolocalização, dados de log, dados de uso, dados de sensores, inferências. <strong>Informações confidenciais:</strong> informações de acesso à conta, dados demográficos confidenciais, conteúdo de comunicações, dados de performance.</p>
+    </div>
+    <div class="pp-block">
+      <h3>Suporte ao cliente</h3>
+      <p>Para fornecer suporte ao cliente e responder às suas perguntas.</p>
+      <p>Informações de contato, dados demográficos, informações de pagamento, conteúdo e arquivos, identificadores e informações do dispositivo, dados de geolocalização, dados de log, dados de uso, dados de sensores, inferências. <strong>Informações confidenciais:</strong> informações de acesso à conta, dados demográficos confidenciais, conteúdo de comunicações, dados de performance.</p>
+    </div>
+    <div class="pp-block">
+      <h3>Comunicações</h3>
+      <p>Para lhe enviar informações, incluindo confirmações, faturas, avisos técnicos, atualizações, alertas de segurança, lembretes, suporte e mensagens administrativas.</p>
+      <p>Informações de contato, dados demográficos, informações de pagamento, conteúdo e arquivos, identificadores e informações do dispositivo, dados de geolocalização, dados de log, dados de uso, dados de sensores, inferências. <strong>Informações confidenciais:</strong> dados demográficos confidenciais, dados de performance.</p>
+    </div>
+    <div class="pp-block">
+      <h3>Marketing</h3>
+      <p>Para se comunicar com você sobre novos serviços, ofertas, promoções, recompensas, concursos, eventos futuros e outras informações sobre nossos serviços e os de nossos parceiros selecionados.</p>
+      <p>Informações de contato, dados demográficos, informações de pagamento, conteúdo e arquivos, identificadores e informações do dispositivo, dados de geolocalização, dados de log, dados de uso, dados de sensores, inferências. <strong>Informações confidenciais:</strong> dados demográficos confidenciais, dados de performance.</p>
+    </div>
+    <div class="pp-block">
+      <h3>Anúncio</h3>
+      <p>Para exibir publicidade para você.</p>
+      <p>Informações de contato, dados demográficos, informações de pagamento, conteúdo e arquivos, identificadores e dados de geolocalização e informações do dispositivo, dados de log, dados de uso, dados de sensores, inferências. <strong>Informações confidenciais:</strong> dados demográficos confidenciais, dados de performance.</p>
+    </div>
+
+    <h2>Como e quando compartilhamos suas informações</h2>
+    <p>Podemos compartilhar suas informações com, por exemplo:</p>
+    <ul>
+      <li><strong>Outros serviços:</strong> podemos compartilhar suas informações com outros serviços sob sua direção, quando você optar por vincular sua conta U.GO a esses serviços. Caso você escolha vincular sua conta U.GO a algum desses terceiros ou permitir que compartilhemos suas informações com eles, tais dados estarão sujeitos às políticas de privacidade desses terceiros.</li>
+      <li><strong>Provedores de serviços:</strong> podemos fornecer suas informações a provedores de serviços ou agentes que atuam em nosso nome para os fins descritos nesta política. Por exemplo, empresas que contratamos para oferecer suporte ao cliente ou auxiliar na proteção e segurança de nossos sistemas e serviços podem precisar acessar suas informações para desempenhar essas funções. Ressaltamos que esses provedores de serviços ou agentes estão obrigados a manter a confidencialidade e segurança de suas informações, garantindo o cumprimento das normas de privacidade aplicáveis.</li>
+      <li><strong>Serviços financeiros e processamento de pagamentos:</strong> quando você fornece dados de pagamento, por exemplo, para fazer uma compra, divulgaremos dados de pagamento e transações a bancos e outras entidades conforme necessário para processamento de pagamentos, prevenção de fraudes, redução de risco de crédito, análises ou outras atividades financeiras relacionadas a serviços.</li>
+      <li><strong>Transações corporativas:</strong> podemos divulgar suas informações como parte de uma transação ou processo corporativo, tal como fusão, financiamento, aquisição, falência, dissolução, transferência, desinvestimento ou venda total ou parcial de nossos negócios ou ativos.</li>
+      <li><strong>Legal e aplicação da lei:</strong> iremos acessar, divulgar e preservar suas informações quando acreditarmos que isso seja necessário para cumprir a lei aplicável ou responder a um processo legal válido, inclusive de autoridades policiais ou outras agências governamentais.</li>
+      <li><strong>Segurança, proteção e direitos:</strong> também poderemos divulgar suas informações se acreditarmos que é necessário para proteger nossos clientes e terceiros, como prevenir spam ou tentativas de fraude, ou auxiliar na prevenção de perdas de vidas ou lesões graves de qualquer pessoa; e para manter a segurança e operação de nossos serviços, incluindo a prevenção ou interrupção de ataques em nossos sistemas ou redes de computadores. Essas divulgações são feitas com o objetivo de garantir a segurança e a integridade de nossos serviços, bem como proteger os interesses e direitos de nossos usuários e de terceiros envolvidos. Todas as ações são conduzidas em estrita conformidade com as leis e regulamentos pertinentes.</li>
+      <li><strong>Provedores de publicidade:</strong> empresas terceirizadas de análise e publicidade também coletam dados pessoais por meio de nosso site e aplicativos, incluindo identificadores e informações de dispositivos (como IDs de cookies, IDs de dispositivos e endereço IP), dados de geolocalização, dados de log e inferências baseadas e associadas com esses dados, conforme descrito em nossa Política de Cookies, quando aplicável. Esses terceiros podem combinar esses dados em vários sites para melhorar a análise para seus próprios fins e para outros. Por exemplo, usamos o Google Analytics em nosso site para nos ajudar a entender como os usuários interagem com nosso site; você pode aprender como o Google coleta e usa informações em <a href="https://www.google.com/policies/privacy/partners" target="_blank" rel="noopener noreferrer">www.google.com/policies/privacy/partners</a>.</li>
+    </ul>
+
+    <h2>Por quanto tempo mantemos suas informações</h2>
+    <p>Mantemos suas informações apenas pelo período necessário para fornecer nossos serviços a você, cumprir os propósitos descritos nesta política, atender a nossas obrigações legais, resolver disputas e cumprir nossos acordos. Os períodos de retenção podem variar significativamente, levando em consideração suas expectativas e consentimento, a sensibilidade dos dados, a disponibilidade de controles automatizados, bem como nossas obrigações legais ou contratuais.</p>
+
+    <h2>Seus direitos e escolhas</h2>
+    <p>Nossa meta é proporcionar a você escolhas simples e relevantes em relação às suas informações. Caso você possua uma conta U.GO, muitos desses controles estão integrados diretamente em suas configurações. Por exemplo, você pode:</p>
+    <ul>
+      <li>Editar informações em seu perfil a qualquer momento.</li>
+      <li>Vincular ou desvincular sua conta U.GO de outros serviços.</li>
+      <li>Decidir se deseja personalizar a U.GO de acordo com suas preferências.</li>
+      <li>Encerrar sua conta quando desejar. Ao fechar sua conta, ela será desativada, e os dados associados a ela serão excluídos. (É importante observar que, em alguns casos, pode haver motivos legais para a retenção de seus dados, como se recebermos uma solicitação de aplicação da lei exigindo a preservação dos dados.)</li>
+    </ul>
+    <p>Em algumas jurisdições, esses controles e escolhas podem ser considerados como direitos garantidos pela legislação aplicável. Nossa intenção é garantir que você tenha controle sobre suas informações e que suas preferências sejam respeitadas em consonância com as normas e regulamentos vigentes.</p>
+
+    <h2>Correção e exclusão de suas informações</h2>
+    <p>Você tem a liberdade de acessar seu perfil e atualizar suas informações ou optar por excluir seus dados a qualquer momento, encerrando sua conta. No entanto, é importante notar que em determinadas situações, podemos ser legalmente obrigados a manter seus dados, por exemplo, se recebermos uma solicitação da aplicação da lei requerendo a preservação dos dados. Caso deseje solicitar a exclusão de sua conta, entre em contato conosco através do e-mail <a href="mailto:atendimento@ugoapp.com.br">atendimento@ugoapp.com.br</a> utilizando o endereço de e-mail associado à sua conta U.GO. Estaremos prontos para auxiliá-lo nesse processo.</p>
+
+    <h2>Opor-se ao processamento de suas informações</h2>
+    <p>Você pode nos pedir para parar de usar suas informações para determinados fins, inclusive quando usamos suas informações para enviar e-mails de marketing ou mensagens SMS. Se você optar por não receber nossas mensagens de marketing, ainda poderemos enviar atualizações sobre sua conta, como quando você solicitar lembretes para fazer login.</p>
+
+    <h2>Transferindo suas informações</h2>
+    <p>As informações que coletamos podem ser armazenadas e processadas em seu país ou região, ou em qualquer outro país onde nós ou nossas afiliadas, subsidiárias ou prestadores de serviços processamos dados. Atualmente, usamos principalmente data centers nos Estados Unidos. Esses locais foram escolhidos para operar com eficiência e melhorar nosso desempenho.</p>
+    <p>Tomamos medidas para proteger suas informações, conforme descrito nesta política, onde quer que os dados estejam localizados, alguns dos quais não foram determinados pela Comissão Europeia como tendo um nível adequado de proteção de dados. Quando o fazemos, usamos mecanismos legais, incluindo contratos, para ajudar a garantir seus direitos e proteções. Para saber mais sobre as decisões da Comissão Europeia sobre a adequação das proteções de dados pessoais, visite: <a href="https://ec.europa.eu/commission/presscorner/detail/en/ip_22_7631" target="_blank" rel="noopener noreferrer">https://ec.europa.eu/commission/presscorner/detail/en/ip_22_7631</a>.</p>
+
+    <h2>Atualizações a esta política</h2>
+    <p>A U.GO reserva-se o direito de modificar esta política periodicamente. Caso ocorram alterações, as mesmas serão divulgadas nesta página. Ao continuar utilizando a U.GO após a entrada em vigor dessas mudanças, você concorda com os termos da nova política. Caso as alterações sejam consideradas significativas, poderemos fornecer um aviso mais destacado ou buscar o seu consentimento para as modificações.</p>
+    <p>A U.GO pode atualizar esta Política de Privacidade de tempos em tempos. Quaisquer atualizações serão publicadas em nossa página de Política de Privacidade atualizada em nosso site, juntamente com o aviso de que a Política de Privacidade foi alterada e a data da última atualização. A U.GO também pode enviar notificações por e-mail para usuários registrados e assinantes sobre quaisquer alterações na Política de Privacidade. A U.GO encoraja você a revisar esta Política de Privacidade regularmente para quaisquer mudanças. Seu uso contínuo destes Serviços e/ou fornecimento contínuo de Informações Pessoais Identificáveis para nós estará sujeito aos termos da Política de Privacidade então vigente.</p>
+
+    <h2>Contate-nos</h2>
+    <p>A melhor maneira de entrar em contato conosco é enviando um e-mail para <a href="mailto:atendimento@ugoapp.com.br">atendimento@ugoapp.com.br</a> ou <a href="mailto:atendimento@ugoapp.com">atendimento@ugoapp.com</a>.</p>
+
+    <h2>Privacidade das crianças</h2>
+    <p>A U.GO valoriza os interesses de privacidade das crianças e encoraja os pais e responsáveis a participarem ativamente das atividades e interesses online de seus filhos. Nossos serviços não são direcionados a crianças menores de 16 anos, e intencionalmente não coletamos informações de identificação pessoal de crianças nessa faixa etária. Reconhecemos a importância de proteger a privacidade dos mais jovens e respeitamos as leis e regulamentos aplicáveis relacionados à privacidade infantil.</p>
+
+    <h2>Dúvidas</h2>
+    <p>Caso possua alguma dúvida sobre esta Política de Privacidade, não hesite em entrar em contato conosco através do e-mail <a href="mailto:atendimento@ugoapp.com.br">atendimento@ugoapp.com.br</a>. Estamos disponíveis para esclarecer quaisquer questões ou preocupações que possam surgir em relação à sua privacidade e ao uso de nossos serviços.</p>
+
+    <footer class="tu-footer">
+      <div class="tu-footer-links">
+        <a href="index.html#hugo-mentor">Dicas do Hugo</a>
+        <a href="index.html#cta-final">FAQ</a>
+        <a href="termos-de-uso.html">Termos de Uso</a>
+        <a href="politica-de-privacidade.html" aria-current="page">Política de Privacidade</a>
+      </div>
+      <div class="tu-footer-logo">
+        <a href="index.html"><img src="ugo-logo.png" alt="U.GO"/></a>
+      </div>
+      <p class="tu-copy">© Copyright U.GO 2025</p>
+      <p class="tu-sub">Redes sociais</p>
+      <div class="tu-social">
+        <a href="https://www.linkedin.com/company/93248000/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://www.instagram.com/u.goapp/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.tiktok.com/tag/ugoapp" target="_blank" rel="noopener noreferrer">TikTok</a>
+      </div>
+      <p class="tu-sub">Parceiros</p>
+      <p style="font-size:.82rem;color:var(--ink3);">Em breve.</p>
+    </footer>
+  </main>
+</body>
+</html>

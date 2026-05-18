@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="page-title">Artigo — U.GO Dicas</title>
+  <link rel="icon" type="image/png" href="ugo-logo.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #fff; --bg2: #F5F5F7; --ink: #1D1D1F; --ink2: #6E6E73; --ink3: #AEAEB2;
+      --accent: #FF5C2A; --border: rgba(0,0,0,0.08);
+    }
+    body { font-family: 'Manrope', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAV ── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: 56px;
+      padding: 0 2rem; display: flex; align-items: center; justify-content: space-between;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.04em; }
+    .nav-logo span { color: var(--accent); }
+    .nav-back { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; font-weight: 600; color: var(--ink2); transition: color .2s; }
+    .nav-back:hover { color: var(--accent); }
+    .nav-cta { padding: 0.45rem 1.1rem; border-radius: 100px; background: var(--ink); color: #fff; font-size: 0.75rem; font-weight: 700; transition: background .2s; }
+    .nav-cta:hover { background: var(--accent); }
+
+    /* ── HERO ── */
+    .post-hero {
+      margin-top: 56px;
+      width: 100%; aspect-ratio: 21/9; min-height: 360px;
+      background: linear-gradient(160deg, #1a1a2e, #533483);
+      position: relative; overflow: hidden;
+    }
+    .post-hero img { width: 100%; height: 100%; object-fit: cover; }
+    .post-hero-fallback {
+      width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+    }
+
+    /* ── ARTICLE WRAPPER ── */
+    .article-wrap { max-width: 740px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+    /* ── HEADER ── */
+    .art-category {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+    .art-category::before { content: ''; display: block; width: 24px; height: 2px; background: var(--accent); }
+    .art-title {
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      font-weight: 800; letter-spacing: -0.03em; line-height: 1.12;
+      color: var(--ink); margin-bottom: 1.5rem;
+    }
+    .art-meta {
+      display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+      font-size: 0.78rem; color: var(--ink2); padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border); margin-bottom: 2.5rem;
+    }
+    .art-meta strong { color: var(--ink); font-weight: 600; }
+    .art-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--ink3); }
+    .art-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #FF8A5C);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 700; color: #fff;
+    }
+
+    /* ── CONTENT ── */
+    .art-content { font-size: 1.05rem; line-height: 1.78; color: #2c2c2e; }
+    .art-content p { margin-bottom: 1.5rem; }
+    .art-content h2 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; margin: 2.5rem 0 1rem; color: var(--ink); }
+    .art-content h3 { font-size: 1.15rem; font-weight: 700; margin: 2rem 0 0.75rem; color: var(--ink); }
+    .art-content strong { font-weight: 700; color: var(--ink); }
+    .art-content em { font-family: 'Instrument Serif', serif; font-style: italic; }
+    .art-content ul, .art-content ol { padding-left: 1.5rem; margin-bottom: 1.5rem; }
+    .art-content li { margin-bottom: 0.5rem; }
+    .art-content a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* Imagem inline */
+    .art-content figure {
+      margin: 2.5rem -1.5rem; /* sangra para as margens */
+    }
+    .art-content figure img { width: 100%; border-radius: 4px; }
+    .art-content figcaption { font-size: 0.75rem; color: var(--ink3); padding: 0.5rem 1.5rem 0; text-align: center; }
+
+    /* Citação em destaque */
+    .art-content blockquote {
+      margin: 2.5rem 0; padding: 1.5rem 1.75rem;
+      border-left: 4px solid var(--accent);
+      background: #FFF5F2; border-radius: 0 12px 12px 0;
+      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-size: 1.25rem; line-height: 1.5; color: var(--ink);
+    }
+
+    /* Pull quote grande */
+    .pull-quote {
+      margin: 3rem 0; padding: 0;
+      border: none; background: none;
+      text-align: left;
+    }
+    .pull-quote::before {
+      content: '"'; font-size: 5rem; font-family: 'Instrument Serif', serif;
+      color: var(--accent); line-height: 0.6; display: block; margin-bottom: 1rem;
+    }
+    .pull-quote p {
+      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-size: 1.5rem; line-height: 1.4; color: var(--ink); margin: 0;
+    }
+
+    /* ── TAGS ── */
+    .art-tags { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .art-tags-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink2); margin-bottom: 0.75rem; }
+    .art-tags-list { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .art-tag { padding: 0.4rem 0.9rem; border-radius: 100px; background: var(--bg2); font-size: 0.78rem; font-weight: 600; color: var(--ink); transition: background .2s; }
+    .art-tag:hover { background: #e4e4e8; }
+
+    /* ── RELATED ── */
+    .related { background: var(--bg2); padding: 4rem 2rem; }
+    .related-inner { max-width: 1200px; margin: 0 auto; }
+    .related-title { font-size: 1.15rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 2rem; }
+    .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .related-card { background: var(--bg); border-radius: 16px; overflow: hidden; text-decoration: none; color: inherit; transition: box-shadow .3s, transform .3s; }
+    .related-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.1); transform: translateY(-3px); }
+    .related-card-img { aspect-ratio: 16/9; overflow: hidden; }
+    .related-card-img-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
+    .related-card-body { padding: 1.25rem; }
+    .related-card-cat { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+    .related-card-title { font-size: 0.9rem; font-weight: 700; line-height: 1.35; }
+
+    /* ── FOOTER ── */
+    .post-footer { background: #111; padding: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .post-footer-logo { font-size: 1.1rem; font-weight: 800; color: #fff; letter-spacing: -0.04em; }
+    .post-footer-logo span { color: var(--accent); }
+    .post-footer-links { display: flex; gap: 2rem; }
+    .post-footer-links a { font-size: 0.75rem; color: rgba(255,255,255,0.35); transition: color .2s; }
+    .post-footer-links a:hover { color: rgba(255,255,255,0.8); }
+    .post-footer-copy { font-size: 0.7rem; color: rgba(255,255,255,0.2); }
+
+    @media (max-width: 768px) {
+      .post-hero { aspect-ratio: 16/9; min-height: 220px; }
+      .related-grid { grid-template-columns: 1fr; }
+      .art-content figure { margin: 2rem 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">u<span>.</span>go</div>
+  <a href="blog.html" class="nav-back">← Todas as dicas</a>
+  <a href="https://www.ugoapp.com.br" target="_blank" class="nav-cta">Agendar demonstração</a>
+</nav>
+
+<!-- HERO -->
+<div class="post-hero" id="post-hero">
+  <div class="post-hero-fallback" id="hero-fallback">📝</div>
+</div>
+
+<!-- ARTICLE -->
+<div class="article-wrap">
+  <div class="art-category" id="art-category">Carregando…</div>
+  <h1 class="art-title" id="art-title">…</h1>
+  <div class="art-meta" id="art-meta"></div>
+  <div class="art-content" id="art-content"></div>
+
+  <!-- Tags -->
+  <div class="art-tags">
+    <div class="art-tags-label">Tags relacionadas</div>
+    <div class="art-tags-list" id="art-tags"></div>
+  </div>
+</div>
+
+<!-- POSTS RELACIONADOS -->
+<div class="related">
+  <div class="related-inner">
+    <div class="related-title">Mais histórias</div>
+    <div class="related-grid" id="related-grid"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="post-footer">
+  <div class="post-footer-logo">u<span>.</span>go</div>
+  <div class="post-footer-links">
+    <a href="index.html">Início</a>
+    <a href="blog.html">Dicas</a>
+    <a href="analytics-empresa.html">Para Empresas</a>
+  </div>
+  <span class="post-footer-copy">© 2026 U.GO. Todos os direitos reservados.</span>
+</footer>
+
+<script>
+  // ── MARKDOWN PARSER ──
+  function parseMarkdown(text) {
+    // Se já contém tags HTML, retorna direto
+    if (/<[a-z][\s\S]*>/i.test(text)) return text;
+
+    const lines = text.split('\n');
+    let html = '';
+    let inList = false;
+    let inOl = false;
+    let buffer = [];
+
+    function flushBuffer() {
+      if (!buffer.length) return;
+      const para = buffer.join(' ').trim();
+      if (para) html += `<p>${inlineFormat(para)}</p>`;
+      buffer = [];
+    }
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const trimmed = line.trim();
+
+      // Título H2
+      if (/^##\s+/.test(trimmed)) {
+        flushBuffer();
+        if (inList) { html += '</ul>'; inList = false; }
+        if (inOl) { html += '</ol>'; inOl = false; }
+        html += `<h2>${inlineFormat(trimmed.replace(/^##\s+/, ''))}</h2>`;
+        continue;
+      }
+      // Título H3
+      if (/^###\s+/.test(trimmed)) {
+        flushBuffer();
+        html += `<h3>${inlineFormat(trimmed.replace(/^###\s+/, ''))}</h3>`;
+        continue;
+      }
+      // Blockquote / citação
+      if (/^>\s+/.test(trimmed)) {
+        flushBuffer();
+        html += `<blockquote>${inlineFormat(trimmed.replace(/^>\s+/, ''))}</blockquote>`;
+        continue;
+      }
+      // Pull quote (linha começando com "")
+      if (/^""/.test(trimmed)) {
+        flushBuffer();
+        const q = trimmed.replace(/^""|""$/g, '').trim();
+        html += `<blockquote class="pull-quote"><p>${inlineFormat(q)}</p></blockquote>`;
+        continue;
+      }
+      // Imagem inline: ![alt](src)
+      if (/^!\[.*?\]\(.*?\)$/.test(trimmed)) {
+        flushBuffer();
+        if (inList) { html += '</ul>'; inList = false; }
+        if (inOl) { html += '</ol>'; inOl = false; }
+        const match = trimmed.match(/^!\[(.*?)\]\((.*?)\)$/);
+        if (match) {
+          html += `<figure><img src="${match[2]}" alt="${match[1]}" style="width:100%;border-radius:8px;"/>${match[1] ? `<figcaption>${match[1]}</figcaption>` : ''}</figure>`;
+        }
+        continue;
+      }
+      // Lista não ordenada
+      if (/^[-*]\s+/.test(trimmed)) {
+        flushBuffer();
+        if (!inList) { html += '<ul>'; inList = true; }
+        html += `<li>${inlineFormat(trimmed.replace(/^[-*]\s+/, ''))}</li>`;
+        continue;
+      }
+      // Lista ordenada
+      if (/^\d+\.\s+/.test(trimmed)) {
+        flushBuffer();
+        if (!inOl) { html += '<ol>'; inOl = true; }
+        html += `<li>${inlineFormat(trimmed.replace(/^\d+\.\s+/, ''))}</li>`;
+        continue;
+      }
+      // Fecha listas abertas
+      if (inList && !trimmed) { html += '</ul>'; inList = false; }
+      if (inOl && !trimmed) { html += '</ol>'; inOl = false; }
+
+      // Linha em branco = quebra de parágrafo
+      if (!trimmed) {
+        flushBuffer();
+        continue;
+      }
+
+      buffer.push(trimmed);
+    }
+
+    flushBuffer();
+    if (inList) html += '</ul>';
+    if (inOl) html += '</ol>';
+    return html;
+  }
+
+  function inlineFormat(text) {
+    return text
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/_(.+?)_/g, '<em>$1</em>')
+      .replace(/`(.+?)`/g, '<code style="background:#F5F5F7;padding:0.15em 0.4em;border-radius:4px;font-size:0.9em">$1</code>')
+      .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  }
+
+  const CAT_LABELS = {
+    'habitos':'Hábitos','produtividade':'Produtividade','soft-skills':'Soft Skills',
+    'gestao':'Gestão de Tempo','ia':'IA & Tecnologia','comunidade':'Comunidade'
+  };
+
+  const CAT_TAGS = {
+    'habitos':['Hábitos','Consistência','Rotina','Mudança de comportamento'],
+    'produtividade':['Produtividade','Foco','Gestão de energia','Alto desempenho'],
+    'soft-skills':['Soft Skills','Desenvolvimento humano','Protagonismo','Liderança'],
+    'gestao':['Gestão de Tempo','Organização','Planejamento','Prioridade'],
+    'ia':['IA','Tecnologia','HUGO','Inovação'],
+    'comunidade':['Comunidade','Pertencimento','Gamificação','Engajamento']
+  };
+
+  // Pega posts hardcoded do blog como fallback
+  const STATIC_POSTS = [
+    { id:'s1', title:'Por que 95% das pessoas abandonam seus hábitos em menos de duas semanas', cat:'habitos', author:'Equipe U.GO', read:'8 min', date:'12 Mai 2026', emoji:'🔥', color:'linear-gradient(135deg,#1a1a2e,#533483)', content:`<p>A maioria das pessoas já tentou criar um hábito pelo menos uma vez na vida — e falhou. Mas por quê isso acontece com tanta frequência, mesmo quando a motivação inicial é alta?</p><h2>O que a neurociência diz</h2><p>Pesquisadores da University College London descobriram que, em média, um comportamento leva <strong>66 dias</strong> para se tornar automático. Mas o problema não está no número de dias — está no que acontece durante eles.</p><blockquote>A motivação te faz começar. O sistema te faz continuar.</blockquote><p>Nos primeiros dias, a dopamina da novidade sustenta o comportamento. Após a primeira semana, o cérebro começa a questionar: "vale o esforço?".</p><h2>O loop de recompensa quebrado</h2><p>Hábitos funcionam em um ciclo: gatilho → rotina → recompensa. Quando a recompensa demora a aparecer (como perder peso ou economizar dinheiro), o cérebro não reforça o comportamento com rapidez suficiente.</p><p>É aqui que o U.GO entra: ao gamificar cada pequeno passo, o HUGO garante que você receba feedback imediato — transformando qualquer ação consistente em vitória celebrada.</p><h2>O que fazer diferente</h2><ul><li>Comece com hábitos menores do que você acha necessário</li><li>Conecte o novo hábito a um já existente (habit stacking)</li><li>Celebre cada repetição, não apenas os resultados grandes</li><li>Use dados para visualizar seu progresso — o que se mede, melhora</li></ul><p>Com o U.GO, cada check-in vira XP, cada sequência vira streak visível, e cada semana superada vira reconhecimento na sua comunidade.</p>` },
+    { id:'s2', title:'Técnica Pomodoro: como usar sem perder o fio da meada entre as tarefas', cat:'produtividade', author:'Pedro Alves', read:'5 min', date:'10 Mai 2026', emoji:'⏱️', color:'linear-gradient(135deg,#fff5f2,#ffe4d6)', content:`<p>A Técnica Pomodoro é uma das abordagens de produtividade mais conhecidas do mundo. Criada por Francesco Cirillo nos anos 80, divide o trabalho em blocos de 25 minutos separados por pausas curtas.</p><h2>Por que funciona</h2><p>O método respeita os limites naturais de concentração do cérebro humano. Em vez de lutar contra a fadiga, você trabalha com ela — descansando antes de precisar.</p><blockquote>Foco profundo não é questão de força de vontade. É questão de design.</blockquote><h2>O erro mais comum</h2><p>A maioria das pessoas usa o Pomodoro mas ignora a pausa. Usam os 5 minutos para checar redes sociais — e voltam mais dispersos do que saíram.</p><p>A pausa ideal envolve: levantar, respirar, mover o corpo. Nada de tela.</p>` },
+    { id:'s3', title:'Inteligência emocional não é talento. É treino diário.', cat:'soft-skills', author:'Ana Lima', read:'7 min', date:'08 Mai 2026', emoji:'🧠', color:'linear-gradient(135deg,#f0f9ff,#dbeafe)', content:`<p>Durante décadas acreditamos que inteligência emocional era algo que algumas pessoas simplesmente "tinham". Os estudos mais recentes mostram que isso é um mito.</p><h2>O que é inteligência emocional, de verdade</h2><p>Daniel Goleman define IE como a capacidade de reconhecer, entender e gerenciar nossas emoções — e as dos outros. São quatro habilidades centrais: autoconsciência, autogestão, consciência social e gestão de relacionamentos.</p><p>Todas elas podem ser desenvolvidas com prática deliberada.</p>` },
+  ];
+
+  function getPosts() {
+    try {
+      const dynamic = JSON.parse(localStorage.getItem('ugo_posts') || '[]');
+      return [...dynamic, ...STATIC_POSTS];
+    } catch { return STATIC_POSTS; }
+  }
+
+  function renderPost(p) {
+    document.title = `${p.title} — U.GO Dicas`;
+    document.getElementById('page-title').textContent = `${p.title} — U.GO Dicas`;
+
+    // Hero
+    const hero = document.getElementById('post-hero');
+    const fallback = document.getElementById('hero-fallback');
+    if (p.image) {
+      const img = document.createElement('img');
+      img.src = p.image; img.alt = p.title;
+      hero.insertBefore(img, fallback);
+      fallback.style.display = 'none';
+    } else if (p.emoji) {
+      fallback.textContent = p.emoji;
+      if (p.color) hero.style.background = p.color;
+    }
+
+    // Header
+    document.getElementById('art-category').innerHTML = CAT_LABELS[p.cat] || p.cat;
+    document.getElementById('art-title').textContent = p.title;
+
+    const initial = (p.author || 'U')[0].toUpperCase();
+    document.getElementById('art-meta').innerHTML = `
+      <div class="art-avatar">${initial}</div>
+      <strong>${p.author || 'Equipe U.GO'}</strong>
+      <div class="art-meta-dot"></div>
+      <span>${p.date || ''}</span>
+      <div class="art-meta-dot"></div>
+      <span>${p.read || '5 min'} de leitura</span>
+    `;
+
+    // Content — parse Markdown simples
+    const contentEl = document.getElementById('art-content');
+    const raw = (p.content && p.content.trim()) ? p.content : (p.excerpt || '');
+    contentEl.innerHTML = parseMarkdown(raw);
+
+    // Tags
+    const tags = CAT_TAGS[p.cat] || [];
+    document.getElementById('art-tags').innerHTML = tags.map(t => `<span class="art-tag">${t}</span>`).join('');
+
+    // Related
+    const all = getPosts();
+    const related = all.filter(x => x.id !== p.id && x.cat === p.cat).slice(0, 3);
+    const fill = all.filter(x => x.id !== p.id && x.cat !== p.cat).slice(0, 3 - related.length);
+    const shown = [...related, ...fill].slice(0, 3);
+    document.getElementById('related-grid').innerHTML = shown.map(r => `
+      <a class="related-card" href="post.html?id=${r.id}">
+        <div class="related-card-img">
+          <div class="related-card-img-inner" style="${r.image ? `background:url('${r.image}') center/cover no-repeat;width:100%;height:100%` : `background:${r.color || '#F5F5F7'}`}">${r.image ? '' : (r.emoji || '📝')}</div>
+        </div>
+        <div class="related-card-body">
+          <div class="related-card-cat">${CAT_LABELS[r.cat] || r.cat}</div>
+          <div class="related-card-title">${r.title}</div>
+        </div>
+      </a>
+    `).join('');
+  }
+
+  // Init
+  const params = new URLSearchParams(location.search);
+  const postId = params.get('id');
+  const posts = getPosts();
+  const post = posts.find(p => p.id === postId) || posts[0];
+  if (post) renderPost(post);
+</script>
+</body>
+</html>

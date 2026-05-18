@@ -84,7 +84,7 @@
         </div>
       </div>
       <div style="flex:1;display:grid;place-items:center;margin-top:8px">
-        <svg viewBox="0 0 300 300" style="width:100%;max-width:340px;height:auto">
+        <svg viewBox="-50 -30 400 370" style="width:100%;max-width:380px;height:auto">
           ${rings}
           ${axisLines}
           <polygon points="${polygon}" fill="#FF6A1A" fill-opacity=".12" stroke="#FF6A1A" stroke-width="2" stroke-linejoin="round"/>

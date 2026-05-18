@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Termo de uso — U.GO</title>
+  <meta name="description" content="Termos de uso da plataforma U.GO. Leia as condições de uso, planos, dados e responsabilidades."/>
+  <link rel="canonical" href="https://www.ugoapp.com.br/termos-de-uso.html"/>
+  <link rel="icon" type="image/png" href="ugo-logo.png" sizes="any"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #FFFFFF;
+      --ink: #1D1D1F;
+      --ink2: #6E6E73;
+      --ink3: #AEAEB2;
+      --accent: #FF5C2A;
+      --border: rgba(0,0,0,0.08);
+    }
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      z-index: 10001;
+      padding: 0.75rem 1.25rem;
+      background: var(--ink);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+    .skip-link:focus {
+      left: 1rem;
+      top: 1rem;
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    #nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      box-shadow: 0 1px 0 var(--border);
+      transition: padding 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+    }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .nav-logo img { height: 48px; width: auto; display: block; filter: brightness(0); }
+    .nav-links { display: flex; gap: 2.5rem; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .nav-links > a:not(.nav-login):not(.nav-cta) {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--ink2);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.3s;
+    }
+    .nav-links > a:not(.nav-login):not(.nav-cta):hover { color: var(--ink); }
+    .nav-cta {
+      background: var(--ink) !important;
+      color: #fff !important;
+      border-radius: 100px;
+      padding: 0.55rem 1.4rem !important;
+      font-weight: 600 !important;
+      letter-spacing: 0 !important;
+      text-decoration: none;
+      transition: background 0.3s !important, transform 0.3s !important;
+    }
+    .nav-cta:hover { background: var(--accent) !important; transform: scale(1.04); }
+    .nav-login {
+      border: 1.5px solid var(--border) !important;
+      border-radius: 100px;
+      padding: 0.55rem 1.4rem !important;
+      font-weight: 600 !important;
+      font-size: 0.78rem !important;
+      letter-spacing: 0 !important;
+      color: var(--ink) !important;
+      text-decoration: none;
+      transition: border-color 0.3s, color 0.3s, transform 0.3s !important;
+    }
+    .nav-login:hover { border-color: var(--accent) !important; color: var(--accent) !important; transform: scale(1.04); }
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+    main h1 {
+      font-size: clamp(1.75rem, 4vw, 2.25rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+      line-height: 1.15;
+    }
+    main .lede {
+      font-size: 0.95rem;
+      color: var(--ink2);
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    main h2 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+      margin: 2rem 0 0.75rem;
+    }
+    main p, main li { font-size: 0.95rem; color: var(--ink2); margin-bottom: 0.85rem; }
+    main ul { margin: 0.5rem 0 1rem 1.25rem; }
+    main li { margin-bottom: 0.35rem; }
+    main strong { color: var(--ink); font-weight: 600; }
+    .tu-footer {
+      margin-top: 3.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .tu-footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .tu-footer-links a {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--ink2);
+      text-decoration: none;
+    }
+    .tu-footer-links a:hover { color: var(--accent); }
+    .tu-footer-logo img { height: 40px; width: auto; filter: brightness(0); margin-bottom: 1rem; }
+    .tu-copy { font-size: 0.8rem; color: var(--ink3); margin-bottom: 1.5rem; }
+    .tu-sub { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink3); margin: 1.25rem 0 0.5rem; }
+    .tu-social { display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; }
+    .tu-social a { font-size: 0.82rem; color: var(--ink2); text-decoration: none; font-weight: 500; }
+    .tu-social a:hover { color: var(--accent); }
+    @media (max-width: 900px) {
+      #nav { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1rem 1.5rem; }
+      .nav-links { width: 100%; gap: 1rem 1.25rem; }
+    }
+    @media (max-width: 768px) {
+      #nav .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo principal</a>
+
+  <nav id="nav" aria-label="Principal">
+    <a href="index.html" class="nav-logo nav-link-target"><img src="ugo-logo.png" alt="U.GO" style="height:48px;width:auto;display:block;filter:brightness(0);"></a>
+    <div class="nav-links">
+      <a href="analytics.html" class="nav-link-target">Analytics</a>
+      <a href="index.html#statement-b2b" class="nav-link-target">Dicas</a>
+      <a href="index.html#gamification" class="nav-link-target">Comunidade</a>
+      <a href="https://app.ugoapp.com.br" target="_blank" rel="noopener noreferrer" class="nav-login nav-link-target">Login web</a>
+      <a href="https://www.ugoapp.com.br" target="_blank" rel="noopener noreferrer" class="nav-cta nav-link-target">Agendar demonstração</a>
+    </div>
+  </nav>
+
+  <main id="conteudo-principal">
+    <h1>TERMO DE USO – U.GO</h1>
+    <p class="lede">Ao acessar ou utilizar a U.GO, o usuário declara que leu, compreendeu e concorda integralmente com estes Termos. Caso não concorde, não deverá utilizar a plataforma.</p>
+
+    <h2>Sobre a U.GO</h2>
+    <p>A U.GO é uma plataforma digital de produtividade, planejamento pessoal e autoconhecimento que utiliza recursos tecnológicos, incluindo inteligência artificial e ferramentas de acompanhamento, para auxiliar usuários na organização de metas, objetivos, tarefas e monitoramento de humor.</p>
+    <p>A U.GO fornece ferramentas de apoio à organização pessoal. A U.GO não presta serviços médicos, psicológicos, psiquiátricos, terapêuticos ou de aconselhamento profissional.</p>
+    <p>O conteúdo e os relatórios gerados pela plataforma possuem caráter informativo e não substituem acompanhamento profissional especializado.</p>
+
+    <h2>Elegibilidade</h2>
+    <p>O uso da plataforma é permitido apenas a maiores de 18 anos com plena capacidade civil.</p>
+    <p>Ao se cadastrar, o usuário declara que as informações fornecidas são verdadeiras e atualizadas.</p>
+    <p>O usuário é responsável por manter a confidencialidade de sua conta e senha.</p>
+
+    <h2>Planos e pagamentos</h2>
+    <p>A U.GO disponibiliza dois planos de assinatura pagos, cujas funcionalidades, valores e condições estão descritos no momento da contratação dentro da plataforma.</p>
+    <p>Ao contratar um plano pago, o usuário concorda com:</p>
+    <ul>
+      <li>a cobrança recorrente conforme periodicidade escolhida;</li>
+      <li>a cobrança automática até que haja cancelamento;</li>
+      <li>as regras da loja de aplicativos, quando aplicável.</li>
+    </ul>
+    <p>O cancelamento pode ser realizado a qualquer momento. O acesso permanecerá ativo até o final do ciclo já pago.</p>
+    <p>Salvo disposição legal em contrário, valores pagos não são reembolsáveis após o início do período de utilização.</p>
+    <p>A U.GO não se responsabiliza por cobranças realizadas por intermediários financeiros ou lojas de aplicativos.</p>
+
+    <h2>Dados inseridos pelo usuário</h2>
+    <p>A plataforma permite que o usuário registre metas, objetivos, planos de ação, sentimentos, humor e outras informações pessoais.</p>
+    <p>O usuário declara estar ciente de que tais dados podem refletir aspectos subjetivos e pessoais.</p>
+    <p>A U.GO não realiza avaliação clínica, diagnóstico ou análise médica com base nessas informações.</p>
+    <p>O usuário é o único responsável pelo conteúdo inserido.</p>
+
+    <h2>Tratamento de dados</h2>
+    <p>A U.GO realiza tratamento de dados pessoais conforme a Lei Geral de Proteção de Dados.</p>
+    <p>Os dados coletados podem incluir:</p>
+    <ul>
+      <li>metas;</li>
+      <li>objetivos;</li>
+      <li>registros de humor;</li>
+      <li>dados de uso da plataforma;</li>
+      <li>informações cadastrais.</li>
+    </ul>
+    <p>Tais dados são utilizados para:</p>
+    <ul>
+      <li>operacionalizar funcionalidades;</li>
+      <li>gerar relatórios personalizados;</li>
+      <li>melhorar a experiência do usuário;</li>
+      <li>oferecer planos e melhorias.</li>
+    </ul>
+    <p>Dados poderão ser utilizados de forma anonimizada e agregada para fins estatísticos e de melhoria de produto.</p>
+    <p>A U.GO adota medidas técnicas e organizacionais de segurança, mas não garante segurança absoluta contra ataques externos.</p>
+
+    <h2>Ausência de garantia de resultados</h2>
+    <p>A U.GO não garante que o uso da plataforma resultará em aumento de produtividade, melhoria emocional, alcance de metas ou qualquer resultado específico.</p>
+    <p>Resultados dependem exclusivamente do engajamento e das circunstâncias individuais de cada usuário.</p>
+
+    <h2>Isenção de responsabilidade</h2>
+    <p>Na máxima extensão permitida pela legislação brasileira, a U.GO não será responsável por:</p>
+    <ul>
+      <li>decisões tomadas pelo usuário com base nas informações da plataforma;</li>
+      <li>frustrações pessoais relacionadas ao não alcance de metas;</li>
+      <li>eventuais impactos emocionais decorrentes da autoavaliação;</li>
+      <li>perda de dados decorrente de falhas técnicas inevitáveis;</li>
+      <li>interrupções temporárias do serviço.</li>
+    </ul>
+    <p>O uso da plataforma ocorre por conta e risco exclusivo do usuário.</p>
+
+    <h2>Limitação de responsabilidade</h2>
+    <p>Caso a U.GO venha a ser responsabilizada judicialmente, sua responsabilidade total estará limitada ao maior valor entre:</p>
+    <ul>
+      <li>o montante pago pelo usuário à U.GO nos últimos 12 meses; ou</li>
+      <li>R$ 500,00.</li>
+    </ul>
+    <p>Essa limitação aplica-se na máxima extensão permitida pela legislação.</p>
+
+    <h2>Propriedade intelectual</h2>
+    <p>Todos os direitos relacionados ao software, marca, identidade visual, algoritmos e funcionalidades pertencem exclusivamente à U.GO.</p>
+    <p>É proibida a cópia, engenharia reversa, modificação ou exploração comercial sem autorização expressa.</p>
+
+    <h2>Suspensão e encerramento</h2>
+    <p>A U.GO poderá suspender ou encerrar contas que violem estes Termos ou utilizem a plataforma de maneira abusiva.</p>
+    <p>O usuário pode solicitar exclusão da conta a qualquer momento, conforme procedimentos internos.</p>
+
+    <h2>Indenização</h2>
+    <p>O usuário concorda em indenizar a U.GO por quaisquer prejuízos decorrentes de:</p>
+    <ul>
+      <li>violação destes Termos;</li>
+      <li>uso indevido da plataforma;</li>
+      <li>conteúdo ilícito inserido.</li>
+    </ul>
+
+    <h2>Alterações</h2>
+    <p>A U.GO poderá alterar estes Termos a qualquer momento.</p>
+    <p>O uso contínuo após a atualização constitui aceitação das novas condições.</p>
+
+    <h2>Legislação e foro</h2>
+    <p>Estes Termos são regidos pelas leis da República Federativa do Brasil.</p>
+    <p>Fica eleito o foro da comarca da sede da U.GO para dirimir quaisquer controvérsias.</p>
+
+    <footer class="tu-footer">
+      <div class="tu-footer-links">
+        <a href="index.html#hugo-mentor">Dicas do Hugo</a>
+        <a href="index.html#cta-final">FAQ</a>
+        <a href="termos-de-uso.html" aria-current="page">Termos de Uso</a>
+        <a href="politica-de-privacidade.html">Política de Privacidade</a>
+      </div>
+      <div class="tu-footer-logo">
+        <a href="index.html"><img src="ugo-logo.png" alt="U.GO"/></a>
+      </div>
+      <p class="tu-copy">© Copyright U.GO 2025</p>
+      <p class="tu-sub">Redes sociais</p>
+      <div class="tu-social">
+        <a href="https://www.linkedin.com/company/93248000/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://www.instagram.com/u.goapp/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.tiktok.com/tag/ugoapp" target="_blank" rel="noopener noreferrer">TikTok</a>
+      </div>
+      <p class="tu-sub">Parceiros</p>
+      <p style="font-size:0.82rem;color:var(--ink3);">Em breve.</p>
+    </footer>
+  </main>
+</body>
+</html>
