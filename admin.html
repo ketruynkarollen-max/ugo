@@ -129,6 +129,32 @@
     .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 100px; font-size: 0.65rem; font-weight: 700; }
     .badge-published { background: #DCFCE7; color: #16A34A; }
 
+    /* ── MODAL CONFIG ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,0.55); align-items: center; justify-content: center; padding: 1.5rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-card {
+      background: #fff; border-radius: 20px; padding: 1.75rem;
+      width: 100%; max-width: 480px; box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+    }
+    .modal-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.35rem; }
+    .modal-card p { font-size: 0.82rem; color: var(--ink2); line-height: 1.6; margin-bottom: 1rem; }
+    .modal-card a { color: var(--accent); }
+    .modal-actions { display: flex; gap: 0.6rem; margin-top: 1rem; flex-wrap: wrap; }
+    .gh-status {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.72rem; font-weight: 700; padding: 0.35rem 0.7rem;
+      border-radius: 100px; background: #FEE2E2; color: #B91C1C;
+    }
+    .gh-status.ok { background: #DCFCE7; color: #16A34A; }
+    .gh-status.server { background: #EFF6FF; color: #2563EB; }
+    .btn-ghost {
+      background: none; border: 1px solid var(--border); color: var(--ink2);
+    }
+    .btn-ghost:hover { background: var(--bg); color: var(--ink); }
+
     @media (max-width: 900px) {
       .admin-body { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
@@ -160,7 +186,9 @@
   <header class="admin-header">
     <div class="admin-header-logo">u<span>.</span>go <span style="font-weight:400;opacity:.5;font-size:.85rem">/ admin</span></div>
     <div class="admin-header-right">
+      <span class="gh-status" id="gh-status-badge">GitHub</span>
       <a href="blog.html" target="_blank">↗ Ver blog</a>
+      <button class="btn-logout" onclick="openGhSettings()">⚙ GitHub</button>
       <button class="btn-logout" onclick="doLogout()">Sair</button>
     </div>
   </header>
@@ -317,16 +345,42 @@
 
 <div id="toast"></div>
 
+<div class="modal-overlay" id="gh-settings-modal" onclick="if(event.target===this)closeGhSettings()">
+  <div class="modal-card">
+    <h3>Configuração do GitHub</h3>
+    <p>
+      Cole o token <strong>uma vez</strong> — fica salvo neste navegador e não pede de novo ao publicar.
+      Crie em <a href="https://github.com/settings/tokens?type=beta" target="_blank" rel="noopener">github.com/settings/tokens</a>
+      → Fine-grained → repositório <strong>ugo</strong> → <strong>Contents: Read and write</strong>.
+    </p>
+    <p id="gh-server-hint" style="display:none;margin-top:-0.5rem;padding:0.65rem 0.85rem;background:#EFF6FF;border-radius:10px;color:#1D4ED8;font-size:0.78rem;">
+      ✓ Token configurado no Vercel — publicação automática sem colar token aqui.
+    </p>
+    <div class="form-group" style="margin-bottom:0.5rem;">
+      <label>GitHub Token</label>
+      <input type="password" id="gh-token-input" placeholder="ghp_… ou github_pat_…" autocomplete="off"/>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="saveGhToken()">Salvar token</button>
+      <button class="btn btn-ghost" onclick="clearGhToken()">Remover</button>
+      <button class="btn btn-secondary" onclick="closeGhSettings()">Fechar</button>
+    </div>
+  </div>
+</div>
+
 <script>
   // ── CONFIG GITHUB ──
   const GH_OWNER = 'ketruynkarollen-max';
   const GH_REPO  = 'ugo';
   const GH_FILE  = 'posts.json';
   const GH_BRANCH = 'main';
+  const GH_TOKEN_KEY = 'ugo_gh_token';
 
   // ── AUTH ──
   const ADMIN_USER = 'admin';
   const ADMIN_PASS = 'ugo2026';
+
+  let ghServerReady = false;
 
   function doLogin() {
     const u = document.getElementById('login-user').value;
@@ -335,7 +389,7 @@
       sessionStorage.setItem('ugo_admin', '1');
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('admin-screen').style.display = 'block';
-      loadPostsFromGitHub();
+      initAdminPanel();
     } else {
       document.getElementById('login-error').style.display = 'block';
     }
@@ -346,17 +400,99 @@
     location.reload();
   }
 
+  function initAdminPanel() {
+    loadPostsFromGitHub();
+    refreshGhStatus();
+  }
+
   window.addEventListener('DOMContentLoaded', () => {
     if (sessionStorage.getItem('ugo_admin') === '1') {
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('admin-screen').style.display = 'block';
-      loadPostsFromGitHub();
+      initAdminPanel();
     }
   });
 
-  // ── GITHUB API ──
+  // ── CONFIG TOKEN (salvo no navegador) ──
   function getToken() {
-    return localStorage.getItem('ugo_gh_token') || '';
+    return localStorage.getItem(GH_TOKEN_KEY) || '';
+  }
+
+  function openGhSettings() {
+    const input = document.getElementById('gh-token-input');
+    if (input) input.value = getToken();
+    document.getElementById('gh-settings-modal').classList.add('open');
+  }
+
+  function closeGhSettings() {
+    document.getElementById('gh-settings-modal').classList.remove('open');
+  }
+
+  function saveGhToken() {
+    const val = document.getElementById('gh-token-input').value.trim();
+    if (!val) { showToast('Cole um token válido.', 'error'); return; }
+    localStorage.setItem(GH_TOKEN_KEY, val);
+    document.getElementById('gh-token-input').value = '';
+    refreshGhStatus();
+    closeGhSettings();
+    showToast('Token salvo! Não vai pedir de novo neste navegador.', 'success');
+  }
+
+  function clearGhToken() {
+    localStorage.removeItem(GH_TOKEN_KEY);
+    document.getElementById('gh-token-input').value = '';
+    refreshGhStatus();
+    showToast('Token removido deste navegador.', '');
+  }
+
+  async function refreshGhStatus() {
+    const badge = document.getElementById('gh-status-badge');
+    const hint = document.getElementById('gh-server-hint');
+    if (!badge) return;
+
+    ghServerReady = await checkServerGhToken();
+    if (ghServerReady) {
+      badge.textContent = 'GitHub · Vercel ✓';
+      badge.className = 'gh-status server';
+      if (hint) hint.style.display = 'block';
+      return;
+    }
+    if (hint) hint.style.display = 'none';
+    if (getToken()) {
+      badge.textContent = 'GitHub · salvo ✓';
+      badge.className = 'gh-status ok';
+    } else {
+      badge.textContent = 'GitHub · configurar';
+      badge.className = 'gh-status';
+    }
+  }
+
+  async function checkServerGhToken() {
+    try {
+      const res = await fetch('/api/posts', {
+        method: 'GET',
+        headers: { 'X-Admin-Pass': ADMIN_PASS },
+      });
+      return res.ok;
+    } catch {
+      return false;
+    }
+  }
+
+  async function pushViaServer(posts) {
+    const res = await fetch('/api/posts', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Admin-Pass': ADMIN_PASS,
+      },
+      body: JSON.stringify({ posts }),
+    });
+    if (res.ok) return true;
+    if (res.status === 503) return null;
+    const err = await res.json().catch(() => ({}));
+    showToast(`Erro: ${err.error || err.message || res.statusText}`, 'error');
+    return false;
   }
 
   async function loadPostsFromGitHub() {
@@ -369,23 +505,26 @@
       showToast('Erro ao carregar posts.', 'error');
       renderAll();
     }
+    refreshGhStatus();
   }
 
   async function pushPostsToGitHub(posts) {
-    const token = getToken();
-    if (!token) {
-      const t = prompt('Cole seu GitHub Token (com permissão contents:write):\n\nCrie em: github.com/settings/tokens → Fine-grained token → Contents: Read and write');
-      if (!t) { showToast('Token necessário para publicar.', 'error'); return false; }
-      localStorage.setItem('ugo_gh_token', t.trim());
+    const viaServer = await pushViaServer(posts);
+    if (viaServer === true) return true;
+    if (viaServer === false) return false;
+
+    let tk = getToken();
+    if (!tk) {
+      openGhSettings();
+      showToast('Configure o token do GitHub uma vez (botão ⚙ GitHub).', 'error');
+      return false;
     }
 
-    const tk = getToken();
     const apiUrl = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`;
 
-    // Busca SHA atual do arquivo
     let sha = '';
     try {
-      const r = await fetch(apiUrl, { headers: { Authorization: `token ${tk}`, Accept: 'application/vnd.github+json' } });
+      const r = await fetch(apiUrl, { headers: { Authorization: `Bearer ${tk}`, Accept: 'application/vnd.github+json' } });
       if (r.ok) { const d = await r.json(); sha = d.sha; }
     } catch {}
 
@@ -395,17 +534,19 @@
 
     const res = await fetch(apiUrl, {
       method: 'PUT',
-      headers: { Authorization: `token ${tk}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      headers: { Authorization: `Bearer ${tk}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
       body: JSON.stringify(body)
     });
 
     if (!res.ok) {
-      const err = await res.json();
+      const err = await res.json().catch(() => ({}));
       if (res.status === 401) {
-        localStorage.removeItem('ugo_gh_token');
-        showToast('Token inválido. Tente novamente.', 'error');
+        localStorage.removeItem(GH_TOKEN_KEY);
+        refreshGhStatus();
+        openGhSettings();
+        showToast('Token inválido. Salve um token novo em ⚙ GitHub.', 'error');
       } else {
-        showToast(`Erro GitHub: ${err.message}`, 'error');
+        showToast(`Erro GitHub: ${err.message || res.statusText}`, 'error');
       }
       return false;
     }
