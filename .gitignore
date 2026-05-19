@@ -23,9 +23,14 @@ macbook-b64.txt
 /*.mp4
 !/demo-mobile.mp4
 !/hugo.mp4
+!/videodesk.mp4
 
 # PNG na raiz: ignorar tudo exceto os usados na página
 /*.png
+!/ugo-logo.png
+!/banner111.png
+!/analyticshugo.png
+!/og-landing-correta.png
 !/AAAAAAA.png
 !/dashboard.png
 !/features-banner.png
@@ -42,6 +47,8 @@ macbook-b64.txt
 !/screen-pomodoro.png
 
 /*.webp
+!/banner111.webp
+!/analyticshugo.webp
 !/screen1.webp
 !/screen2.webp
 !/screen3.webp
@@ -65,6 +72,7 @@ macbook-b64.txt
 
 /*.jpg
 /*.jpeg
+!/analyticshugo.jpeg
 
 # Modelos 3D na raiz: só o MacBook do bloco analytics
 /*.glb
