@@ -198,7 +198,10 @@
     .scroll-article-img {
       aspect-ratio: 4/3; overflow: hidden;
     }
-    .scroll-article-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+    .scroll-article-img img,
+    .scroll-article-img > span { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; display: block; }
+    .grid-card-img img,
+    .grid-card-img > span { width: 100%; height: 100%; display: block; }
     .scroll-article:hover .scroll-article-img img { transform: scale(1.04); }
     .scroll-article-body {
       padding: 1.75rem;
@@ -318,47 +321,42 @@
     }
   </style>
 </head>
-<body>
+<body data-i18n-page="blog">
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="index.html" class="nav-logo"><img src="ugo-logo.png" alt="U.GO" width="160" height="64"></a>
+  <a href="index.html" class="nav-logo"><img src="ugo-logo.png" alt="Logo U.GO" width="160" height="64"></a>
   <div class="nav-links">
     <div class="nav-dropdown">
       <button type="button" class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
-        Analytics
+        <span data-i18n="nav.analytics">Analytics</span>
         <span class="nav-dropdown-chevron" aria-hidden="true"></span>
       </button>
       <div class="nav-dropdown-panel" role="menu">
-        <a href="analytics-empresa.html" role="menuitem">Analytics Empresa</a>
-        <a href="analytics.html" role="menuitem">Analytics Educacional</a>
+        <a href="analytics-empresa.html" role="menuitem" data-i18n="nav.analyticsEmpresa">Analytics Empresa</a>
+        <a href="analytics-educacional.html" role="menuitem" data-i18n="nav.analyticsEducacional">Analytics Educacional</a>
       </div>
     </div>
-    <a href="blog.html" class="active">Dicas</a>
-    <a href="index.html#gamification">Comunidades</a>
+    <a href="blog.html" class="active" data-i18n="nav.tips">Dicas</a>
+    <a href="index.html#gamification" data-i18n="nav.communities">Comunidades</a>
     <div style="display:flex;gap:0.5rem;align-items:center;">
-      <a href="https://www.ugoapp.com.br" target="_blank" class="nav-cta">Agendar demonstração</a>
-      <a href="https://app.ugoapp.com.br" target="_blank" class="nav-login">Login web</a>
+      <a href="https://www.ugoapp.com.br" target="_blank" class="nav-cta" data-i18n="nav.cta">Agendar demonstração</a>
+      <a href="https://app.ugoapp.com.br" target="_blank" class="nav-login" data-i18n="nav.login">Login web</a>
       <button id="lang-toggle" aria-label="Switch language" style="background:none;border:1.5px solid var(--border);border-radius:100px;padding:0.4rem 0.85rem;font-family:'Manrope',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.06em;color:var(--ink2);cursor:pointer;transition:border-color 0.2s,color 0.2s;white-space:nowrap;">EN</button>
     </div>
   </div>
 </nav>
 
-<!-- PAGE HEADER -->
-<header class="page-header">
-  <h1>Dicas<br/><em>U.GO</em></h1>
-  <p class="page-header-desc">Hábitos, produtividade e desenvolvimento humano. Conteúdo prático para evoluir todo dia.</p>
-</header>
 
 <!-- CATEGORY TABS -->
 <div class="cat-tabs">
-  <button class="cat-tab active" onclick="filterAll(this)">Tudo</button>
-  <button class="cat-tab" onclick="filterCat(this,'habitos')">Hábitos</button>
-  <button class="cat-tab" onclick="filterCat(this,'produtividade')">Produtividade</button>
-  <button class="cat-tab" onclick="filterCat(this,'soft-skills')">Soft Skills</button>
-  <button class="cat-tab" onclick="filterCat(this,'gestao')">Gestão de Tempo</button>
-  <button class="cat-tab" onclick="filterCat(this,'ia')">IA & Tecnologia</button>
-  <button class="cat-tab" onclick="filterCat(this,'comunidade')">Comunidade</button>
+  <button class="cat-tab active" onclick="filterAll(this)" data-i18n="blog.tab.all">Tudo</button>
+  <button class="cat-tab" onclick="filterCat(this,'habitos')" data-i18n="blog.tab.habits">Hábitos</button>
+  <button class="cat-tab" onclick="filterCat(this,'produtividade')" data-i18n="blog.tab.prod">Produtividade</button>
+  <button class="cat-tab" onclick="filterCat(this,'soft-skills')" data-i18n="blog.tab.soft">Soft Skills</button>
+  <button class="cat-tab" onclick="filterCat(this,'gestao')" data-i18n="blog.tab.time">Gestão de Tempo</button>
+  <button class="cat-tab" onclick="filterCat(this,'ia')" data-i18n="blog.tab.ai">IA & Tecnologia</button>
+  <button class="cat-tab" onclick="filterCat(this,'comunidade')" data-i18n="blog.tab.comm">Comunidade</button>
 </div>
 
 <!-- STICKY SPLIT: esquerda fixa, direita desce -->
@@ -366,206 +364,279 @@
   <div class="sticky-section-inner">
 
     <!-- ESQUERDA FIXA -->
-    <div class="sticky-left">
-      <a class="sticky-left-link" href="#">
-        <div style="width:100%;height:100%;background:linear-gradient(160deg,#1a1a2e 0%,#16213e 40%,#0f3460 70%,#533483 100%);position:absolute;inset:0;"></div>
-        <div style="position:absolute;inset:0;background:url('og-landing-correta.png') center/cover no-repeat;opacity:0.6;"></div>
-        <div class="sticky-left-overlay"></div>
-        <div class="sticky-left-body">
-          <span class="sticky-left-cat">Hábitos</span>
-          <h2 class="sticky-left-title">Por que 95% das pessoas abandonam seus hábitos em menos de duas semanas.</h2>
-          <div class="sticky-left-meta">
-            <strong>Equipe U.GO</strong> · 12 Mai 2026 · 8 min de leitura
-          </div>
-        </div>
-      </a>
-    </div>
+    <div class="sticky-left" id="sticky-featured"></div>
 
     <!-- DIREITA QUE DESCE -->
-    <div class="sticky-right" id="scroll-articles">
-
-      <a class="scroll-article" href="post.html?id=s2" data-cat="produtividade">
-        <div class="scroll-article-img" style="background:linear-gradient(135deg,#fff5f2,#ffe4d6);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">⏱️</div>
-        <div class="scroll-article-body">
-          <div class="art-cat">Produtividade</div>
-          <h3 class="art-title">Técnica Pomodoro: como usar sem perder o fio da meada entre as tarefas</h3>
-          <p class="art-excerpt">A técnica funciona — mas só quando você sabe o que fazer nos 5 minutos de pausa.</p>
-          <div class="art-meta"><strong>Pedro Alves</strong> · 5 min</div>
-        </div>
-      </a>
-
-      <a class="scroll-article" href="post.html?id=s3" data-cat="soft-skills">
-        <div class="scroll-article-img" style="background:linear-gradient(135deg,#f0f9ff,#dbeafe);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">🧠</div>
-        <div class="scroll-article-body">
-          <div class="art-cat">Soft Skills</div>
-          <h3 class="art-title">Inteligência emocional não é talento. É treino diário.</h3>
-          <p class="art-excerpt">Pesquisadores já comprovaram: regular emoções é uma habilidade que pode ser desenvolvida.</p>
-          <div class="art-meta"><strong>Ana Lima</strong> · 7 min</div>
-        </div>
-      </a>
-
-      <a class="scroll-article" href="post.html?id=s2" data-cat="gestao">
-        <div class="scroll-article-img" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">📅</div>
-        <div class="scroll-article-body">
-          <div class="art-cat">Gestão de Tempo</div>
-          <h3 class="art-title">Time blocking: como organizar sua semana para realmente executar o que importa</h3>
-          <p class="art-excerpt">Uma das estratégias favoritas de CEOs de alto desempenho. Simples de entender, difícil de manter.</p>
-          <div class="art-meta"><strong>Equipe U.GO</strong> · 6 min</div>
-        </div>
-      </a>
-
-      <a class="scroll-article" href="post.html?id=s1" data-cat="ia">
-        <div class="scroll-article-img" style="background:linear-gradient(135deg,#faf5ff,#e9d5ff);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">🤖</div>
-        <div class="scroll-article-body">
-          <div class="art-cat">IA & Tecnologia</div>
-          <h3 class="art-title">Como o HUGO usa IA para aprender seus padrões e te dar o próximo passo certo</h3>
-          <p class="art-excerpt">Não é um chatbot genérico. O HUGO analisa seu histórico, humor e metas para sugerir ações precisas.</p>
-          <div class="art-meta"><strong>Time de Produto</strong> · 10 min</div>
-        </div>
-      </a>
-
-    </div>
+    <div class="sticky-right" id="scroll-articles"></div>
   </div>
 </div>
 
 <!-- SEÇÃO COM TÍTULO + GRID 3 COLUNAS -->
 <div class="section-divider">
-  <h2>Mais artigos</h2>
-  <a href="#">Ver todos →</a>
+  <h2 data-i18n="blog.more">Mais artigos</h2>
+  <a href="#" data-i18n="blog.seeAll">Ver todos →</a>
 </div>
 
 <div class="three-col">
-  <div class="three-col-grid" id="grid-posts">
-
-    <a class="grid-card" href="post.html?id=s1" data-cat="habitos">
-      <div class="grid-card-img" style="background:linear-gradient(135deg,#fff7ed,#fed7aa);display:flex;align-items:center;justify-content:center;font-size:3rem;">🔥</div>
-      <div class="grid-card-body">
-        <div class="grid-card-cat">Hábitos</div>
-        <h3 class="grid-card-title">Streak de 30 dias: o que acontece com seu cérebro quando você mantém um hábito por um mês</h3>
-        <p class="grid-card-excerpt">Neuroplasticidade, dopamina e o loop de recompensa — a biologia explica por que 30 dias muda algo real.</p>
-        <div class="grid-card-meta"><strong>Dr. Rafael Costa</strong> · 9 min · 08 Mai 2026</div>
-      </div>
-    </a>
-
-    <a class="grid-card" href="post.html?id=s3" data-cat="comunidade">
-      <div class="grid-card-img" style="background:linear-gradient(135deg,#fdf2f8,#f5d0fe);display:flex;align-items:center;justify-content:center;font-size:3rem;">🏆</div>
-      <div class="grid-card-body">
-        <div class="grid-card-cat">Comunidade</div>
-        <h3 class="grid-card-title">Por que evoluir em grupo é até 3x mais eficiente do que evoluir sozinho</h3>
-        <p class="grid-card-excerpt">Responsabilidade compartilhada e reconhecimento público aumentam dramaticamente a taxa de conclusão.</p>
-        <div class="grid-card-meta"><strong>Equipe U.GO</strong> · 5 min · 05 Mai 2026</div>
-      </div>
-    </a>
-
-    <a class="grid-card" href="post.html?id=s3" data-cat="soft-skills">
-      <div class="grid-card-img" style="background:linear-gradient(135deg,#f0f9ff,#bae6fd);display:flex;align-items:center;justify-content:center;font-size:3rem;">🧠</div>
-      <div class="grid-card-body">
-        <div class="grid-card-cat">Soft Skills</div>
-        <h3 class="grid-card-title">Protagonismo: a soft skill mais valorizada no mercado e como desenvolvê-la</h3>
-        <p class="grid-card-excerpt">Pessoas protagonistas não esperam oportunidades — elas criam. Aprenda como tornar isso um hábito.</p>
-        <div class="grid-card-meta"><strong>Juliana Mota</strong> · 6 min · 01 Mai 2026</div>
-      </div>
-    </a>
-
-    <a class="grid-card" href="post.html?id=s2" data-cat="gestao">
-      <div class="grid-card-img" style="background:linear-gradient(135deg,#f0fdf4,#bbf7d0);display:flex;align-items:center;justify-content:center;font-size:3rem;">📅</div>
-      <div class="grid-card-body">
-        <div class="grid-card-cat">Gestão de Tempo</div>
-        <h3 class="grid-card-title">O método das 3 tarefas: como parar de fazer muita coisa e começar a fazer o que importa</h3>
-        <p class="grid-card-excerpt">Listas longas criam ansiedade, não resultado. Descubra como escolher as 3 tarefas que realmente movem o ponteiro.</p>
-        <div class="grid-card-meta"><strong>Equipe U.GO</strong> · 5 min · 28 Abr 2026</div>
-      </div>
-    </a>
-
-    <a class="grid-card" href="post.html?id=s1" data-cat="habitos">
-      <div class="grid-card-img" style="background:linear-gradient(135deg,#fefce8,#fde68a);display:flex;align-items:center;justify-content:center;font-size:3rem;">😴</div>
-      <div class="grid-card-body">
-        <div class="grid-card-cat">Hábitos</div>
-        <h3 class="grid-card-title">Sono e produtividade: como dormir melhor mudou minha rotina para sempre</h3>
-        <p class="grid-card-excerpt">Oito horas de sono não é luxo — é estratégia. Veja como a qualidade do sono afeta cada hábito que você tenta construir.</p>
-        <div class="grid-card-meta"><strong>Marcos Neves</strong> · 7 min · 24 Abr 2026</div>
-      </div>
-    </a>
-
-    <a class="grid-card" href="post.html?id=s2" data-cat="ia">
-      <div class="grid-card-img" style="background:linear-gradient(135deg,#faf5ff,#e9d5ff);display:flex;align-items:center;justify-content:center;font-size:3rem;">🤖</div>
-      <div class="grid-card-body">
-        <div class="grid-card-cat">IA & Tecnologia</div>
-        <h3 class="grid-card-title">O futuro da produtividade é personalizado: como a IA vai adaptar sua rotina ao seu estilo de vida</h3>
-        <p class="grid-card-excerpt">Não existe uma rotina perfeita universal. A IA está começando a entender isso — e o U.GO já aplica isso na prática.</p>
-        <div class="grid-card-meta"><strong>Time de Produto</strong> · 8 min · 20 Abr 2026</div>
-      </div>
-    </a>
-
+  <div class="three-col-grid" id="grid-posts"></div>
   </div>
 </div>
 
 <!-- NEWSLETTER -->
 <div class="newsletter">
-  <h2>Conteúdo que <em>vale seu tempo</em><br/>na sua caixa de entrada.</h2>
-  <p>Toda semana, um artigo prático sobre hábitos, produtividade e desenvolvimento humano.<br/>Sem spam. Cancele quando quiser.</p>
+  <h2 data-i18n="blog.nl.h2">Conteúdo que <em>vale seu tempo</em><br/>na sua caixa de entrada.</h2>
+  <p data-i18n="blog.nl.p">Toda semana, um artigo prático sobre hábitos, produtividade e desenvolvimento humano.<br/>Sem spam. Cancele quando quiser.</p>
   <div class="nl-form">
-    <input type="email" class="nl-input" placeholder="seu@email.com"/>
-    <button class="nl-btn">Quero receber →</button>
+    <input type="email" class="nl-input" placeholder="seu@email.com" data-i18n-placeholder="blog.nl.placeholder"/>
+    <button class="nl-btn" data-i18n="blog.nl.btn">Quero receber →</button>
   </div>
 </div>
 
 <!-- FOOTER -->
 <footer class="footer">
-  <a href="index.html" style="font-family:'Manrope',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:-0.04em;color:#fff;text-decoration:none;">u<span style="color:var(--accent)">.</span>go</a>
+  <a href="index.html"><img src="ugo-logo.png" alt="Logo U.GO" width="120" height="48" style="height:48px;width:auto;display:block;filter:brightness(0) invert(1);"></a>
   <div class="footer-links">
-    <a href="index.html">Início</a>
-    <a href="analytics-empresa.html">Para Empresas</a>
-    <a href="politica-de-privacidade.html">Privacidade</a>
-    <a href="termos-de-uso.html">Termos</a>
+    <a href="index.html" data-i18n="footer.home">Início</a>
+    <a href="analytics-empresa.html" data-i18n="footer.analytics1">Para Empresas</a>
+    <a href="politica-de-privacidade.html" data-i18n="footer.privacy">Privacidade</a>
+    <a href="termos-de-uso.html" data-i18n="footer.terms">Termos</a>
   </div>
-  <span class="footer-copy">© 2026 U.GO. Todos os direitos reservados.</span>
+  <span class="footer-copy" data-i18n="footer.copy">© 2026 U.GO. Todos os direitos reservados.</span>
 </footer>
 
 <script>
-  const CAT_LABELS = {
-    'habitos':'Hábitos','produtividade':'Produtividade','soft-skills':'Soft Skills',
-    'gestao':'Gestão de Tempo','ia':'IA & Tecnologia','comunidade':'Comunidade'
+(function (global) {
+  const GH_RAW = 'https://raw.githubusercontent.com/ketruynkarollen-max/ugo/main';
+  const GH_POSTS = GH_RAW + '/posts.json';
+
+  function normalizeImageUrl(url) {
+    if (!url) return '';
+    if (url.startsWith('/blog-images/')) return GH_RAW + url;
+    return url;
+  }
+
+  function normalizePost(p) {
+    if (!p) return p;
+    if (!p.image) return p;
+    return Object.assign({}, p, { image: normalizeImageUrl(p.image) });
+  }
+
+  async function fetchPosts() {
+    try {
+      const r = await fetch(GH_POSTS + '?_=' + Date.now());
+      if (r.ok) {
+        const data = await r.json();
+        if (Array.isArray(data) && data.length) {
+          return data.map(normalizePost);
+        }
+      }
+    } catch (e) {
+      console.warn('UgoPostsSource: GitHub', e);
+    }
+    try {
+      const r = await fetch('posts.json?_=' + Date.now());
+      const data = await r.json();
+      return Array.isArray(data) ? data.map(normalizePost) : [];
+    } catch (e) {
+      console.warn('UgoPostsSource: local', e);
+      return [];
+    }
+  }
+
+  global.UgoPostsSource = {
+    GH_RAW: GH_RAW,
+    GH_POSTS: GH_POSTS,
+    normalizeImageUrl: normalizeImageUrl,
+    normalizePost: normalizePost,
+    fetchPosts: fetchPosts,
   };
+})(typeof window !== 'undefined' ? window : global);
+
+(function () {
+  const CAT_LABELS = {
+    habitos: 'Hábitos',
+    produtividade: 'Produtividade',
+    'soft-skills': 'Soft Skills',
+    gestao: 'Gestão de Tempo',
+    ia: 'IA & Tecnologia',
+    comunidade: 'Comunidade',
+  };
+
+  function esc(s) {
+    return String(s ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function postImageSrc(p) {
+    return (window.UgoPostsSource && window.UgoPostsSource.normalizeImageUrl(p && p.image)) || (p && p.image) || '';
+  }
+
+  function cardThumb(p, size) {
+    const fz = size === 'scroll' ? '3.5rem' : '3rem';
+    const src = postImageSrc(p);
+    if (src) {
+      return (
+        '<img src="' +
+        esc(src) +
+        '" alt="' +
+        esc(p.title) +
+        '" loading="lazy" decoding="async">'
+      );
+    }
+    const bg = p.color || 'linear-gradient(135deg,#F5F5F7,#E8E8EC)';
+    return (
+      '<span style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:' +
+      bg +
+      ';font-size:' +
+      fz +
+      '">' +
+      (p.emoji || '📝') +
+      '</span>'
+    );
+  }
+
+  function renderFeatured(p) {
+    const el = document.getElementById('sticky-featured');
+    if (!el) return;
+    let bg;
+    const featSrc = postImageSrc(p);
+    if (featSrc) {
+      bg =
+        '<img src="' +
+        esc(featSrc) +
+        '" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">';
+    } else {
+      bg =
+        '<div style="width:100%;height:100%;background:' +
+        (p.color || 'linear-gradient(160deg,#1a1a2e,#533483)') +
+        ';position:absolute;inset:0;"></div>' +
+        "<div style=\"position:absolute;inset:0;background:url('og-landing-correta.png') center/cover no-repeat;opacity:0.35;\"></div>";
+    }
+    el.innerHTML =
+      '<a class="sticky-left-link" href="post.html?id=' +
+      esc(p.id) +
+      '" data-cat="' +
+      esc(p.cat) +
+      '">' +
+      bg +
+      '<div class="sticky-left-overlay"></div><div class="sticky-left-body">' +
+      '<span class="sticky-left-cat" data-cat="' +
+      esc(p.cat) +
+      '">' +
+      esc(CAT_LABELS[p.cat] || p.cat) +
+      '</span>' +
+      '<h2 class="sticky-left-title">' +
+      esc(p.title) +
+      '</h2>' +
+      '<div class="sticky-left-meta"><strong>' +
+      esc(p.author || 'Equipe U.GO') +
+      '</strong> · ' +
+      esc(p.date || '') +
+      ' · ' +
+      esc(p.read || '5 min') +
+      '</div></div></a>';
+  }
+
+  function renderScrollArticle(p) {
+    return (
+      '<a class="scroll-article" href="post.html?id=' +
+      esc(p.id) +
+      '" data-cat="' +
+      esc(p.cat) +
+      '">' +
+      '<div class="scroll-article-img">' +
+      cardThumb(p, 'scroll') +
+      '</div><div class="scroll-article-body">' +
+      '<' + 'div class="art-cat" data-cat="' +
+      esc(p.cat) +
+      '">' +
+      esc(CAT_LABELS[p.cat] || p.cat) +
+      '</div>' +
+      '<h3 class="art-title">' +
+      esc(p.title) +
+      '</h3><p class="art-excerpt">' +
+      esc(p.excerpt) +
+      '</p>' +
+      '<div class="art-meta"><strong>' +
+      esc(p.author || 'Equipe U.GO') +
+      '</strong> · ' +
+      esc(p.read || '5 min') +
+      '</div></div></a>'
+    );
+  }
+
+  function renderGridCard(p) {
+    return (
+      '<a class="grid-card" href="post.html?id=' +
+      esc(p.id) +
+      '" data-cat="' +
+      esc(p.cat) +
+      '">' +
+      '<div class="grid-card-img">' +
+      cardThumb(p, 'grid') +
+      '</div><div class="grid-card-body">' +
+      '<div class="grid-card-cat">' +
+      esc(CAT_LABELS[p.cat] || p.cat) +
+      '</div>' +
+      '<h3 class="grid-card-title">' +
+      esc(p.title) +
+      '</h3><p class="grid-card-excerpt">' +
+      esc(p.excerpt) +
+      '</p>' +
+      '<div class="grid-card-meta"><strong>' +
+      esc(p.author || 'Equipe U.GO') +
+      '</strong> · ' +
+      esc(p.read || '5 min') +
+      ' · ' +
+      esc(p.date || '') +
+      '</div></div></a>'
+    );
+  }
 
   async function loadDynamicPosts() {
     try {
-      const res = await fetch(`/posts.json?_=${Date.now()}`);
-      const posts = await res.json();
+      const posts = window.UgoPostsSource
+        ? await window.UgoPostsSource.fetchPosts()
+        : await fetch('posts.json?_=' + Date.now()).then((r) => r.json());
       if (!posts.length) return;
+      renderFeatured(posts[0]);
+      const scroll = document.getElementById('scroll-articles');
+      if (scroll) scroll.innerHTML = posts.slice(1, 5).map(renderScrollArticle).join('');
       const grid = document.getElementById('grid-posts');
-      // Limpa posts estáticos hardcoded
-      grid.innerHTML = '';
-      const html = posts.map(p => `
-        <a class="grid-card" href="post.html?id=${p.id}" data-cat="${p.cat}">
-          <div class="grid-card-img" style="${p.image ? `background:url('${p.image.replace(/'/g,"\\'")}') center/cover no-repeat` : `background:${p.color || 'linear-gradient(135deg,#F5F5F7,#E8E8EC)'};display:flex;align-items:center;justify-content:center;font-size:3rem;`}">${p.image ? '' : (p.emoji || '📝')}</div>
-          <div class="grid-card-body">
-            <div class="grid-card-cat">${CAT_LABELS[p.cat] || p.cat}</div>
-            <h3 class="grid-card-title">${p.title}</h3>
-            <p class="grid-card-excerpt">${p.excerpt}</p>
-            <div class="grid-card-meta"><strong>${p.author || 'Equipe U.GO'}</strong> · ${p.read || '5 min'} · ${p.date || ''}</div>
-          </div>
-        </a>
-      `).join('');
-      grid.innerHTML = html;
-    } catch(e) {}
+      if (grid) grid.innerHTML = posts.slice(1).map(renderGridCard).join('');
+    } catch (e) {
+      console.warn('blog posts:', e);
+    }
   }
 
   document.addEventListener('DOMContentLoaded', loadDynamicPosts);
 
-  function filterAll(btn) {
-    document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+  window.filterAll = function (btn) {
+    document.querySelectorAll('.cat-tab').forEach(function (b) {
+      b.classList.remove('active');
+    });
     btn.classList.add('active');
-    document.querySelectorAll('[data-cat]').forEach(el => el.style.display = '');
-  }
+    document.querySelectorAll('[data-cat]').forEach(function (el) {
+      el.style.display = '';
+    });
+  };
 
-  function filterCat(btn, cat) {
-    document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+  window.filterCat = function (btn, cat) {
+    document.querySelectorAll('.cat-tab').forEach(function (b) {
+      b.classList.remove('active');
+    });
     btn.classList.add('active');
-    document.querySelectorAll('[data-cat]').forEach(el => {
+    document.querySelectorAll('[data-cat]').forEach(function (el) {
       el.style.display = el.dataset.cat === cat ? '' : 'none';
     });
-  }
+  };
+})();
+
 </script>
+<script src="i18n.js"></script>
+<script>UgoI18n.init();</script>
 </body>
 </html>

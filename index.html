@@ -126,7 +126,8 @@
       position: fixed; top: 0; left: 0; width: 100%;
       z-index: 1000;
       padding: 0.5rem 2.5rem;
-      display: flex; justify-content: space-between; align-items: center;
+      display: flex; justify-content: flex-start; align-items: center;
+      gap: 1rem;
       transition: padding 0.4s ease, background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
     }
     #nav.scrolled {
@@ -149,6 +150,22 @@
     .nav-logo .logo-dot { color: var(--accent); }
     .nav-links {
       display: flex; gap: 2.5rem; align-items: center;
+      margin-left: auto;
+    }
+    #lang-toggle {
+      background: none;
+      border: 1.5px solid var(--border);
+      border-radius: 100px;
+      padding: 0.4rem 0.85rem;
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--ink2);
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: border-color 0.2s, color 0.2s;
     }
     .nav-links a {
       font-size: 0.78rem; font-weight: 500;
@@ -246,6 +263,101 @@
       white-space: nowrap;
       transition: color 0.2s, background 0.2s;
     }
+    .nav-menu-btn {
+      display: none;
+      flex-shrink: 0;
+      margin-left: auto;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .nav-menu-btn span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      margin: 0 auto;
+      background: var(--ink);
+      border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.2s;
+    }
+    .nav-menu-btn[aria-expanded="true"] span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .nav-menu-btn[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .nav-menu-btn[aria-expanded="true"] span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+    .nav-mobile-panel {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 5.5rem 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      overflow-y: auto;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.3s ease, visibility 0.3s;
+    }
+    .nav-mobile-panel.is-open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    .nav-mobile-panel a,
+    .nav-mobile-panel .nav-mobile-label {
+      display: block;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-decoration: none;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--border2);
+    }
+    .nav-mobile-panel .nav-mobile-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      padding-top: 1.25rem;
+      border-bottom: none;
+    }
+    .nav-mobile-panel .nav-mobile-sublink {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--ink2);
+      padding-left: 0.75rem;
+    }
+    .nav-mobile-ctas {
+      margin-top: auto;
+      padding-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .nav-mobile-ctas .nav-cta,
+    .nav-mobile-ctas .nav-login {
+      display: block;
+      text-align: center;
+      padding: 0.9rem 1.25rem !important;
+      font-size: 0.9rem !important;
+    }
+    body.nav-menu-open { overflow: hidden; }
+
     .nav-dropdown-panel a:hover {
       color: var(--ink);
       background: rgba(0,0,0,0.04);
@@ -254,8 +366,10 @@
     /* ── CANVAS HERO SECTION (seq1 + seq2 unificadas) ── */
     #scrolly { height: 220vh; position: relative; }
     #canvas-sticky {
+      position: -webkit-sticky;
       position: sticky; top: 0;
-      height: 100vh; width: 100%;
+      height: 100vh; height: calc(var(--vh, 1vh) * 100);
+      width: 100%;
       overflow: hidden;
     }
     #hero-canvas {
@@ -285,8 +399,10 @@
       position: absolute; inset: 0; pointer-events: none; z-index: 10;
     }
     #panels-sticky {
+      position: -webkit-sticky;
       position: sticky; top: 0;
-      height: 100vh; width: 100%;
+      height: 100vh; height: calc(var(--vh, 1vh) * 100);
+      width: 100%;
     }
     .text-panel {
       position: absolute; inset: 0;
@@ -1319,6 +1435,22 @@
       padding: clamp(3rem,5vw,5rem) 0 0;
     }
     .what-ugo-inner { max-width:1280px; margin:0 auto; }
+    .features-banner-wrap {
+      width: 100%;
+      background: #fff;
+      line-height: 0;
+    }
+    .features-banner-canvas {
+      display: block;
+      width: 100%;
+      vertical-align: top;
+    }
+    .features-banner-fallback {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .features-banner-fallback[hidden] { display: none !important; }
     .section-center-title {
       text-align:center;
       font-size:clamp(1.5rem,3vw,2.2rem);
@@ -1793,8 +1925,10 @@
     }
     @media (max-width: 768px) {
       .fe-carousel-viewport { border-radius: 22px; }
-      .fe-cover-item { width: clamp(100px, 22vw, 130px); }
-      .fe-coverflow { min-height: 280px; }
+      .fe-cover-item { width: clamp(140px, 28vw, 180px); }
+      .fe-cover-item .fe-phone { max-width: 180px; }
+      .fe-cover-item .fe-phone-screen img { max-height: min(52vh, 520px); }
+      .fe-coverflow { min-height: 400px; }
       .fe-showcase-body {
         gap: 0.5rem;
       }
@@ -2556,7 +2690,9 @@
     /* ── NOTEBOOK SCROLL ── */
     #notebook-scroll { height: 220vh; position: relative; }
     #notebook-sticky {
-      position: sticky; top: 0; height: 100vh;
+      position: -webkit-sticky;
+      position: sticky; top: 0;
+      height: 100vh; height: calc(var(--vh, 1vh) * 100);
       overflow: hidden;
       background: #0a0a0c;
       display: flex; flex-direction: column;
@@ -2732,7 +2868,10 @@
 
     /* ── MOBILE ── */
     @media (max-width: 768px) {
+      #nav { padding: 0.5rem 1rem; }
       .nav-links { display: none; }
+      .nav-menu-btn { display: flex; margin-left: auto; }
+      .nav-logo img { height: 48px !important; }
       .bento {
         grid-template-columns: 1fr 1fr;
         grid-auto-rows: 160px;
@@ -2803,7 +2942,7 @@
     .tilt-card:hover .tilt-shine { opacity: 1; }
 
     /* ── CLIP-PATH REVEAL ── */
-    .will-clip { clip-path: inset(0 100% 0 0 round 12px); will-change: clip-path; }
+    .will-clip { -webkit-clip-path: inset(0 100% 0 0 round 12px); clip-path: inset(0 100% 0 0 round 12px); will-change: clip-path; }
 
     /* ── HORIZONTAL SCROLL (features) — replaced by carousel ── */
 
@@ -3397,23 +3536,76 @@
     <div class="nav-links">
       <div class="nav-dropdown">
         <button type="button" class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true" id="nav-analytics-trigger">
-          Analytics
+          <span data-i18n="nav.analytics">Analytics</span>
           <span class="nav-dropdown-chevron" aria-hidden="true"></span>
         </button>
         <div class="nav-dropdown-panel" role="menu" aria-labelledby="nav-analytics-trigger">
-          <a href="analytics-empresa.html" class="nav-link-target" role="menuitem">Analytics Empresa</a>
-          <a href="analytics.html" class="nav-link-target" role="menuitem">Analytics Educacional</a>
+          <a href="analytics-empresa.html" class="nav-link-target" role="menuitem" data-i18n="nav.analyticsEmpresa">Analytics Empresa</a>
+          <a href="analytics-educacional.html" class="nav-link-target" role="menuitem" data-i18n="nav.analyticsEducacional">Analytics Educacional</a>
         </div>
       </div>
       <a href="blog.html" class="nav-link-target" data-i18n="nav.tips">Dicas</a>
       <a href="#gamification" class="nav-link-target" data-i18n="nav.communities">Comunidades</a>
-      <div style="display:flex;gap:0.5rem;align-items:center;">
-        <a href="https://www.ugoapp.com.br" target="_blank" class="nav-cta nav-link-target" data-i18n="nav.cta">Agendar demonstração</a>
-        <a href="https://app.ugoapp.com.br" target="_blank" class="nav-login nav-link-target" data-i18n="nav.login">Login web</a>
-        <button id="lang-toggle" aria-label="Switch language" style="background:none;border:1.5px solid var(--border);border-radius:100px;padding:0.4rem 0.85rem;font-family:'Manrope',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.06em;color:var(--ink2);cursor:pointer;transition:border-color 0.2s,color 0.2s;white-space:nowrap;">EN</button>
-      </div>
+      <a href="https://app.ugoapp.com.br" target="_blank" rel="noopener noreferrer" class="nav-login nav-link-target" data-i18n="nav.login">Login web</a>
+      <a href="https://www.ugoapp.com.br" target="_blank" rel="noopener noreferrer" class="nav-cta nav-link-target" data-i18n="nav.cta">Agendar demonstração</a>
+      <button type="button" id="lang-toggle" aria-label="Switch language">EN</button>
     </div>
+    <button type="button" class="nav-menu-btn" id="nav-menu-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-mobile-panel">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <div id="nav-mobile-panel" class="nav-mobile-panel" aria-hidden="true">
+    <span class="nav-mobile-label" data-i18n="nav.analytics">Analytics</span>
+    <a href="analytics-empresa.html" class="nav-link-target nav-mobile-sublink" data-i18n="nav.analyticsEmpresa">Analytics Empresa</a>
+    <a href="analytics-educacional.html" class="nav-link-target nav-mobile-sublink" data-i18n="nav.analyticsEducacional">Analytics Educacional</a>
+    <a href="blog.html" class="nav-link-target" data-i18n="nav.tips">Dicas</a>
+    <a href="#gamification" class="nav-link-target" data-i18n="nav.communities">Comunidades</a>
+    <div class="nav-mobile-ctas">
+      <button type="button" id="lang-toggle-mobile" class="lang-toggle-sync" aria-label="Switch language" style="background:none;border:1.5px solid var(--border);border-radius:100px;padding:0.55rem 1rem;font-family:'Manrope',sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:0.06em;color:var(--ink2);cursor:pointer;width:100%;">EN</button>
+      <a href="https://www.ugoapp.com.br" target="_blank" rel="noopener noreferrer" class="nav-cta nav-link-target" data-i18n="nav.cta">Agendar demonstração</a>
+      <a href="https://app.ugoapp.com.br" target="_blank" rel="noopener noreferrer" class="nav-login nav-link-target" data-i18n="nav.login">Login web</a>
+    </div>
+  </div>
+
+  <!-- Fix iOS: --vh variable, reveal fallback, import map polyfill -->
+  <script>
+    (function () {
+      /* ── 1. Fix --vh para iOS Safari ── */
+      function setVH() {
+        var vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', vh + 'px');
+      }
+      setVH();
+      window.addEventListener('resize', setVH, { passive: true });
+      window.addEventListener('orientationchange', function () { setTimeout(setVH, 150); }, { passive: true });
+
+      /* ── 2. Fallback: mostrar reveal-b2b se GSAP não animar em 4s ── */
+      var revealTimer = setTimeout(function () {
+        var hidden = document.querySelectorAll('.reveal-b2b, .reveal-b2b-r');
+        hidden.forEach(function (el) {
+          if (parseFloat(window.getComputedStyle(el).opacity) < 0.5) {
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            el.style.opacity   = '1';
+            el.style.transform = 'none';
+          }
+        });
+      }, 4000);
+
+      /* ── 3. Import map: Safari < 16.4 não suporta — carregar Three.js via fallback global ── */
+      try {
+        var testMap = document.createElement('script');
+        testMap.type = 'importmap';
+        var supported = HTMLScriptElement.supports && HTMLScriptElement.supports('importmap');
+        if (!supported) {
+          /* Injeta Three.js como global para o script type="module" ter fallback */
+          var s = document.createElement('script');
+          s.src = 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js';
+          document.head.appendChild(s);
+        }
+      } catch(e) {}
+    })();
+  </script>
 
   <!-- HERO SCROLL CANVAS -->
   <section id="scrolly">
@@ -3509,16 +3701,15 @@
       <h2 class="section-center-title" data-i18n="whatugo.title">Do Sonho Grande à ação diária. Tudo em um só app.</h2>
     </div>
     <div style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;overflow:hidden;">
-      <picture>
-        <source srcset="features-banner.avif" type="image/avif"/>
-        <source srcset="features-banner.webp" type="image/webp"/>
-        <img src="features-banner.png" alt="Telas do app U.GO: humor, tarefas, gráfico da vida, agenda, gamificação e HUGO IA" loading="lazy" decoding="async" style="width:100%;height:auto;display:block;"/>
-      </picture>
+      <div id="features-banner-wrap" class="features-banner-wrap" data-i18n-aria-label="whatugo.bannerAlt" role="img" aria-label="Funcionalidades do app U.GO">
+        <canvas class="features-banner-canvas" aria-hidden="true"></canvas>
+        <img class="features-banner-fallback" src="features-banner-pt.png" alt="" width="1920" height="1080" loading="lazy" decoding="async" hidden>
+      </div>
     </div>
   </section>
 
   <!-- ══════════════ MOCKUP 3D / TASKS ══════════════ -->
-  <section id="mockup3d" style="background:linear-gradient(to right, #FFFFFF 50%, #F5F5F7 50%);padding:100px 40px;">
+  <section id="mockup3d" style="background:#FFFFFF;padding:100px 40px;">
     <style>
       .mk-wrap { max-width:1280px; margin:0 auto; display:flex; align-items:center; gap:64px; }
       .mk-text { flex:1; min-width:0; }
@@ -3575,12 +3766,50 @@
         border-radius:5px 5px 18px 18px;
         box-shadow:0 14px 28px rgba(0,0,0,0.35);
       }
+      .mk-mobile-flat {
+        display:none;
+        width:100%;
+        max-width:400px;
+        margin:0 auto;
+        border-radius:20px;
+        overflow:hidden;
+        box-shadow:0 20px 50px rgba(0,0,0,0.12);
+        background:#F5F5F7;
+      }
+      .mk-mobile-flat video,
+      .mk-mobile-flat img {
+        width:100%;
+        height:auto;
+        display:block;
+        vertical-align:top;
+      }
+      .mk-mobile-flat .mk-mobile-poster { display:none; }
+      .mk-mobile-flat.is-poster-only video { display:none; }
+      .mk-mobile-flat.is-poster-only .mk-mobile-poster { display:block; }
       @media (max-width:768px){
-        #mockup3d { padding:60px 20px; background:linear-gradient(to bottom, #FFFFFF 50%, #F5F5F7 50%) !important; }
-        .mk-wrap { flex-direction:column; gap:32px; }
-        .mk-canvas-wrap { width:100%; height:320px !important; }
-        .mk-fb-laptop { transform:rotateY(-10deg) rotateX(4deg); width:100%; max-width:360px; margin:0 auto; }
-        .mk-desc { font-size:15px; }
+        #mockup3d { padding:60px 20px 72px; background:#FFFFFF !important; overflow:hidden; }
+        .mk-wrap { flex-direction:column; gap:28px; align-items:stretch; }
+        .mk-text { order:1; }
+        .mk-canvas-wrap {
+          order:2;
+          width:100%;
+          height:auto !important;
+          min-height:0;
+          flex:none;
+          position:relative;
+          overflow:visible;
+        }
+        #mk-canvas { display:none !important; }
+        .mk-fallback {
+          position:relative;
+          inset:auto;
+          height:auto;
+          perspective:none;
+          pointer-events:auto;
+        }
+        .mk-fb-laptop { display:none !important; }
+        .mk-mobile-flat { display:block; }
+        .mk-desc { font-size:15px; margin-bottom:0; }
       }
     </style>
 
@@ -3596,11 +3825,18 @@
           <div class="mk-fb-laptop">
             <div class="mk-fb-lid">
               <div class="mk-fb-bezel">
-                <video id="mkFallbackVideo" src="videodesk.mp4" muted playsinline autoplay loop preload="auto" webkit-playsinline></video>
+                <video id="mkFallbackVideo" src="videodesk.mp4" muted playsinline autoplay loop preload="auto" webkit-playsinline poster="screen2.webp"></video>
               </div>
             </div>
             <div class="mk-fb-hinge" aria-hidden="true"></div>
             <div class="mk-fb-base" aria-hidden="true"></div>
+          </div>
+          <div class="mk-mobile-flat" id="mkMobileFlat">
+            <video id="mkMobileVideo" src="videodesk.mp4" muted playsinline autoplay loop preload="metadata" webkit-playsinline poster="screen2.webp"></video>
+            <picture class="mk-mobile-poster">
+              <source srcset="screen2.webp" type="image/webp"/>
+              <img src="screen2.png" alt="U.GO — quadros de tarefas e gestão de tempo no app" loading="lazy" decoding="async"/>
+            </picture>
           </div>
         </div>
       </div>
@@ -3615,6 +3851,15 @@
       const wrap = canvas && canvas.parentElement;
       const mkFallback = document.getElementById('mkFallback');
       const mkFallbackVideo = document.getElementById('mkFallbackVideo');
+      const mkMobileFlat = document.getElementById('mkMobileFlat');
+      const mkMobileVideo = document.getElementById('mkMobileVideo');
+
+      function bindMkVideoFallback(videoEl, flatEl) {
+        if (!videoEl || !flatEl) return;
+        videoEl.addEventListener('error', () => flatEl.classList.add('is-poster-only'));
+      }
+      bindMkVideoFallback(mkFallbackVideo, mkMobileFlat);
+      bindMkVideoFallback(mkMobileVideo, mkMobileFlat);
 
       function showMkFallback(reason) {
         if (window.__ugoMk3dFallback) return;
@@ -3623,7 +3868,12 @@
         if (reason) console.warn('[U.GO] MacBook 3D — fallback:', reason);
         if (canvas) canvas.style.display = 'none';
         if (mkFallback) mkFallback.hidden = false;
-        if (mkFallbackVideo) mkFallbackVideo.play().catch(() => {});
+        const playVid = (v) => {
+          if (!v) return;
+          v.play().catch(() => { if (mkMobileFlat) mkMobileFlat.classList.add('is-poster-only'); });
+        };
+        if (window.innerWidth <= 768) playVid(mkMobileVideo);
+        else playVid(mkFallbackVideo);
       }
 
       function markMkOk() {
@@ -3912,8 +4162,8 @@
           <div class="hm-chat-header">
             <div class="hm-chat-av">🤖</div>
             <div>
-              <div class="hm-chat-name">HUGO IA</div>
-              <div class="hm-chat-sub">IA da U.GO</div>
+              <div class="hm-chat-name" data-i18n="hugo.chat.name">HUGO IA</div>
+              <div class="hm-chat-sub" data-i18n="hugo.chat.sub">IA da U.GO</div>
             </div>
             <div class="hm-chat-dots">
               <span></span><span></span><span></span>
@@ -3921,7 +4171,7 @@
           </div>
           <div class="hm-chat-body" id="hm-chat-body"></div>
           <div class="hm-chat-input">
-            <div class="hm-input-fake">Digite sua mensagem...</div>
+            <div class="hm-input-fake" data-i18n="hugo.chat.placeholder">Digite sua mensagem...</div>
             <div class="hm-send-btn">
               <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
                 <path d="M13 1L6.5 7.5M13 1L9 13L6.5 7.5M13 1L1 5L6.5 7.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -3939,28 +4189,51 @@
     const body = document.getElementById('hm-chat-body');
     if (!body) return;
 
-    const MSGS = [
-      { type:'hugo', text:'Oi! Como você está se sentindo hoje? 😊' },
-      { type:'user', text:'Bem, quero estudar!' },
-      { type:'hugo', text:'Qual é sua prioridade número 1 hoje?' },
-      { type:'user', text:'Estudar para a prova de amanhã' },
-      { type:'hugo', text:'Ótimo! Vou te lembrar às 19h. Você vai conseguir! 🚀' },
-      { type:'user', text:'Quantas horas estudei essa semana?' },
-      { type:'hugo', text:'Você estudou <strong>9h20min</strong> essa semana. Seu recorde é 11h — está quase lá! 🔥' },
-      { type:'user', text:'Qual hábito devo focar agora?' },
-      { type:'hugo', text:'Reforce <strong>leitura diária</strong>. Você manteve 4 dias seguidos — mais 3 e vira sequência! 📚' },
-      { type:'user', text:'Me manda um resumo do mês' },
-      { type:'hugo', text:'Abril: 38 tarefas concluídas, 3 metas batidas e nível subiu para <strong>Prata ✨</strong>. Seu melhor mês!' },
-      { type:'user', text:'Tenho uma reunião importante amanhã' },
-      { type:'hugo', text:'Anotado! Vou te avisar às 8h para você chegar preparado. Quer que eu reserve um tempo para revisão hoje? 📅' },
-      { type:'user', text:'Sim, me lembra às 20h' },
-      { type:'hugo', text:'Lembrete criado para às 20h: <strong>Revisar para reunião</strong>. Vai arrasar! 💪' },
-      { type:'user', text:'Como está minha sequência?' },
-      { type:'hugo', text:'Você está em <strong>12 dias seguidos</strong>! É o seu novo recorde pessoal. Continue assim 🏆' },
-    ];
+    const MSGS_BY_LANG = {
+      pt: [
+        { type:'hugo', text:'Oi! Como você está se sentindo hoje? 😊' },
+        { type:'user', text:'Bem, quero estudar!' },
+        { type:'hugo', text:'Qual é sua prioridade número 1 hoje?' },
+        { type:'user', text:'Estudar para a prova de amanhã' },
+        { type:'hugo', text:'Ótimo! Vou te lembrar às 19h. Você vai conseguir! 🚀' },
+        { type:'user', text:'Quantas horas estudei essa semana?' },
+        { type:'hugo', text:'Você estudou <strong>9h20min</strong> essa semana. Seu recorde é 11h — está quase lá! 🔥' },
+        { type:'user', text:'Qual hábito devo focar agora?' },
+        { type:'hugo', text:'Reforce <strong>leitura diária</strong>. Você manteve 4 dias seguidos — mais 3 e vira sequência! 📚' },
+        { type:'user', text:'Me manda um resumo do mês' },
+        { type:'hugo', text:'Abril: 38 tarefas concluídas, 3 metas batidas e nível subiu para <strong>Prata ✨</strong>. Seu melhor mês!' },
+        { type:'user', text:'Tenho uma reunião importante amanhã' },
+        { type:'hugo', text:'Anotado! Vou te avisar às 8h para você chegar preparado. Quer que eu reserve um tempo para revisão hoje? 📅' },
+        { type:'user', text:'Sim, me lembra às 20h' },
+        { type:'hugo', text:'Lembrete criado para às 20h: <strong>Revisar para reunião</strong>. Vai arrasar! 💪' },
+        { type:'user', text:'Como está minha sequência?' },
+        { type:'hugo', text:'Você está em <strong>12 dias seguidos</strong>! É o seu novo recorde pessoal. Continue assim 🏆' },
+      ],
+      en: [
+        { type:'hugo', text:'Hi! How are you feeling today? 😊' },
+        { type:'user', text:'Good — I want to study!' },
+        { type:'hugo', text:'What\'s your #1 priority today?' },
+        { type:'user', text:'Study for tomorrow\'s exam' },
+        { type:'hugo', text:'Great! I\'ll remind you at 7pm. You\'ve got this! 🚀' },
+        { type:'user', text:'How many hours did I study this week?' },
+        { type:'hugo', text:'You studied <strong>9h20min</strong> this week. Your record is 11h — almost there! 🔥' },
+        { type:'user', text:'Which habit should I focus on now?' },
+        { type:'hugo', text:'Double down on <strong>daily reading</strong>. You\'ve kept 4 days in a row — 3 more and it\'s a streak! 📚' },
+        { type:'user', text:'Send me a monthly summary' },
+        { type:'hugo', text:'April: 38 tasks completed, 3 goals hit, and level up to <strong>Silver ✨</strong>. Your best month!' },
+        { type:'user', text:'I have an important meeting tomorrow' },
+        { type:'hugo', text:'Noted! I\'ll ping you at 8am so you\'re prepared. Want me to block review time today? 📅' },
+        { type:'user', text:'Yes, remind me at 8pm' },
+        { type:'hugo', text:'Reminder set for 8pm: <strong>Review for meeting</strong>. You\'re going to crush it! 💪' },
+        { type:'user', text:'How\'s my streak?' },
+        { type:'hugo', text:'You\'re on <strong>12 days in a row</strong>! That\'s your new personal record. Keep going 🏆' },
+      ],
+    };
 
+    let MSGS = MSGS_BY_LANG.pt;
     let index = 0;
     let running = false;
+    let timerId = null;
 
     function makeRow(msg) {
       const row = document.createElement('div');
@@ -3991,20 +4264,31 @@
       body.scrollTo({ top: body.scrollHeight, behavior: 'smooth' });
 
       index++;
-      setTimeout(addNext, index % MSGS.length === 0 ? 2000 : 950);
+      timerId = setTimeout(addNext, index % MSGS.length === 0 ? 2000 : 950);
     }
 
-    // start when visible
+    window.__ugoHmChatApplyLang = function (l) {
+      MSGS = MSGS_BY_LANG[l] || MSGS_BY_LANG.pt;
+      if (!running) return;
+      if (timerId) clearTimeout(timerId);
+      body.innerHTML = '';
+      index = 0;
+      const first = makeRow(MSGS[0]);
+      body.appendChild(first);
+      requestAnimationFrame(() => requestAnimationFrame(() => first.classList.add('hm-visible')));
+      index = 1;
+      timerId = setTimeout(addNext, 950);
+    };
+
     const section = body.closest('section');
     const obs = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting && !running) {
         running = true;
-        // seed first message instantly so never blank
         const first = makeRow(MSGS[0]);
         body.appendChild(first);
         requestAnimationFrame(() => requestAnimationFrame(() => first.classList.add('hm-visible')));
         index = 1;
-        setTimeout(addNext, 950);
+        timerId = setTimeout(addNext, 950);
         obs.disconnect();
       }
     }, { threshold: 0.2 });
@@ -4020,49 +4304,49 @@
         <div class="fe-showcase-body">
         <div class="fe-coverflow" id="feCoverflow">
           <div class="fe-coverflow-track" id="feCoverflowTrack">
-            <article class="fe-cover-item is-active" data-i="0" data-title="Big 5: seu objetivo em cinco marcos." data-desc="Escreva cinco metas que você precisa conquistar para alcançar o objetivo que você definiu — clareza antes da execução.">
+            <article class="fe-cover-item is-active" data-i="0">
               <span class="fe-cover-cap">Big 5</span>
               <div class="fe-phone">
                 <div class="fe-phone-notch"></div>
                 <div class="fe-phone-screen"><picture><source srcset="screen6.avif" type="image/avif"/><source srcset="screen6.webp" type="image/webp"/><img src="screen6.png" alt="U.GO — Criar objetivo com metodologia Big 5: cinco metas para o seu sonho grande" loading="lazy" decoding="async"/></picture></div>
               </div>
             </article>
-            <article class="fe-cover-item" data-i="1" data-title="Execute o que planejou." data-desc="Veja suas atividades principais, priorize o que importa e sinta o progresso em tempo real.">
+            <article class="fe-cover-item" data-i="1">
               <span class="fe-cover-cap">Tarefas</span>
               <div class="fe-phone">
                 <div class="fe-phone-notch"></div>
                 <div class="fe-phone-screen"><picture><source srcset="screen2.avif" type="image/avif"/><source srcset="screen2.webp" type="image/webp"/><img src="screen2.png" alt="Tarefas e objetivos no U.GO — priorize o que importa e execute o planejado" loading="lazy" decoding="async"/></picture></div>
               </div>
             </article>
-            <article class="fe-cover-item" data-i="2" data-title="Monitore como você está." data-desc="Registre seu humor todo dia e entenda os padrões que afetam seu foco e sua energia.">
+            <article class="fe-cover-item" data-i="2">
               <span class="fe-cover-cap">Humor</span>
               <div class="fe-phone">
                 <div class="fe-phone-notch"></div>
                 <div class="fe-phone-screen"><picture><source srcset="screen1.avif" type="image/avif"/><source srcset="screen1.webp" type="image/webp"/><img src="screen1.png" alt="Tela de humor e sentimento do dia no app U.GO — acompanhe bem-estar e foco" loading="lazy" decoding="async"/></picture></div>
               </div>
             </article>
-            <article class="fe-cover-item" data-i="3" data-title="Veja sua evolução na vida inteira." data-desc="O gráfico da vida mapeia todas as áreas — para você crescer com equilíbrio, não só com velocidade.">
+            <article class="fe-cover-item" data-i="3">
               <span class="fe-cover-cap">Gráfico</span>
               <div class="fe-phone">
                 <div class="fe-phone-notch"></div>
                 <div class="fe-phone-screen"><picture><source srcset="screen3.avif" type="image/avif"/><source srcset="screen3.webp" type="image/webp"/><img src="screen3.png" alt="Gráfico da vida no U.GO — visão equilibrada das áreas pessoais e profissionais" loading="lazy" decoding="async"/></picture></div>
               </div>
             </article>
-            <article class="fe-cover-item" data-i="4" data-title="Troque experiências e evolua junto." data-desc="">
+            <article class="fe-cover-item" data-i="4">
               <span class="fe-cover-cap">Comunidade</span>
               <div class="fe-phone">
                 <div class="fe-phone-notch"></div>
                 <div class="fe-phone-screen"><picture><source srcset="screen4.avif" type="image/avif"/><source srcset="screen4.webp" type="image/webp"/><img src="screen4.png" alt="Comunidade U.GO — troque experiências e evolua junto com outros membros" loading="lazy" decoding="async"/></picture></div>
               </div>
             </article>
-            <article class="fe-cover-item" data-i="5" data-title="Foque com técnica e constância." data-desc="">
+            <article class="fe-cover-item" data-i="5">
               <span class="fe-cover-cap">Pomodoro</span>
               <div class="fe-phone">
                 <div class="fe-phone-notch"></div>
                 <div class="fe-phone-screen"><picture><source srcset="screen-pomodoro.avif" type="image/avif"/><source srcset="screen-pomodoro.webp" type="image/webp"/><img src="screen-pomodoro.png" alt="U.GO — Pomodoro: foco, técnica e constância na rotina" loading="lazy" decoding="async"/></picture></div>
               </div>
             </article>
-            <article class="fe-cover-item" data-i="6" data-title="Seu mentor pessoal de IA." data-desc="O HUGO acompanha sua rotina, cobra execução e gera os insights que você não vê sozinho.">
+            <article class="fe-cover-item" data-i="6">
               <span class="fe-cover-cap">HUGO IA</span>
               <div class="fe-phone">
                 <div class="fe-phone-notch"></div>
@@ -4162,8 +4446,25 @@
       const el = slides[index];
       if (!el) return;
       if (titleEl) titleEl.textContent = el.dataset.title || '';
-      if (descEl) descEl.textContent = el.dataset.desc || '';
+      if (descEl) {
+        const desc = el.dataset.desc || '';
+        descEl.textContent = desc;
+        descEl.style.display = desc ? '' : 'none';
+      }
     }
+
+    window.__ugoFeCarouselApplyI18n = function (t) {
+      slides.forEach((el, i) => {
+        const cap = el.querySelector('.fe-cover-cap');
+        const titleKey = 'features.slide' + i + '.title';
+        const descKey = 'features.slide' + i + '.desc';
+        const capKey = 'features.slide' + i + '.cap';
+        if (t[titleKey] !== undefined) el.dataset.title = t[titleKey];
+        if (t[descKey] !== undefined) el.dataset.desc = t[descKey];
+        if (cap && t[capKey] !== undefined) cap.textContent = t[capKey];
+      });
+      applyIndex();
+    };
 
     function updateDistances() {
       slides.forEach((el, i) => {
@@ -4206,7 +4507,6 @@
     window.__ugoFeCarouselGoTo = goToIndex;
 
     window.addEventListener('resize', () => layoutTrack());
-    applyIndex();
   })();
   </script>
 
@@ -4244,8 +4544,9 @@
   <style>
     .cf-curtain {
       position: relative;
-      height: 100vh;
+      height: 100vh; height: calc(var(--vh, 1vh) * 100);
       width: 100%;
+      -webkit-clip-path: polygon(0% 0, 100% 0%, 100% 100%, 0 100%);
       clip-path: polygon(0% 0, 100% 0%, 100% 100%, 0 100%);
     }
     .cf-footer {
@@ -4352,7 +4653,7 @@
           <div class="cf-col">
             <div class="cf-col-title" data-i18n="footer.col1">Produto</div>
             <a href="analytics-empresa.html" data-i18n="footer.analytics1">Analytics Empresa</a>
-            <a href="analytics.html" data-i18n="footer.analytics2">Analytics Educacional</a>
+            <a href="analytics-educacional.html" data-i18n="footer.analytics2">Analytics Educacional</a>
             <a href="#statement" data-i18n="footer.tips">Dicas</a>
             <a href="#gamification" data-i18n="footer.community">Comunidade</a>
           </div>
@@ -4398,35 +4699,39 @@
 
     /* ═══════════════════════════════════════
        LENIS SMOOTH SCROLL
+       iOS Safari: usa scroll nativo (Lenis
+       + scrollerProxy quebram no iOS)
     ═══════════════════════════════════════ */
+    const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+
     const lenis = new Lenis({
       duration: 1.6,
       easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smooth: true
+      smoothTouch: false,
+      touchMultiplier: 0,
     });
 
-    /* Lenis + ScrollTrigger: pin/scrub seguem o scroll virtual (senão o pin “não trava” direito). */
-    ScrollTrigger.scrollerProxy(document.documentElement, {
-      scrollTop(value) {
-        if (arguments.length) {
-          lenis.scrollTo(value, { immediate: true });
-        }
-        return lenis.scroll;
-      },
-      getBoundingClientRect() {
-        return {
-          top: 0,
-          left: 0,
-          width: window.innerWidth,
-          height: window.innerHeight,
-        };
-      },
-    });
+    if (!isTouch) {
+      /* Desktop: usa scrollerProxy para pin/scrub seguirem o scroll virtual */
+      ScrollTrigger.scrollerProxy(document.documentElement, {
+        scrollTop(value) {
+          if (arguments.length) lenis.scrollTo(value, { immediate: true });
+          return lenis.scroll;
+        },
+        getBoundingClientRect() {
+          return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+        },
+      });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(t => lenis.raf(t * 1000));
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      /* Mobile/iOS: conecta Lenis sem proxy, ScrollTrigger usa scroll nativo */
+      lenis.on('scroll', () => ScrollTrigger.update());
+      gsap.ticker.add(t => lenis.raf(t * 1000));
+    }
+
     ScrollTrigger.addEventListener('refresh', () => lenis.resize());
-
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add(t => lenis.raf(t * 1000));
-    gsap.ticker.lagSmoothing(0);
 
     /* ═══ Carrossel de apps: trava o cartão (mockups + texto em baixo) e o scroll horizontaliza os slides ═══ */
     (function setupFeCoverflowScroll() {
@@ -4476,6 +4781,34 @@
         nav.classList.toggle('scrolled', y > 80);
       }
     });
+
+    (function initMobileNav() {
+      const btn = document.getElementById('nav-menu-btn');
+      const panel = document.getElementById('nav-mobile-panel');
+      if (!btn || !panel) return;
+      const close = () => {
+        btn.setAttribute('aria-expanded', 'false');
+        panel.classList.remove('is-open');
+        panel.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('nav-menu-open');
+      };
+      const open = () => {
+        btn.setAttribute('aria-expanded', 'true');
+        panel.classList.add('is-open');
+        panel.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('nav-menu-open');
+      };
+      btn.addEventListener('click', () => {
+        if (panel.classList.contains('is-open')) close();
+        else open();
+      });
+      panel.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => close());
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') close();
+      });
+    })();
 
     /* ═══════════════════════════════════════
        SCROLL PROGRESS
@@ -4540,13 +4873,23 @@
     gsap.utils.toArray('.reveal-b2b').forEach((el,i) => {
       gsap.fromTo(el,{opacity:0,y:40},{
         opacity:1,y:0,duration:1.2,ease:'power3.out',delay:i*0.05,
-        scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none reverse'}
+        scrollTrigger:{
+          trigger:el,
+          start:'top 92%',
+          toggleActions:'play none none none',
+          onEnter: function() { el.style.opacity = '1'; el.style.transform = 'none'; }
+        }
       });
     });
     gsap.utils.toArray('.reveal-b2b-r').forEach((el,i) => {
       gsap.fromTo(el,{opacity:0,y:40},{
         opacity:1,y:0,duration:1.2,ease:'power3.out',delay:0.15,
-        scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none reverse'}
+        scrollTrigger:{
+          trigger:el,
+          start:'top 92%',
+          toggleActions:'play none none none',
+          onEnter: function() { el.style.opacity = '1'; el.style.transform = 'none'; }
+        }
       });
     });
 
@@ -4870,6 +5213,8 @@
   <!-- <script type="module" src="notebook-3d-2.js?v=5"></script> -->
 
   <!-- ══════════════ i18n PT / EN ══════════════ -->
+  <script src="i18n.js"></script>
+  <script src="features-banner-gl.js" defer></script>
   <script>
   (function() {
     const translations = {
@@ -4881,10 +5226,32 @@
         'hero.title':            'U.GO — Transforme seu<br/>Sonho Grande em ação diária<br/><span class="panel-h1-tagline">com IA, rotina e comunidade</span>',
         'hero.body':             'Você sabe o que quer. A U.GO te ajuda a chegar lá — com rotina, IA e uma comunidade que te mantém em movimento.',
         'whatugo.title':         'Do Sonho Grande à ação diária. Tudo em um só app.',
+        'whatugo.bannerAlt':     'Telas do app U.GO: comunidade, gamificação, ranking, desafios e versão web',
         'tasks.eyebrow':         'Gestão de tempo',
         'tasks.title':           'Visualize tudo. Execute o que importa.',
         'tasks.desc':            'Organize tarefas, projetos e rotinas em quadros visuais. Prospecção, reuniões, entregas e follow-ups — tudo no lugar certo, para você saber sempre qual é o próximo passo.',
         'features.title':        'Tudo que você precisa para evoluir — em um só lugar.',
+        'features.slide0.cap':   'Big 5',
+        'features.slide0.title': 'Big 5: seu objetivo em cinco marcos.',
+        'features.slide0.desc':  'Escreva cinco metas que você precisa conquistar para alcançar o objetivo que você definiu — clareza antes da execução.',
+        'features.slide1.cap':   'Tarefas',
+        'features.slide1.title': 'Execute o que planejou.',
+        'features.slide1.desc':  'Veja suas atividades principais, priorize o que importa e sinta o progresso em tempo real.',
+        'features.slide2.cap':   'Humor',
+        'features.slide2.title': 'Monitore como você está.',
+        'features.slide2.desc':  'Registre seu humor todo dia e entenda os padrões que afetam seu foco e sua energia.',
+        'features.slide3.cap':   'Gráfico',
+        'features.slide3.title': 'Veja sua evolução na vida inteira.',
+        'features.slide3.desc':  'O gráfico da vida mapeia todas as áreas — para você crescer com equilíbrio, não só com velocidade.',
+        'features.slide4.cap':   'Comunidade',
+        'features.slide4.title': 'Troque experiências e evolua junto.',
+        'features.slide4.desc':  '',
+        'features.slide5.cap':   'Pomodoro',
+        'features.slide5.title': 'Foque com técnica e constância.',
+        'features.slide5.desc':  '',
+        'features.slide6.cap':   'HUGO IA',
+        'features.slide6.title': 'Seu mentor pessoal de IA.',
+        'features.slide6.desc':  'O HUGO acompanha sua rotina, cobra execução e gera os insights que você não vê sozinho.',
         'statement.text':        'A U.GO é a plataforma que <strong>mede, desenvolve e acompanha comportamento</strong> — para você construir hábitos reais e empresas alcançarem performance com dados.',
         'statement.cta1':        'Baixar agora',
         'statement.cta2':        'Agendar demonstração',
@@ -4897,6 +5264,9 @@
         'hugo.feat3':            'Organiza<br/>sua rotina',
         'hugo.feat4':            'Ensina no<br/>dia a dia',
         'hugo.feat5':            'Ajuda a<br/>destravar',
+        'hugo.chat.name':        'HUGO IA',
+        'hugo.chat.sub':         'IA da U.GO',
+        'hugo.chat.placeholder': 'Digite sua mensagem...',
         'b2b.empresa.eyebrow':   'Para Empresas',
         'b2b.empresa.title':     'Chega de gerir pessoas no escuro.',
         'b2b.empresa.desc':      'A U.GO entrega ao seu líder o que mais falta: visibilidade real sobre quem está evoluindo, quem está perdendo engajamento e onde o problema está antes de aparecer no resultado.',
@@ -4931,10 +5301,32 @@
         'hero.title':            'U.GO — Turn your<br/>Big Dream into daily action<br/><span class="panel-h1-tagline">with AI, routine and community</span>',
         'hero.body':             'You know what you want. U.GO helps you get there — with routine, AI and a community that keeps you moving.',
         'whatugo.title':         'From Big Dream to daily action. All in one app.',
+        'whatugo.bannerAlt':     'U.GO app screens: community, gamification, ranking, challenges and web version',
         'tasks.eyebrow':         'Time management',
         'tasks.title':           'See everything. Execute what matters.',
         'tasks.desc':            'Organize tasks, projects and routines in visual boards. Prospecting, meetings, deliveries and follow-ups — everything in the right place, so you always know the next step.',
         'features.title':        'Everything you need to grow — all in one place.',
+        'features.slide0.cap':   'Big 5',
+        'features.slide0.title': 'Big 5: your goal in five milestones.',
+        'features.slide0.desc':  'Write five goals you need to achieve for the objective you set — clarity before execution.',
+        'features.slide1.cap':   'Tasks',
+        'features.slide1.title': 'Execute what you planned.',
+        'features.slide1.desc':  'See your main activities, prioritize what matters and feel progress in real time.',
+        'features.slide2.cap':   'Mood',
+        'features.slide2.title': 'Monitor how you\'re doing.',
+        'features.slide2.desc':  'Log your mood every day and understand the patterns that affect your focus and energy.',
+        'features.slide3.cap':   'Life chart',
+        'features.slide3.title': 'See your growth across your whole life.',
+        'features.slide3.desc':  'The life chart maps every area — so you grow with balance, not just speed.',
+        'features.slide4.cap':   'Community',
+        'features.slide4.title': 'Share experiences and grow together.',
+        'features.slide4.desc':  '',
+        'features.slide5.cap':   'Pomodoro',
+        'features.slide5.title': 'Focus with technique and consistency.',
+        'features.slide5.desc':  '',
+        'features.slide6.cap':   'HUGO AI',
+        'features.slide6.title': 'Your personal AI mentor.',
+        'features.slide6.desc':  'HUGO follows your routine, holds you accountable and surfaces insights you can\'t see alone.',
         'statement.text':        'U.GO is the platform that <strong>measures, develops and tracks behavior</strong> — helping you build real habits and helping companies achieve data-driven performance.',
         'statement.cta1':        'Download now',
         'statement.cta2':        'Schedule a demo',
@@ -4947,6 +5339,9 @@
         'hugo.feat3':            'Organizes<br/>your routine',
         'hugo.feat4':            'Teaches<br/>every day',
         'hugo.feat5':            'Helps you<br/>unblock',
+        'hugo.chat.name':        'HUGO AI',
+        'hugo.chat.sub':         'U.GO AI',
+        'hugo.chat.placeholder': 'Type your message...',
         'b2b.empresa.eyebrow':   'For Companies',
         'b2b.empresa.title':     'Stop managing people in the dark.',
         'b2b.empresa.desc':      'U.GO gives your leaders what they need most: real visibility into who is growing, who is losing engagement, and where the problem is before it shows in results.',
@@ -4975,31 +5370,447 @@
       }
     };
 
-    let lang = localStorage.getItem('ugo-lang') || 'pt';
-
-    function applyLang(l) {
-      lang = l;
-      localStorage.setItem('ugo-lang', l);
-      const t = translations[l];
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (t[key] !== undefined) el.innerHTML = t[key];
+    if (window.UgoI18n) {
+      UgoI18n.merge(translations);
+      document.addEventListener('DOMContentLoaded', () => {
+        UgoI18n.init();
+        const btn = document.getElementById('lang-toggle');
+        if (btn) {
+          btn.addEventListener('mouseenter', () => { btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)'; });
+          btn.addEventListener('mouseleave', () => { btn.style.borderColor = 'var(--border)'; btn.style.color = 'var(--ink2)'; });
+        }
       });
-      const btn = document.getElementById('lang-toggle');
-      if (btn) btn.textContent = l === 'pt' ? 'EN' : 'PT';
-      document.documentElement.lang = l === 'pt' ? 'pt-BR' : 'en';
     }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      applyLang(lang);
-      const btn = document.getElementById('lang-toggle');
-      if (btn) {
-        btn.addEventListener('click', () => applyLang(lang === 'pt' ? 'en' : 'pt'));
-        btn.addEventListener('mouseenter', () => { btn.style.borderColor = 'var(--accent)'; btn.style.color = 'var(--accent)'; });
-        btn.addEventListener('mouseleave', () => { btn.style.borderColor = 'var(--border)'; btn.style.color = 'var(--ink2)'; });
-      }
-    });
   })();
   </script>
+
+<!-- ══════════════ MODAL AGENDAMENTO ══════════════ -->
+<style>
+  /* ── Overlay ── */
+  #sched-overlay {
+    position: fixed; inset: 0; z-index: 9000;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    display: flex; align-items: center; justify-content: center;
+    padding: 1rem;
+  }
+  #sched-overlay.open { opacity: 1; visibility: visible; }
+
+  /* ── Card ── */
+  #sched-card {
+    background: #fff;
+    border-radius: 24px;
+    width: 100%; max-width: 480px;
+    max-height: 90vh; overflow-y: auto;
+    padding: 2.5rem 2rem 2rem;
+    position: relative;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.18);
+    transform: translateY(24px) scale(0.97);
+    transition: transform 0.35s cubic-bezier(0.25,1,0.5,1);
+    scrollbar-width: thin;
+  }
+  #sched-overlay.open #sched-card { transform: translateY(0) scale(1); }
+
+  /* ── Close button ── */
+  #sched-close {
+    position: absolute; top: 1.2rem; right: 1.2rem;
+    width: 32px; height: 32px; border-radius: 50%;
+    border: none; background: #f0eff0;
+    font-size: 1.2rem; line-height: 1; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: #6E6E73; transition: background 0.2s, color 0.2s;
+  }
+  #sched-close:hover { background: #FF5C2A; color: #fff; }
+
+  /* ── Header ── */
+  .sched-eyebrow {
+    display: inline-block;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #FF5C2A;
+    margin-bottom: 0.6rem;
+  }
+  #sched-card h2 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 1.6rem; font-weight: 800;
+    color: #1D1D1F; line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  .sched-sub {
+    font-size: 0.88rem; color: #6E6E73;
+    line-height: 1.55; margin-bottom: 1.6rem;
+  }
+
+  /* ── Form groups ── */
+  .sf-group {
+    display: flex; flex-direction: column; gap: 0.35rem;
+    margin-bottom: 1rem;
+  }
+  .sf-group label {
+    font-size: 0.78rem; font-weight: 700;
+    color: #1D1D1F; letter-spacing: 0.02em;
+  }
+  .sf-group input,
+  .sf-group textarea,
+  .sf-group select {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.92rem; color: #1D1D1F;
+    background: #F5F5F7; border: 1.5px solid transparent;
+    border-radius: 12px; padding: 0.72rem 1rem;
+    outline: none; transition: border-color 0.2s, background 0.2s;
+    resize: none; width: 100%;
+  }
+  .sf-group input::placeholder,
+  .sf-group textarea::placeholder { color: #AEAEB2; }
+  .sf-group input:focus,
+  .sf-group textarea:focus,
+  .sf-group select:focus {
+    border-color: #FF5C2A; background: #fff;
+    box-shadow: 0 0 0 3px rgba(255,92,42,0.12);
+  }
+  .sf-group input.error,
+  .sf-group textarea.error { border-color: #e53e3e; }
+  .sf-err-msg {
+    font-size: 0.74rem; color: #e53e3e; display: none;
+  }
+
+  /* ── Two-col row ── */
+  .sf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+  /* ── Submit button ── */
+  #sf-submit {
+    width: 100%; margin-top: 0.5rem;
+    padding: 0.9rem 1.5rem;
+    background: #FF5C2A; color: #fff;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.95rem; font-weight: 700;
+    border: none; border-radius: 100px;
+    cursor: pointer; transition: background 0.25s, transform 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  }
+  #sf-submit:hover { background: #e04a1a; transform: scale(1.02); }
+  #sf-submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+  /* ── Spinner ── */
+  .sf-spinner {
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 2.5px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    animation: sf-spin 0.7s linear infinite;
+    display: none;
+  }
+  @keyframes sf-spin { to { transform: rotate(360deg); } }
+
+  /* ── Error banner ── */
+  #sf-banner-err {
+    background: #fff5f5; border: 1px solid #fed7d7;
+    border-radius: 10px; padding: 0.7rem 1rem;
+    font-size: 0.82rem; color: #c53030;
+    margin-top: 0.75rem; display: none;
+  }
+
+  /* ── Success state ── */
+  #sched-success {
+    display: none; flex-direction: column;
+    align-items: center; text-align: center; padding: 1rem 0;
+  }
+  .sf-check-wrap {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: linear-gradient(135deg, #FF5C2A, #FF8A5C);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.2rem; font-size: 1.8rem; color: #fff;
+  }
+  #sched-success h3 {
+    font-size: 1.3rem; font-weight: 800; color: #1D1D1F;
+    margin-bottom: 0.4rem;
+  }
+  #sched-success p { font-size: 0.88rem; color: #6E6E73; margin-bottom: 1.5rem; }
+  #sf-close-ok {
+    padding: 0.75rem 2rem; background: #FF5C2A; color: #fff;
+    border: none; border-radius: 100px; font-family: 'Manrope', sans-serif;
+    font-size: 0.9rem; font-weight: 700; cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+  #sf-close-ok:hover { background: #e04a1a; transform: scale(1.03); }
+
+  /* ── Mobile fullscreen ── */
+  @media (max-width: 640px) {
+    #sched-overlay { padding: 0; align-items: flex-end; }
+    #sched-card {
+      border-radius: 20px 20px 0 0; max-height: 92vh;
+      transform: translateY(100%);
+    }
+    #sched-overlay.open #sched-card { transform: translateY(0); }
+  }
+</style>
+
+<div id="sched-overlay" role="dialog" aria-modal="true" aria-labelledby="sched-title" aria-hidden="true">
+  <div id="sched-card">
+    <button id="sched-close" aria-label="Fechar modal">✕</button>
+
+    <!-- Formulário -->
+    <div id="sched-form-wrap">
+      <span class="sched-eyebrow">Agendar demonstração</span>
+      <h2 id="sched-title">Vamos conversar?</h2>
+      <p class="sched-sub">Preencha os dados e nossa equipe entra em contato em até 24h.</p>
+
+      <form id="sched-form" novalidate>
+        <div class="sf-row">
+          <div class="sf-group">
+            <label for="sf-name">Nome completo <span aria-hidden="true">*</span></label>
+            <input type="text" id="sf-name" name="Nome" required placeholder="Seu nome" autocomplete="name" />
+            <span class="sf-err-msg" id="sf-name-err">Campo obrigatório</span>
+          </div>
+          <div class="sf-group">
+            <label for="sf-email">E-mail <span aria-hidden="true">*</span></label>
+            <input type="email" id="sf-email" name="Email" required placeholder="seu@email.com" autocomplete="email" />
+            <span class="sf-err-msg" id="sf-email-err">E-mail inválido</span>
+          </div>
+        </div>
+        <div class="sf-row">
+          <div class="sf-group">
+            <label for="sf-phone">WhatsApp</label>
+            <input type="tel" id="sf-phone" name="Telefone" placeholder="(11) 99999-9999" autocomplete="tel" />
+          </div>
+          <div class="sf-group">
+            <label for="sf-type">Tipo</label>
+            <select id="sf-type" name="Tipo">
+              <option value="">Selecione...</option>
+              <option value="Pessoa física">Pessoa física</option>
+              <option value="Empresa">Empresa</option>
+              <option value="Escola / Instituição">Escola / Instituição</option>
+            </select>
+          </div>
+        </div>
+        <div class="sf-group">
+          <label for="sf-company">Empresa / Escola</label>
+          <input type="text" id="sf-company" name="Empresa" placeholder="Nome da organização" autocomplete="organization" />
+        </div>
+        <div class="sf-group">
+          <label for="sf-msg">Mensagem (opcional)</label>
+          <textarea id="sf-msg" name="Mensagem" rows="3" placeholder="O que você gostaria de saber?"></textarea>
+        </div>
+
+        <button type="submit" id="sf-submit" aria-label="Enviar formulário de agendamento">
+          <span id="sf-submit-txt">Enviar →</span>
+          <span class="sf-spinner" id="sf-spinner" aria-hidden="true"></span>
+        </button>
+        <div id="sf-banner-err" role="alert">Erro ao enviar. Verifique sua conexão e tente novamente.</div>
+      </form>
+    </div>
+
+    <!-- Sucesso -->
+    <div id="sched-success" role="status">
+      <div class="sf-check-wrap" aria-hidden="true">✓</div>
+      <h3>Mensagem enviada!</h3>
+      <p>Nossa equipe entrará em contato em breve. Obrigado!</p>
+      <button id="sf-close-ok">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  /* ── Configuração Airtable ────────────────────────────
+     1. Crie uma base no Airtable chamada "UGO Leads"
+     2. Crie a tabela "Leads" com os campos:
+        - Nome        (Single line text)
+        - Email       (Email)
+        - Telefone    (Phone number)
+        - Tipo        (Single line text)
+        - Empresa     (Single line text)
+        - Mensagem    (Long text)
+        - Data        (Date - com hora)
+        - Origem      (Single line text)
+     3. Gere um Personal Access Token em airtable.com/create/tokens
+        com escopos: data.records:write  e  schema.bases:read
+     4. Pegue o Base ID: abra a base → Help → API docs → copie o ID (appXXXXXX)
+     5. Substitua os valores abaixo e crie um arquivo .env ou edite diretamente
+  ──────────────────────────────────────────────────── */
+  var AIRTABLE_TOKEN   = 'SEU_PERSONAL_ACCESS_TOKEN_AQUI';
+  var AIRTABLE_BASE_ID = 'SEU_BASE_ID_AQUI';
+  var AIRTABLE_TABLE   = 'Leads';
+
+  /* ── Elementos ── */
+  var overlay  = document.getElementById('sched-overlay');
+  var card     = document.getElementById('sched-card');
+  var closeBtn = document.getElementById('sched-close');
+  var form     = document.getElementById('sched-form');
+  var formWrap = document.getElementById('sched-form-wrap');
+  var success  = document.getElementById('sched-success');
+  var submitBtn= document.getElementById('sf-submit');
+  var submitTxt= document.getElementById('sf-submit-txt');
+  var spinner  = document.getElementById('sf-spinner');
+  var bannerErr= document.getElementById('sf-banner-err');
+  var closeOk  = document.getElementById('sf-close-ok');
+
+  /* ── Lock/unlock scroll (funciona no iOS Safari) ── */
+  var _scrollY = 0;
+  function lockScroll() {
+    _scrollY = window.scrollY || window.pageYOffset;
+    document.body.style.position = 'fixed';
+    document.body.style.top = '-' + _scrollY + 'px';
+    document.body.style.width = '100%';
+    document.body.style.overflowY = 'scroll';
+  }
+  function unlockScroll() {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.overflowY = '';
+    window.scrollTo(0, _scrollY);
+  }
+
+  /* ── Abrir modal ── */
+  function openModal() {
+    overlay.removeAttribute('aria-hidden');
+    overlay.classList.add('open');
+    lockScroll();
+    setTimeout(function () {
+      var first = card.querySelector('input, select, textarea, button');
+      if (first) first.focus();
+    }, 350);
+  }
+
+  /* ── Fechar modal ── */
+  function closeModal() {
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    unlockScroll();
+    setTimeout(function () {
+      formWrap.style.display = '';
+      success.style.display = 'none';
+      form.reset();
+      bannerErr.style.display = 'none';
+      clearErrors();
+    }, 320);
+  }
+
+  /* ── Interceptar todos os botões de agendamento ── */
+  function interceptButtons() {
+    var selectors = [
+      '.nav-cta',
+      '.bi-btn-secondary',
+      '.b2b-btn',
+      '.btn-demo'
+    ];
+    selectors.forEach(function (sel) {
+      document.querySelectorAll(sel).forEach(function (el) {
+        var href = el.getAttribute('href') || '';
+        if (href.indexOf('ugoapp.com.br') !== -1 || href === '#') {
+          el.addEventListener('click', function (e) {
+            e.preventDefault();
+            openModal();
+          });
+        }
+      });
+    });
+  }
+
+  /* ── Fechar ao clicar no overlay ── */
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closeModal();
+  });
+  closeBtn.addEventListener('click', closeModal);
+  closeOk.addEventListener('click', closeModal);
+
+  /* ── Fechar com Esc + focus trap ── */
+  overlay.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { closeModal(); return; }
+    if (e.key !== 'Tab') return;
+    var focusable = card.querySelectorAll(
+      'input, select, textarea, button, [tabindex]:not([tabindex="-1"])'
+    );
+    var first = focusable[0];
+    var last  = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  /* ── Validação ── */
+  function clearErrors() {
+    card.querySelectorAll('.error').forEach(function (el) { el.classList.remove('error'); });
+    card.querySelectorAll('.sf-err-msg').forEach(function (el) { el.style.display = 'none'; });
+  }
+
+  function showFieldError(input, msgEl) {
+    input.classList.add('error');
+    msgEl.style.display = 'block';
+    input.focus();
+  }
+
+  function validate() {
+    clearErrors();
+    var name  = document.getElementById('sf-name');
+    var email = document.getElementById('sf-email');
+    var valid = true;
+
+    if (!name.value.trim()) {
+      showFieldError(name, document.getElementById('sf-name-err'));
+      valid = false;
+    }
+    if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      if (valid) showFieldError(email, document.getElementById('sf-email-err'));
+      valid = false;
+    }
+    return valid;
+  }
+
+  /* ── Envio para Airtable ── */
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!validate()) return;
+
+    bannerErr.style.display = 'none';
+    submitBtn.disabled = true;
+    submitTxt.style.display = 'none';
+    spinner.style.display = 'inline-block';
+
+    var data = new FormData(form);
+    var fields = {};
+    data.forEach(function (val, key) { if (val) fields[key] = val; });
+    fields['Data']   = new Date().toISOString();
+    fields['Origem'] = window.location.href;
+
+    fetch('https://api.airtable.com/v0/' + AIRTABLE_BASE_ID + '/' + encodeURIComponent(AIRTABLE_TABLE), {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + AIRTABLE_TOKEN,
+        'Content-Type':  'application/json'
+      },
+      body: JSON.stringify({ fields: fields })
+    })
+    .then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    })
+    .then(function () {
+      formWrap.style.display = 'none';
+      success.style.display  = 'flex';
+      var closeOkBtn = document.getElementById('sf-close-ok');
+      if (closeOkBtn) closeOkBtn.focus();
+    })
+    .catch(function () {
+      bannerErr.style.display = 'block';
+      submitBtn.disabled = false;
+      submitTxt.style.display = 'inline';
+      spinner.style.display   = 'none';
+    });
+  });
+
+  /* ── Init ── */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', interceptButtons);
+  } else {
+    interceptButtons();
+  }
+})();
+</script>
+
 </body>
 </html>

@@ -5,6 +5,7 @@ const GH_BRANCH = 'main';
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, OPTIONS');
+  res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Admin-Pass');
 
   if (req.method === 'OPTIONS') {

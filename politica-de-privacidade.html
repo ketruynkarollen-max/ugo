@@ -18,7 +18,7 @@
     .skip-link:focus { left: 1rem; top: 1rem; outline: 2px solid var(--accent); outline-offset: 2px; }
     #nav { position: sticky; top: 0; z-index: 1000; padding: 1.5rem 2.5rem; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,.92); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); box-shadow: 0 1px 0 var(--border); transition: padding .4s ease, background .4s ease, box-shadow .4s ease; }
     .nav-logo { text-decoration: none; display: flex; align-items: center; }
-    .nav-logo img { height: 48px; width: auto; display: block; filter: brightness(0); }
+    .nav-logo img { height: 64px; width: auto; display: block; filter: brightness(0); }
     .nav-links { display: flex; gap: 2.5rem; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
     .nav-links > a:not(.nav-login):not(.nav-cta) { font-size: .78rem; font-weight: 500; color: var(--ink2); text-decoration: none; letter-spacing: .01em; transition: color .3s; }
     .nav-links > a:not(.nav-login):not(.nav-cta):hover { color: var(--ink); }
@@ -52,21 +52,21 @@
     @media (max-width: 768px) { #nav .nav-links { display: none; } }
   </style>
 </head>
-<body>
-  <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo principal</a>
+<body data-i18n-page="privacy">
+  <a class="skip-link" href="#conteudo-principal" data-i18n="skip.main">Ir para o conteúdo principal</a>
   <nav id="nav" aria-label="Principal">
-    <a href="index.html" class="nav-logo nav-link-target"><img src="ugo-logo.png" alt="U.GO" style="height:48px;width:auto;display:block;filter:brightness(0);"></a>
+    <a href="index.html" class="nav-logo nav-link-target"><img src="ugo-logo.png" alt="Logo U.GO" width="160" height="64"></a>
     <div class="nav-links">
-      <a href="analytics.html" class="nav-link-target">Analytics</a>
-      <a href="index.html#statement-b2b" class="nav-link-target">Dicas</a>
-      <a href="index.html#gamification" class="nav-link-target">Comunidade</a>
-      <a href="https://app.ugoapp.com.br" target="_blank" rel="noopener noreferrer" class="nav-login nav-link-target">Login web</a>
-      <a href="https://www.ugoapp.com.br" target="_blank" rel="noopener noreferrer" class="nav-cta nav-link-target">Agendar demonstração</a>
+      <a href="analytics-empresa.html" class="nav-link-target" data-i18n="nav.analytics">Analytics</a>
+      <a href="index.html#statement-b2b" class="nav-link-target" data-i18n="nav.tips">Dicas</a>
+      <a href="index.html#gamification" class="nav-link-target" data-i18n="nav.community">Comunidade</a>
+      <a href="https://app.ugoapp.com.br" target="_blank" rel="noopener noreferrer" class="nav-login nav-link-target" data-i18n="nav.login">Login web</a>
+      <a href="https://www.ugoapp.com.br" target="_blank" rel="noopener noreferrer" class="nav-cta nav-link-target" data-i18n="nav.cta">Agendar demonstração</a>
     </div>
   </nav>
 
   <main id="conteudo-principal">
-    <h1>Política de Privacidade — U.GO</h1>
+    <h1 data-i18n="legal.privacy.title">Política de Privacidade — U.GO</h1>
     <p class="lede"><strong>Termo de Privacidade.</strong> A U.GO tem como propósito auxiliar o maior número possível de pessoas a alcançar seus objetivos por meio do planejamento, produtividade e mudanças de hábitos. Com esse objetivo, elaboramos esta política para esclarecer as informações coletadas através de nossos sites, aplicativos, dispositivos e outros produtos e serviços (doravante denominados coletivamente como &quot;Serviços&quot;), bem como a forma como essas informações são utilizadas e as opções disponíveis para você em relação a esses dados.</p>
 
     <p>É importante observar que esta política não abrange os dados que tratamos em nome de terceiros. As práticas relacionadas a esses dados estão sujeitas a acordos específicos firmados com essas entidades. Recomendamos que você consulte as políticas de privacidade dessas entidades para obter informações detalhadas sobre como elas tratam seus dados.</p>
@@ -215,7 +215,7 @@
         <a href="politica-de-privacidade.html" aria-current="page">Política de Privacidade</a>
       </div>
       <div class="tu-footer-logo">
-        <a href="index.html"><img src="ugo-logo.png" alt="U.GO"/></a>
+        <a href="index.html"><img src="ugo-logo.png" alt="Logo U.GO" width="120" height="48" style="height:48px;width:auto;display:block;filter:brightness(0) invert(1);"></a>
       </div>
       <p class="tu-copy">© Copyright U.GO 2025</p>
       <p class="tu-sub">Redes sociais</p>
@@ -228,5 +228,7 @@
       <p style="font-size:.82rem;color:var(--ink3);">Em breve.</p>
     </footer>
   </main>
+<script src="i18n.js"></script>
+<script>UgoI18n.init();</script>
 </body>
 </html>

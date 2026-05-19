@@ -26,11 +26,9 @@
       background: rgba(255,255,255,0.92); backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border);
     }
-    .nav-logo { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.04em; }
-    .nav-logo span { color: var(--accent); }
-    .nav-back { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; font-weight: 600; color: var(--ink2); transition: color .2s; }
-    .nav-back:hover { color: var(--accent); }
-    .nav-cta { padding: 0.45rem 1.1rem; border-radius: 100px; background: var(--ink); color: #fff; font-size: 0.75rem; font-weight: 700; transition: background .2s; }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; flex-shrink: 0; }
+    .nav-logo img { height: 64px; width: auto; display: block; filter: brightness(0); }
+    .nav-cta { margin-left: auto; padding: 0.45rem 1.1rem; border-radius: 100px; background: var(--ink); color: #fff; font-size: 0.75rem; font-weight: 700; transition: background .2s; }
     .nav-cta:hover { background: var(--accent); }
 
     /* ── HERO ── */
@@ -139,13 +137,12 @@
     .related-card-title { font-size: 0.9rem; font-weight: 700; line-height: 1.35; }
 
     /* ── FOOTER ── */
-    .post-footer { background: #111; padding: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-    .post-footer-logo { font-size: 1.1rem; font-weight: 800; color: #fff; letter-spacing: -0.04em; }
-    .post-footer-logo span { color: var(--accent); }
-    .post-footer-links { display: flex; gap: 2rem; }
-    .post-footer-links a { font-size: 0.75rem; color: rgba(255,255,255,0.35); transition: color .2s; }
-    .post-footer-links a:hover { color: rgba(255,255,255,0.8); }
-    .post-footer-copy { font-size: 0.7rem; color: rgba(255,255,255,0.2); }
+    .footer { background: #111; padding: 2.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer img { height: 48px; width: auto; display: block; filter: brightness(0) invert(1); }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-size: 0.75rem; color: rgba(255,255,255,0.35); transition: color .2s; }
+    .footer-links a:hover { color: rgba(255,255,255,0.75); }
+    .footer-copy { font-size: 0.7rem; color: rgba(255,255,255,0.2); }
 
     @media (max-width: 768px) {
       .post-hero { aspect-ratio: 16/9; min-height: 220px; }
@@ -154,13 +151,12 @@
     }
   </style>
 </head>
-<body>
+<body data-i18n-page="post">
 
 <!-- NAV -->
 <nav id="nav">
-  <div class="nav-logo">u<span>.</span>go</div>
-  <a href="blog.html" class="nav-back">← Todas as dicas</a>
-  <a href="https://www.ugoapp.com.br" target="_blank" class="nav-cta">Agendar demonstração</a>
+  <a href="index.html" class="nav-logo"><img src="ugo-logo.png" alt="Logo U.GO" width="160" height="64" style="height:64px;width:auto;display:block;filter:brightness(0);"></a>
+  <a href="https://www.ugoapp.com.br" target="_blank" class="nav-cta"><span data-i18n="nav.cta">Agendar demonstração</span></a>
 </nav>
 
 <!-- HERO -->
@@ -191,16 +187,19 @@
 </div>
 
 <!-- FOOTER -->
-<footer class="post-footer">
-  <div class="post-footer-logo">u<span>.</span>go</div>
-  <div class="post-footer-links">
-    <a href="index.html">Início</a>
-    <a href="blog.html">Dicas</a>
-    <a href="analytics-empresa.html">Para Empresas</a>
+<footer class="footer">
+  <a href="index.html"><img src="ugo-logo.png" alt="Logo U.GO" width="120" height="48" style="height:48px;width:auto;display:block;filter:brightness(0) invert(1);"></a>
+  <div class="footer-links">
+    <a href="index.html" data-i18n="footer.home">Início</a>
+    <a href="blog.html" data-i18n="nav.tips">Dicas</a>
+    <a href="analytics-empresa.html" data-i18n="footer.analytics1">Para Empresas</a>
+    <a href="politica-de-privacidade.html" data-i18n="footer.privacy">Privacidade</a>
+    <a href="termos-de-uso.html" data-i18n="footer.terms">Termos</a>
   </div>
-  <span class="post-footer-copy">© 2026 U.GO. Todos os direitos reservados.</span>
+  <span class="footer-copy" data-i18n="footer.copy">© 2026 U.GO. Todos os direitos reservados.</span>
 </footer>
 
+<script src="posts-source.js"></script>
 <script>
   // ── MARKDOWN PARSER ──
   function parseMarkdown(text) {
@@ -327,22 +326,37 @@
 
   async function getPosts() {
     try {
-      const res = await fetch(`/posts.json?_=${Date.now()}`);
+      if (window.UgoPostsSource) {
+        const posts = await window.UgoPostsSource.fetchPosts();
+        if (posts.length) return posts;
+      }
+      const res = await fetch('posts.json?_=' + Date.now());
       const posts = await res.json();
       return posts.length ? posts : STATIC_POSTS;
-    } catch { return STATIC_POSTS; }
+    } catch {
+      return STATIC_POSTS;
+    }
   }
 
-  function renderPost(p) {
+  function imgUrl(u) {
+    return window.UgoPostsSource
+      ? window.UgoPostsSource.normalizeImageUrl(u)
+      : u && u.startsWith('/blog-images/')
+        ? 'https://raw.githubusercontent.com/ketruynkarollen-max/ugo/main' + u
+        : u || '';
+  }
+
+  async function renderPost(p, allPosts) {
     document.title = `${p.title} — U.GO Dicas`;
     document.getElementById('page-title').textContent = `${p.title} — U.GO Dicas`;
 
     // Hero
     const hero = document.getElementById('post-hero');
     const fallback = document.getElementById('hero-fallback');
-    if (p.image) {
+    const heroSrc = imgUrl(p.image);
+    if (heroSrc) {
       const img = document.createElement('img');
-      img.src = p.image; img.alt = p.title;
+      img.src = heroSrc; img.alt = p.title;
       hero.insertBefore(img, fallback);
       fallback.style.display = 'none';
     } else if (p.emoji) {
@@ -374,14 +388,14 @@
     document.getElementById('art-tags').innerHTML = tags.map(t => `<span class="art-tag">${t}</span>`).join('');
 
     // Related
-    const all = getPosts();
+    const all = allPosts || (await getPosts());
     const related = all.filter(x => x.id !== p.id && x.cat === p.cat).slice(0, 3);
     const fill = all.filter(x => x.id !== p.id && x.cat !== p.cat).slice(0, 3 - related.length);
     const shown = [...related, ...fill].slice(0, 3);
     document.getElementById('related-grid').innerHTML = shown.map(r => `
       <a class="related-card" href="post.html?id=${r.id}">
         <div class="related-card-img">
-          <div class="related-card-img-inner" style="${r.image ? `background:url('${r.image}') center/cover no-repeat;width:100%;height:100%` : `background:${r.color || '#F5F5F7'}`}">${r.image ? '' : (r.emoji || '📝')}</div>
+          <div class="related-card-img-inner" style="${r.image ? `background:url('${imgUrl(r.image).replace(/'/g, "\\'")}') center/cover no-repeat;width:100%;height:100%` : `background:${r.color || '#F5F5F7'}`}">${r.image ? '' : (r.emoji || '📝')}</div>
         </div>
         <div class="related-card-body">
           <div class="related-card-cat">${CAT_LABELS[r.cat] || r.cat}</div>
@@ -397,8 +411,10 @@
     const postId = params.get('id');
     const posts = await getPosts();
     const post = posts.find(p => p.id === postId) || posts[0];
-    if (post) renderPost(post);
+    if (post) await renderPost(post, posts);
   })();
 </script>
+<script src="i18n.js"></script>
+<script>UgoI18n.init();</script>
 </body>
 </html>

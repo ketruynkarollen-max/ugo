@@ -3,7 +3,9 @@
   "rewrites": [
     { "source": "/analytics-empresa", "destination": "/analytics-empresa.html" },
     { "source": "/analytics-empresa/", "destination": "/analytics-empresa.html" },
-    { "source": "/analytics", "destination": "/analytics.html" },
+    { "source": "/analytics-educacional", "destination": "/analytics-educacional.html" },
+    { "source": "/analytics-educacional/", "destination": "/analytics-educacional.html" },
+    { "source": "/analytics", "destination": "/analytics-educacional.html" },
     { "source": "/termos-de-uso", "destination": "/termos-de-uso.html" },
     { "source": "/politica-de-privacidade", "destination": "/politica-de-privacidade.html" }
   ],
