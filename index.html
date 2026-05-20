@@ -4741,25 +4741,25 @@
       const slideCount = feViewport.querySelectorAll('.fe-cover-item').length;
       if (slideCount < 2) return;
       const steps = slideCount - 1;
-      const stepDistance = () => Math.min(600, Math.max(400, window.innerHeight * 0.55));
+      const stepDistance = () => Math.min(700, Math.max(500, window.innerHeight * 0.65));
       ScrollTrigger.create({
         trigger: feViewport,
         start: 'top 72px',
         end: () => `+=${steps * stepDistance()}`,
         pin: true,
         pinSpacing: true,
-        scrub: 0.4,
+        scrub: 0.6,
         anticipatePin: 1,
         invalidateOnRefresh: true,
         onUpdate(self) {
           const maxIdx = slideCount - 1;
-          const i = Math.round(self.progress * maxIdx);
+          const i = Math.min(maxIdx, Math.floor(self.progress * slideCount));
           window.__ugoFeCarouselGoTo(i);
         }
       });
     })();
 
-    requestAnimationFrame(() => ScrollTrigger.refresh());
+    setTimeout(() => ScrollTrigger.refresh(), 800);
 
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
