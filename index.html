@@ -3825,7 +3825,7 @@
           <div class="mk-fb-laptop">
             <div class="mk-fb-lid">
               <div class="mk-fb-bezel">
-                <video id="mkFallbackVideo" src="videodesk.mp4" muted playsinline autoplay loop preload="auto" webkit-playsinline poster="screen2.webp"></video>
+                <video id="mkFallbackVideo" src="videodesk.mp4" muted playsinline autoplay loop preload="metadata" poster="screen2.webp"></video>
               </div>
             </div>
             <div class="mk-fb-hinge" aria-hidden="true"></div>
@@ -3843,9 +3843,18 @@
     </div>
 
     <script type="module">
-      import * as THREE from 'three';
-      import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-      import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+    // Lazy-load Three.js only when MacBook section enters viewport
+    const _mkWrap = document.querySelector('.mk-canvas-wrap');
+    if (_mkWrap) {
+      new IntersectionObserver(async (entries, obs) => {
+        if (!entries[0].isIntersecting) return;
+        obs.disconnect();
+      const [{default: THREE_mod}, {GLTFLoader}, {DRACOLoader}] = await Promise.all([
+        import('three'),
+        import('three/addons/loaders/GLTFLoader.js'),
+        import('three/addons/loaders/DRACOLoader.js'),
+      ]);
+      const THREE = THREE_mod;
 
       const canvas = document.getElementById('mk-canvas');
       const wrap = canvas && canvas.parentElement;
@@ -4058,6 +4067,8 @@
       }, false);
       }
       }
+      }, {threshold: 0.1}).observe(_mkWrap);
+    }
     </script>
     <script>
     (function () {
@@ -5233,7 +5244,7 @@
   <!-- <script type="module" src="notebook-3d-2.js?v=5"></script> -->
 
   <!-- ══════════════ i18n PT / EN ══════════════ -->
-  <script src="i18n.js"></script>
+  <script src="i18n.js" defer></script>
   <script>
   (function() {
     const translations = {
