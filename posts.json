@@ -46,8 +46,8 @@
     "read": "5 min",
     "date": "10 Mai 2026",
     "emoji": "⏱️",
-    "color": "linear-gradient(135deg,#fff5f2,#ffe4d6)",
-    "image": "",
+    "color": "",
+    "image": "https://raw.githubusercontent.com/ketruynkarollen-max/ugo/main/blog-images/post-s2.jpg",
     "excerpt": "A técnica funciona — mas só quando você sabe o que fazer nos 5 minutos de pausa.",
     "content": "## O que é a Técnica Pomodoro\n\nCriada por Francesco Cirillo nos anos 80, divide o trabalho em blocos de 25 minutos separados por pausas curtas.\n\n## Por que funciona\n\nO método respeita os limites naturais de concentração do cérebro humano. Em vez de lutar contra a fadiga, você trabalha com ela.\n\n> Foco profundo não é questão de força de vontade. É questão de design.\n\n## O erro mais comum\n\nA maioria das pessoas usa o Pomodoro mas ignora a pausa. Usam os 5 minutos para checar redes sociais — e voltam mais dispersos do que saíram.\n\nA pausa ideal envolve: levantar, respirar, mover o corpo. Nada de tela."
   },
