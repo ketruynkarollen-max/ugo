@@ -4740,26 +4740,46 @@
       if (!feViewport || typeof window.__ugoFeCarouselGoTo !== 'function') return;
       const slideCount = feViewport.querySelectorAll('.fe-cover-item').length;
       if (slideCount < 2) return;
-      const steps = slideCount - 1;
-      const stepDistance = () => Math.min(700, Math.max(500, window.innerHeight * 0.65));
-      ScrollTrigger.create({
-        trigger: feViewport,
-        start: 'top 72px',
-        end: () => `+=${steps * stepDistance()}`,
-        pin: true,
-        pinSpacing: true,
-        scrub: 0.6,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onUpdate(self) {
-          const maxIdx = slideCount - 1;
-          const i = Math.min(maxIdx, Math.floor(self.progress * slideCount));
-          window.__ugoFeCarouselGoTo(i);
-        }
-      });
-    })();
 
-    setTimeout(() => ScrollTrigger.refresh(), 800);
+      const isMobile = () => window.innerWidth <= 768;
+
+      if (isMobile()) {
+        // Mobile: swipe gestures only, no ScrollTrigger pin
+        let touchStartX = 0, touchStartY = 0, currentIdx = 0;
+        feViewport.addEventListener('touchstart', e => {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        feViewport.addEventListener('touchend', e => {
+          const dx = e.changedTouches[0].clientX - touchStartX;
+          const dy = e.changedTouches[0].clientY - touchStartY;
+          if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+            currentIdx = Math.max(0, Math.min(slideCount - 1, currentIdx + (dx < 0 ? 1 : -1)));
+            window.__ugoFeCarouselGoTo(currentIdx);
+          }
+        }, { passive: true });
+      } else {
+        // Desktop: ScrollTrigger scroll-driven
+        const steps = slideCount - 1;
+        const stepDistance = () => Math.min(700, Math.max(500, window.innerHeight * 0.65));
+        ScrollTrigger.create({
+          trigger: feViewport,
+          start: 'top 72px',
+          end: () => `+=${steps * stepDistance()}`,
+          pin: true,
+          pinSpacing: true,
+          scrub: 0.6,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate(self) {
+            const maxIdx = slideCount - 1;
+            const i = Math.min(maxIdx, Math.floor(self.progress * slideCount));
+            window.__ugoFeCarouselGoTo(i);
+          }
+        });
+        setTimeout(() => ScrollTrigger.refresh(), 800);
+      }
+    })();
 
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
