@@ -70,6 +70,12 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin/>
+  <link rel="dns-prefetch" href="https://unpkg.com"/>
+  <link rel="preload" href="ugo-logo.png?v=2" as="image"/>
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" as="script"/>
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" as="script"/>
   <link rel="preload" href="ugo-logo.png" as="image"/>
   <link rel="preload" href="screen6.webp" as="image" type="image/webp"/>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
@@ -4884,8 +4890,19 @@
         ctx.fillStyle=g; ctx.fillRect(0,0,cw,ch);
       }
     }
-    for (let i=0;i<F1;i++){const img=new Image();img.src=`sequence/frame_${String(i).padStart(3,'0')}_delay-0.041s.webp`;img.onload=()=>{if(i===0)drawUnified(0);};imgs1.push(img);}
-    for (let i=0;i<F2;i++){const img=new Image();img.src=`sequencia2/frame_${String(i).padStart(3,'0')}_delay-0.04s.png`;imgs2.push(img);}
+    // Lazy-load frames only when hero canvas is visible
+    function loadFrames() {
+      for (let i=0;i<F1;i++){const img=new Image();img.src=`sequence/frame_${String(i).padStart(3,'0')}_delay-0.041s.webp`;img.onload=()=>{if(i===0)drawUnified(0);};imgs1.push(img);}
+      // sequencia2 não usada — removida para performance
+    }
+    if ('IntersectionObserver' in window) {
+      const heroObs = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) { loadFrames(); heroObs.disconnect(); }
+      }, {rootMargin: '200px'});
+      heroObs.observe(canvas);
+    } else {
+      loadFrames();
+    }
     const resize=()=>{canvas.width=innerWidth;canvas.height=innerHeight;drawUnified(state.frame);};
     resize(); window.addEventListener('resize', resize);
 
