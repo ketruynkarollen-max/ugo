@@ -1,18 +1,5 @@
 [
   {
-    "id": "s6",
-    "title": "Teste de publicação automática",
-    "cat": "habitos",
-    "author": "Equipe U.GO",
-    "read": "1 min",
-    "date": "25 Mai 2026",
-    "emoji": "🤖",
-    "color": "",
-    "image": "",
-    "excerpt": "Este é um teste do sistema de publicação automática do agente carcara.",
-    "content": "## Teste\n\nSe você está lendo isso, o sistema funcionou!"
-  },
-  {
     "id": "s5",
     "title": "A ansiedade de domingo à noite tem nome — e explicação",
     "cat": "soft-skills",
